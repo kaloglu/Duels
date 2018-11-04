@@ -1,0 +1,49 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion app.compileSdk
+    buildToolsVersion app.buildTools
+
+    defaultConfig {
+        applicationId "com.kaloglu.cleanwithonemodule"
+
+        minSdkVersion app.minSdk
+        targetSdkVersion app.targetSdk
+
+        versionCode 1
+        versionName "1.0.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility java.sourceCompatibility
+        targetCompatibility java.targetCompatibility
+    }
+    flavorDimensions 'default'
+    productFlavors {
+        dev {
+            dimension 'default'
+            buildConfigField 'String', 'END_POINT', endpoint
+            buildConfigField 'String', 'LOCAL_DB', localdb
+        }
+
+    }
+
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    addDependencies(dependencies, appDependencies)
+    implementation 'com.android.support:design:28.0.0'
+}
+
