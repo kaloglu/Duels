@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Duels</string>
+    <string name="signed_in">Giriş yapıldı</string>
+    <string name="sign_in_cancelled">Giriş kullanıcı tarafından iptal edildi</string>
+    <string name="no_internet_connection">internet bağlantısını kontrol edin</string>
+    <string name="unknown_error">bilinmeyen bir hata oldu</string>
+    <string name="unknown_sign_in_response">Bu işlem desteklenmiyor</string>
+    <string name="developer_error">Geliştirici hatası</string>
+    <string name="provider_error">Giriş sağlayıcısı hatalı tanımlanmış.</string>
+    <string name="anonymous_upgrade_merge_error">Şifresiz giriş işleminde sorun oldu.</string>
+    <string name="email_mismatch_error">Bu mail ile eşleşen bi rkullanıcı bulunamadı.</string>
+    <string name="sign_out">Çıkış</string>
 </resources>

@@ -1,3 +1,8 @@
 package com.kaloglu.duels.domain.interfaces.base.mvp
 
-interface BaseView
+import android.support.annotation.StringRes
+
+interface BaseView {
+    fun showSnackbar(@StringRes messageId: Int)
+    fun showSnackbar(message: String)
+}

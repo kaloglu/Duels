@@ -1,6 +1,7 @@
 package com.kaloglu.duels.mobileui.base
 
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import dagger.android.support.DaggerAppCompatActivity
 
 abstract class BaseActivity : DaggerAppCompatActivity() {
@@ -56,4 +57,16 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
     protected abstract fun initUserInterface()
 
     protected open fun setContentView() = setContentView(contentResourceId)
+
+    fun showSnackbar(messageId: Int) =
+            showSnackbar(resources.getString(messageId))
+
+
+    fun showSnackbar(message: String) =
+            Snackbar.make(
+                    findViewById(baseFrameLayoutId),
+                    message,
+                    Snackbar.LENGTH_LONG
+            ).show()
+
 }

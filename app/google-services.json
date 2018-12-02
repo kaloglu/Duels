@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "660607613642",
+    "firebase_url": "https://friend-duels.firebaseio.com",
+    "project_id": "friend-duels",
+    "storage_bucket": "friend-duels.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:660607613642:android:9c4dc320743ddfcf",
+        "android_client_info": {
+          "package_name": "com.kaloglu.duels"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "660607613642-hcmvmki8j74nj3q1upnjnf2o7pvfvk5c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kaloglu.duels",
+            "certificate_hash": "6825ed1e0e9bd9d40bf096bdab9832e7f30a0b24"
+          }
+        },
+        {
+          "client_id": "660607613642-dpmu35aocso1ooumvmp7n1g7qdi1v5bf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHxfwIpfXEZk16dvgEnq4U3y_N8xwUcJk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "660607613642-dpmu35aocso1ooumvmp7n1g7qdi1v5bf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

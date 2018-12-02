@@ -3,7 +3,7 @@ package com.kaloglu.duels.mobileui.main
 import android.content.Context
 import android.content.Intent
 import android.support.annotation.StringRes
-import android.view.View
+import com.firebase.ui.auth.AuthUI
 import com.kaloglu.duels.R
 import com.kaloglu.duels.domain.interfaces.main.MainContract
 import com.kaloglu.duels.mobileui.base.BaseFragment
@@ -25,22 +25,14 @@ class MainActivity : BaseMvpActivity<MainContract.Presenter>(),
         setSupportActionBar(toolbar)
         toolbar.title = title
 
-//        setNavigationOnClick {
-//            onBackPressed()
-//        }
+        buttonSignOut.setOnClickListener {
+            AuthUI.getInstance()
+                    .signOut(this)
+                    .addOnCompleteListener(presenter.signOut())
+        }
+
     }
 
-
-    override fun setSupportActionBar(toolbar: android.support.v7.widget.Toolbar?) {
-        super.setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
-    override fun setNavigationOnClick(onClick: (View) -> Unit) = Unit
-    //            toolbar?.setNavigationOnClickListener {
-//                onClick(it)
-//            } ?: Unit
-//
     override fun setTitle(@StringRes resId: Int) = setTitle(getString(resId))
 
     internal fun setTitle(string: String) {
