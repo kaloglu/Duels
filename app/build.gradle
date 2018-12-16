@@ -30,8 +30,9 @@ android {
     }
     flavorDimensions 'default'
     productFlavors {
-        dev {
+        prod {
             dimension 'default'
+            buildConfigField 'String', 'NETWORK_PROTOCOL', networkProtocol
             buildConfigField 'String', 'END_POINT', endpoint
             buildConfigField 'String', 'LOCAL_DB', localdb
         }

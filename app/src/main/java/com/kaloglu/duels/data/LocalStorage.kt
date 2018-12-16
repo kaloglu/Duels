@@ -3,87 +3,52 @@ package com.kaloglu.duels.data
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import java.util.*
+import com.kaloglu.duels.viewobjects.CachedSample
 
-class LocalStorage(val context: Context) {
+class LocalStorage(context: Context) {
 
     private val preferences = PreferenceManager.getDefaultSharedPreferences(context)
 
     companion object {
-        private const val CLIENT_ID = "client_id"
-        private const val BEARER_TOKEN = "token"
-        private const val REFRESH_TOKEN = "refresh_token"
-        private const val ACCESS_TOKEN_EXPIRE_DATE = "access_token_expire_date"
-        private const val REFRESH_TOKEN_EXPIRE_DATE = "refresh_token_expire_date"
-
+        const val SAMPLE_PARAMETER_KEY = "email"
     }
 
-    //region TOKEN and REFRESH TOKEN
-
-    fun setBearerToken(token: String?) {
-        setValue(BEARER_TOKEN, token)
-    }
-
-    fun getBearerToken(): String? =
-            preferences.getString(BEARER_TOKEN, null)
-
-    fun clearBearerToken() =
-            preferences.edit().remove(BEARER_TOKEN).apply()
-
-    fun setRefreshToken(refreshToken: String) {
-        setValue(REFRESH_TOKEN, refreshToken)
-    }
-
-    fun getRefreshToken(): String? =
-            preferences.getString(REFRESH_TOKEN, null)
-
-    fun clearRefreshToken() =
-            preferences.edit().remove(REFRESH_TOKEN).apply()
-
-    fun setAccessTokenExpireDate(date: String) {
-        setValue(ACCESS_TOKEN_EXPIRE_DATE, date.toLong())
-    }
-
-    fun setRefreshTokenExpireDate(date: String) {
-        setValue(REFRESH_TOKEN_EXPIRE_DATE, date.toLong())
-    }
-
-    fun getAccessTokenExpireDate() =
-            preferences.getLong(ACCESS_TOKEN_EXPIRE_DATE, 0)
-
-    fun clearAccessTokenExpireDate() {
-        setValue(ACCESS_TOKEN_EXPIRE_DATE,0)
-    }
-
-    fun getRefreshTokenExpireDate() =
-            preferences.getLong(REFRESH_TOKEN_EXPIRE_DATE, 0)
-
-    //endregion
-
-    fun getClientId(): String {
-        var id = preferences.getString(CLIENT_ID, "")
-        if (id.isNullOrEmpty()) {
-            id = UUID.randomUUID().toString()
-            setValue(CLIENT_ID, id)
-        }
-        return id
-    }
-
-    private fun edit(operation: (SharedPreferences.Editor) -> Unit) {
-        val editor = preferences.edit()
-        operation(editor)
-        editor.apply()
-    }
-
-    private fun setValue(key: String, value: Any?) {
-        when (value) {
-            is String? -> edit { it.putString(key, value) }
-            is Int -> edit { it.putInt(key, value) }
-            is Boolean -> edit { it.putBoolean(key, value) }
-            is Float -> edit { it.putFloat(key, value) }
-            is Long -> edit { it.putLong(key, value) }
+    inline operator fun <reified T> SharedPreferences.get(key: String, defaultValue: T): T {
+        return when {
+            T::class == Boolean::class -> this.getBoolean(key, defaultValue as Boolean) as T
+            T::class == Float::class -> this.getFloat(key, defaultValue as Float) as T
+            T::class == Int::class -> this.getInt(key, defaultValue as Int) as T
+            T::class == Long::class -> this.getLong(key, defaultValue as Long) as T
+            T::class == String::class -> this.getString(key, defaultValue as String) as T
             else -> throw UnsupportedOperationException("Not yet implemented")
         }
+
     }
+
+    inline operator fun <reified T> SharedPreferences.set(key: String, value: T) {
+        edit().apply {
+            when (T::class) {
+                Boolean::class -> putBoolean(key, value as Boolean)
+                Float::class -> putFloat(key, value as Float)
+                Int::class -> putInt(key, value as Int)
+                Long::class -> putLong(key, value as Long)
+                String::class -> putString(key, value as String)
+                else -> throw UnsupportedOperationException("Not yet implemented")
+            }
+
+            apply()
+        }
+    }
+
+    fun getSample() = preferences[SAMPLE_PARAMETER_KEY, ""]
+
+    fun setSample(cachedSample: CachedSample?) =
+            when {
+                cachedSample?.sampleParameter.isNullOrEmpty().not() ->
+                    preferences[SAMPLE_PARAMETER_KEY] = cachedSample?.sampleParameter
+                else -> preferences[SAMPLE_PARAMETER_KEY] = ""
+            }
+
+    fun cleaSample() = setSample(null)
 
 }

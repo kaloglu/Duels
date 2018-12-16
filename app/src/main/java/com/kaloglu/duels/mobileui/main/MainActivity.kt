@@ -5,14 +5,25 @@ import android.content.Intent
 import android.support.annotation.StringRes
 import com.firebase.ui.auth.AuthUI
 import com.kaloglu.duels.R
-import com.kaloglu.duels.domain.interfaces.main.MainContract
 import com.kaloglu.duels.mobileui.base.BaseFragment
 import com.kaloglu.duels.mobileui.base.mvp.BaseMvpActivity
+import com.kaloglu.duels.presentation.interfaces.main.MainContract
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : BaseMvpActivity<MainContract.Presenter>(),
-        MainContract.View {
+class MainActivity : BaseMvpActivity<Any, MainContract.Presenter>(), MainContract.View<Any> {
+
+    override fun onLoading() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onSuccess(data: Any?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onError(errorMessage: String?, data: Any?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     override val contentResourceId = R.layout.activity_main
 

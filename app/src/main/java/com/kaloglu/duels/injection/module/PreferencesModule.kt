@@ -1,18 +1,20 @@
 package com.kaloglu.duels.injection.module
 
-import android.content.Context
+import android.app.Application
 import com.kaloglu.duels.data.LocalStorage
-import com.kaloglu.duels.injection.qualifier.ApplicationContext
 import com.kaloglu.duels.injection.scopes.PerApplication
 import dagger.Module
 import dagger.Provides
 
 @Module
 class PreferencesModule {
+    @Module
+    companion object {
 
-    @PerApplication
-    @Provides
-    fun providesSharedDataPreferences(@ApplicationContext context: Context): LocalStorage {
-        return LocalStorage(context)
+        @JvmStatic
+        @PerApplication
+        @Provides
+        fun providesLocalStorage(application: Application): LocalStorage =
+                LocalStorage(application)
     }
 }

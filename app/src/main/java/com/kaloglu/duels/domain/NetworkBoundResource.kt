@@ -20,11 +20,14 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
 import android.support.annotation.MainThread
 import android.support.annotation.WorkerThread
-import com.kaloglu.duels.viewobjects.Resource
 import com.kaloglu.duels.api.ApiEmptyResponse
 import com.kaloglu.duels.api.ApiErrorResponse
 import com.kaloglu.duels.api.ApiResponse
 import com.kaloglu.duels.api.ApiSuccessResponse
+import com.kaloglu.duels.presentation.interfaces.base.mvp.BaseView
+import com.kaloglu.duels.viewobjects.Resource
+import com.kaloglu.duels.viewobjects.Status
+import java.util.*
 
 /**
  * A generic class that can provide a resource backed by both the sqlite database and the network.
@@ -35,78 +38,85 @@ import com.kaloglu.duels.api.ApiSuccessResponse
  * @param <ResultType>
  * @param <RequestType>
 </RequestType></ResultType> */
-abstract class NetworkBoundResource<ResultType, RequestType>
-@MainThread constructor(private val appExecutors: AppExecutors) {
+abstract class NetworkBoundResource<ResultType, RequestType, ParameterType>
+@MainThread constructor(open val executorFactory: ExecutorFactory) {
 
-    private val result = MediatorLiveData<Resource<ResultType>>()
+    abstract var param: Param<ParameterType?>
 
-    init {
-        result.value = Resource.loading(null)
-        @Suppress("LeakingThis")
-        val dbSource = loadFromDb()
-        result.addSource(dbSource) { data ->
-            result.removeSource(dbSource)
-            if (shouldFetch(data)) {
-                fetchFromNetwork(dbSource)
-            } else {
-                result.addSource(dbSource) { newData ->
-                    setValue(Resource.success(newData))
+    private val resultMerger = MediatorLiveData<Resource<ResultType>>()
+
+    protected val result
+        get() = resultMerger as LiveData<Resource<ResultType>>
+
+    internal fun call() {
+        resultMerger.value = Resource.loading(null)
+        val cachedSource = loadFromDb()
+        resultMerger.addSource(cachedSource) { data ->
+            resultMerger.removeSource(cachedSource)
+            when {
+                shouldFetch(data) -> {
+                    val remoteSource = createCall()
+                    fetchFromNetwork(remoteSource, cachedSource)
                 }
+                else -> addSuccessSourceWithCache(cachedSource)
             }
         }
     }
 
     @MainThread
-    private fun setValue(newValue: Resource<ResultType>) {
-        if (result.value != newValue) {
-            result.value = newValue
+    protected fun setValue(newValue: Resource<ResultType>) {
+        if (resultMerger.value != newValue) {
+            resultMerger.value = newValue
         }
     }
 
-    private fun fetchFromNetwork(dbSource: LiveData<ResultType>) {
-        val apiResponse = createCall()
-        // we re-attach dbSource as a new source, it will dispatch its latest value quickly
-        result.addSource(dbSource) { newData ->
+    // we re-attach cachedSource as a new source, it will dispatch its latest value quickly
+    private fun fetchFromNetwork(remoteSource: LiveData<ApiResponse<RequestType>>, cachedSource: LiveData<ResultType>) {
+        resultMerger.addSource(cachedSource) { newData ->
             setValue(Resource.loading(newData))
         }
-        result.addSource(apiResponse) { response ->
-            result.removeSource(apiResponse)
-            result.removeSource(dbSource)
+        resultMerger.addSource(remoteSource) { response ->
+            resultMerger.removeSource(remoteSource)
+            resultMerger.removeSource(cachedSource)
             when (response) {
-                is ApiSuccessResponse -> {
-                    appExecutors.diskIO().execute {
-                        saveCallResult(processResponse(response))
-                        appExecutors.mainThread().execute {
-                            // we specially request a new live data,
-                            // otherwise we will get immediately last cached value,
-                            // which may not be updated with latest results received from network.
-                            result.addSource(loadFromDb()) { newData ->
-                                setValue(Resource.success(newData))
-                            }
-                        }
-                    }
-                }
-                is ApiEmptyResponse -> {
-                    appExecutors.mainThread().execute {
-                        // reload from disk whatever we had
-                        result.addSource(loadFromDb()) { newData ->
-                            setValue(Resource.success(newData))
-                        }
-                    }
-                }
-                is ApiErrorResponse -> {
-                    onFetchFailed()
-                    result.addSource(dbSource) { newData ->
-                        setValue(Resource.error(response.errorMessage, newData))
-                    }
+                is ApiSuccessResponse -> addSuccessSourceFetchedCache(response)
+                is ApiEmptyResponse -> addSuccessSourceWithCache(cachedSource)
+                is ApiErrorResponse -> addErrorSource(cachedSource, response)
+            }
+        }
+    }
+
+    private fun addErrorSource(dbSource: LiveData<ResultType>, response: ApiErrorResponse<RequestType>) {
+        onFetchFailed()
+        resultMerger.addSource(dbSource) { newData ->
+            setValue(Resource.error(response.errorMessage, newData))
+        }
+    }
+
+    private fun addSuccessSourceWithCache(cachedResource: LiveData<ResultType>) {
+        executorFactory.mainThread().execute {
+            // reload from disk whatever we had
+            resultMerger.addSource(cachedResource) { cachedData ->
+                setValue(Resource.success(cachedData))
+            }
+        }
+    }
+
+     fun addSuccessSourceFetchedCache(response: ApiSuccessResponse<RequestType>) {
+        executorFactory.diskIO().execute {
+            saveCallResult(processResponse(response))
+            executorFactory.mainThread().execute {
+                // we specially request a new live data,
+                // otherwise we will get immediately last cached value,
+                // which may not be updated with latest results received from network.
+                resultMerger.addSource(loadFromDb()) { fetchedData ->
+                    setValue(Resource.success(fetchedData))
                 }
             }
         }
     }
 
     protected open fun onFetchFailed() {}
-
-    fun asLiveData() = result as LiveData<Resource<ResultType>>
 
     @WorkerThread
     protected open fun processResponse(response: ApiSuccessResponse<RequestType>) = response.body
@@ -122,4 +132,34 @@ abstract class NetworkBoundResource<ResultType, RequestType>
 
     @MainThread
     protected abstract fun createCall(): LiveData<ApiResponse<RequestType>>
+
+    protected fun getMaxRefreshTime(minDifference: Int): Date {
+        val cal = Calendar.getInstance()
+        cal.time = Date()
+        cal.add(Calendar.MINUTE, -1 * minDifference)
+        return cal.time
+    }
+
+
+    @Suppress("UNCHECKED_CAST")
+    fun <T> observe(view: BaseView<T>): NetworkBoundResource<ResultType, RequestType, ParameterType> {
+        result.observe(view, android.arch.lifecycle.Observer {
+            when (it?.status) {
+                Status.LOADING -> view.onLoading()
+                Status.SUCCESS -> view.onSuccess(it.data as T)
+                Status.ERROR -> view.onError(it.message, it.data as T)
+                null -> TODO("should define ${it?.status}")
+            }
+        })
+
+        return this
+    }
+
+    open fun setParam(value: ParameterType): NetworkBoundResource<ResultType, RequestType, ParameterType> {
+        param = Param(value)
+        return this
+    }
+
+    data class Param<ParameterType>(var value: ParameterType)
 }
+

@@ -20,9 +20,9 @@ abstract class ActivityModule {
         @JvmStatic
         @Provides
         @PerActivity
-        fun provideFragmentManager(activity: AppCompatActivity): FragmentManager {
-            return activity.supportFragmentManager
-        }
+        fun provideFragmentManager(activity: AppCompatActivity): FragmentManager =
+                activity.supportFragmentManager
+
     }
 
     @Binds

@@ -1,41 +1,47 @@
 package com.kaloglu.duels.mobileui.base.mvp
 
+import android.arch.lifecycle.Lifecycle
 import android.support.annotation.CallSuper
-import com.kaloglu.duels.domain.interfaces.base.mvp.BasePresenter
-import com.kaloglu.duels.domain.interfaces.base.mvp.BaseView
+import com.kaloglu.duels.navigation.ActivityNavigator
+import com.kaloglu.duels.presentation.interfaces.base.mvp.BasePresenter
+import com.kaloglu.duels.presentation.interfaces.base.mvp.BaseView
 import java.lang.ref.WeakReference
 
-abstract class BaseAbstractPresenter<V : BaseView> : BasePresenter<V> {
+abstract class BaseAbstractPresenter<M, V : BaseView<M>>(
+        val activityNavigator: ActivityNavigator
+) : BasePresenter<M, V> {
 
     private var viewRef: WeakReference<V>? = null
+    private var viewLifecycleRef: WeakReference<Lifecycle?>? = null
 
     @Suppress("UNCHECKED_CAST")
     @CallSuper
-    override fun attachView(view: BaseView) {
+    override fun attachView(view: BaseView<M>) {
         viewRef = WeakReference(view as V)
+        viewLifecycleRef = WeakReference(viewRef?.get()?.lifecycle)
+
+        viewLifecycleRef?.get()?.addObserver(this)
+
     }
 
     @CallSuper
     override fun detachView() {
         viewRef?.clear()
         viewRef = null
+        viewLifecycleRef = null
     }
 
-    /**
-     * Gets the attached view. You should call [isViewAttached] to avoid exceptions.
-     *
-     * @return the view if it is attached
-     * @throws [IllegalArgumentException] if no view is attached
-     */
     override fun getView() = when {
         isViewAttached() -> viewRef!!.get()!!
         else -> throw IllegalArgumentException()
     }
 
-    /**
-     * Checks if a view is attached to this presenter.
-     *
-     * @return false if no view is attached
-     */
-    override fun isViewAttached() = viewRef != null && viewRef!!.get() != null
+    override fun isViewAttached() = viewRef != null && viewRef?.get() != null
+
+    override fun getSignInActivity() {
+        activityNavigator
+                .toSignInActivity(requestCodeForSignIn)
+                .navigate()
+    }
+
 }
