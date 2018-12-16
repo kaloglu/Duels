@@ -16,7 +16,6 @@
 
 package com.kaloglu.duels.api
 
-import retrofit2.Response
 import timber.log.Timber
 import java.util.regex.Pattern
 
@@ -25,48 +24,48 @@ import java.util.regex.Pattern
  * @param <T> the type of the response object
 </T> */
 @Suppress("unused") // T is used in extending classes
-sealed class ApiResponse<T> {
+sealed class RemoteResponse<T> {
     open val body: T? = null
     open val errorMessage = ""
 
     companion object {
-        fun <T> create(error: Throwable): ApiErrorResponse<T> {
-            return ApiErrorResponse(error.message ?: "unknown error")
+        fun <T> create(error: Throwable): RemoteErrorResponse<T> {
+            return RemoteErrorResponse(error.message ?: "unknown error")
         }
 
-        fun <T> create(response: Response<T>): ApiResponse<T> {
-            return if (response.isSuccessful) {
-                val body = response.body()
-                if (body == null || response.code() == 204) {
-                    ApiEmptyResponse()
-                } else {
-                    ApiSuccessResponse(
-                        body = body,
-                        linkHeader = response.headers()?.get("link")
-                    )
-                }
-            } else {
-                val msg = response.errorBody()?.string()
-                val errorMsg = if (msg.isNullOrEmpty()) {
-                    response.message()
-                } else {
-                    msg
-                }
-                ApiErrorResponse(errorMsg ?: "unknown error")
-            }
-        }
+//        fun <T> create(response: Response<T>): RemoteResponse<T> {
+//            return if (response.isSuccessful) {
+//                val body = response.body()
+//                if (body == null || response.code() == 204) {
+//                    RemoteEmptyResponse()
+//                } else {
+//                    RemoteSuccessResponse(
+//                        body = body,
+//                        linkHeader = response.headers()?.get("link")
+//                    )
+//                }
+//            } else {
+//                val msg = response.errorBody()?.string()
+//                val errorMsg = if (msg.isNullOrEmpty()) {
+//                    response.message()
+//                } else {
+//                    msg
+//                }
+//                RemoteErrorResponse(errorMsg ?: "unknown error")
+//            }
+//        }
     }
 }
 
 /**
- * separate class for HTTP 204 resposes so that we can make ApiSuccessResponse's body non-null.
+ * separate class for HTTP 204 resposes so that we can make RemoteSuccessResponse's body non-null.
  */
-class ApiEmptyResponse<T> : ApiResponse<T>()
+class RemoteEmptyResponse<T> : RemoteResponse<T>()
 
-data class ApiSuccessResponse<T>(
+data class RemoteSuccessResponse<T>(
         override val body: T,
         val links: Map<String, String>
-) : ApiResponse<T>() {
+) : RemoteResponse<T>() {
     constructor(body: T, linkHeader: String?) : this(
         body = body,
         links = linkHeader?.extractLinks() ?: emptyMap()
@@ -110,4 +109,4 @@ data class ApiSuccessResponse<T>(
     }
 }
 
-data class ApiErrorResponse<T>(override val errorMessage: String) : ApiResponse<T>()
+data class RemoteErrorResponse<T>(override val errorMessage: String) : RemoteResponse<T>()

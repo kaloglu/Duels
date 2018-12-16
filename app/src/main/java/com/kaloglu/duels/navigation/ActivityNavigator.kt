@@ -15,25 +15,20 @@ import javax.inject.Inject
 class ActivityNavigator @Inject constructor(private val activity: Activity) {
 
     fun finishCurrentActivity() =
-            NavigationCreator(activity)
-                    .finishThis()
+            NavigationCreator(activity).finishThis()
 
     fun openExternalUrl(url: String) =
-            NavigationCreator(activity)
-                    .intent(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+            NavigationCreator(activity).intent(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
 
     fun toMainActivity() =
-            NavigationCreator(activity)
-                    .intent(MainActivity.newIntent(activity))
+            NavigationCreator(activity).intent(MainActivity.newIntent(activity))
 
     fun toSignInActivity(requestCodeForSignIn: Int): NavigationCreator {
 
         val providerList =
                 Arrays.asList(
                         AuthUI.IdpConfig.GoogleBuilder().build(),
-                        AuthUI.IdpConfig.EmailBuilder().build(),
-                        AuthUI.IdpConfig.PhoneBuilder().build(),
-                        AuthUI.IdpConfig.AnonymousBuilder().build()
+                        AuthUI.IdpConfig.EmailBuilder().build()
                 )
 
         val intent = AuthUI.getInstance()
@@ -48,7 +43,6 @@ class ActivityNavigator @Inject constructor(private val activity: Activity) {
     }
 
     fun toSplashScreen() =
-            NavigationCreator(activity)
-                    .intent(SplashActivity.newIntent(activity))
+            NavigationCreator(activity).intent(SplashActivity.newIntent(activity))
 
 }

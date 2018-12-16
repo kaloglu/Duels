@@ -20,10 +20,10 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
 import android.support.annotation.MainThread
 import android.support.annotation.WorkerThread
-import com.kaloglu.duels.api.ApiEmptyResponse
-import com.kaloglu.duels.api.ApiErrorResponse
-import com.kaloglu.duels.api.ApiResponse
-import com.kaloglu.duels.api.ApiSuccessResponse
+import com.kaloglu.duels.api.RemoteEmptyResponse
+import com.kaloglu.duels.api.RemoteErrorResponse
+import com.kaloglu.duels.api.RemoteResponse
+import com.kaloglu.duels.api.RemoteSuccessResponse
 import com.kaloglu.duels.presentation.interfaces.base.mvp.BaseView
 import com.kaloglu.duels.viewobjects.Resource
 import com.kaloglu.duels.viewobjects.Status
@@ -71,7 +71,7 @@ abstract class NetworkBoundResource<ResultType, RequestType, ParameterType>
     }
 
     // we re-attach cachedSource as a new source, it will dispatch its latest value quickly
-    private fun fetchFromNetwork(remoteSource: LiveData<ApiResponse<RequestType>>, cachedSource: LiveData<ResultType>) {
+    private fun fetchFromNetwork(remoteSource: LiveData<RemoteResponse<RequestType>>, cachedSource: LiveData<ResultType>) {
         resultMerger.addSource(cachedSource) { newData ->
             setValue(Resource.loading(newData))
         }
@@ -79,14 +79,14 @@ abstract class NetworkBoundResource<ResultType, RequestType, ParameterType>
             resultMerger.removeSource(remoteSource)
             resultMerger.removeSource(cachedSource)
             when (response) {
-                is ApiSuccessResponse -> addSuccessSourceFetchedCache(response)
-                is ApiEmptyResponse -> addSuccessSourceWithCache(cachedSource)
-                is ApiErrorResponse -> addErrorSource(cachedSource, response)
+                is RemoteSuccessResponse -> addSuccessSourceFetchedCache(response)
+                is RemoteEmptyResponse -> addSuccessSourceWithCache(cachedSource)
+                is RemoteErrorResponse -> addErrorSource(cachedSource, response)
             }
         }
     }
 
-    private fun addErrorSource(dbSource: LiveData<ResultType>, response: ApiErrorResponse<RequestType>) {
+    private fun addErrorSource(dbSource: LiveData<ResultType>, response: RemoteErrorResponse<RequestType>) {
         onFetchFailed()
         resultMerger.addSource(dbSource) { newData ->
             setValue(Resource.error(response.errorMessage, newData))
@@ -102,7 +102,7 @@ abstract class NetworkBoundResource<ResultType, RequestType, ParameterType>
         }
     }
 
-     fun addSuccessSourceFetchedCache(response: ApiSuccessResponse<RequestType>) {
+     fun addSuccessSourceFetchedCache(response: RemoteSuccessResponse<RequestType>) {
         executorFactory.diskIO().execute {
             saveCallResult(processResponse(response))
             executorFactory.mainThread().execute {
@@ -119,7 +119,7 @@ abstract class NetworkBoundResource<ResultType, RequestType, ParameterType>
     protected open fun onFetchFailed() {}
 
     @WorkerThread
-    protected open fun processResponse(response: ApiSuccessResponse<RequestType>) = response.body
+    protected open fun processResponse(response: RemoteSuccessResponse<RequestType>) = response.body
 
     @WorkerThread
     protected abstract fun saveCallResult(item: RequestType)
@@ -131,7 +131,7 @@ abstract class NetworkBoundResource<ResultType, RequestType, ParameterType>
     protected abstract fun loadFromDb(): LiveData<ResultType>
 
     @MainThread
-    protected abstract fun createCall(): LiveData<ApiResponse<RequestType>>
+    protected abstract fun createCall(): LiveData<RemoteResponse<RequestType>>
 
     protected fun getMaxRefreshTime(minDifference: Int): Date {
         val cal = Calendar.getInstance()
