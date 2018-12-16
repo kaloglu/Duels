@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.kaloglu.duels">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+          package="com.kaloglu.duels">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -12,6 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+                android:name="com.google.firebase.auth.internal.FederatedSignInActivity"
+                android:launchMode="singleInstance"
+                tools:replace="android:launchMode"/>
         <activity
             android:name=".mobileui.main.MainActivity"
             android:label="@string/app_name"

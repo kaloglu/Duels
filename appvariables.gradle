@@ -1,0 +1,11 @@
+// @see https://hackernoon.com/android-how-to-add-gradle-dependencies-using-foreach-c4cbcc070458
+//If you need retrofit define these
+//
+//ext.networkProtocol = '"retrofit"'
+//ext.endpoint = '"https://api.github.com/"'
+
+ext.networkProtocol = '"firebase"'
+ext.endpoint = '""'
+
+ext.localdb = '"DuelsDB"'
+
