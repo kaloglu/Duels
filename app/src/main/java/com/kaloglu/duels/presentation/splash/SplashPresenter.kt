@@ -16,9 +16,9 @@ class SplashPresenter @Inject constructor(
 ) : BaseAbstractPresenter<CachedSample, SplashContract.View<CachedSample>>(activityNavigator), SplashContract.Presenter {
 
     override fun checkAuth() =
-            when (firebaseAuth.currentUser) {
-                null -> getNextActivity()
-                else -> getSignInActivity()
+            when  {
+                firebaseAuth.currentUser == null -> getSignInActivity()
+                else -> getNextActivity()
             }
 
     override fun getNextActivity() =
