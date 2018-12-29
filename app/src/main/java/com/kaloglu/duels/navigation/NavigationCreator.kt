@@ -2,7 +2,7 @@ package com.kaloglu.duels.navigation
 
 import android.app.Activity
 import android.content.Intent
-import android.support.annotation.AnimRes
+import androidx.annotation.AnimRes
 
 class NavigationCreator internal constructor(private val activity: Activity) {
 

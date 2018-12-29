@@ -1,7 +1,7 @@
 package com.kaloglu.duels.injection.module.data.cache
 
 import android.app.Application
-import android.arch.persistence.room.Room
+import androidx.room.Room
 import com.kaloglu.duels.BuildConfig
 import com.kaloglu.duels.data.cache.db.DuelsDb
 import com.kaloglu.duels.data.cache.sample.SampleDao

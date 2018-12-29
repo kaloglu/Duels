@@ -2,7 +2,7 @@ package com.kaloglu.duels.mobileui.main
 
 import android.content.Context
 import android.content.Intent
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
 import com.firebase.ui.auth.AuthUI
 import com.kaloglu.duels.R
 import com.kaloglu.duels.mobileui.base.BaseFragment
