@@ -1,8 +1,8 @@
 package com.kaloglu.duels.firebase
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.support.annotation.MainThread
+import androidx.annotation.MainThread
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.kaloglu.duels.api.RemoteResponse
 import com.kaloglu.duels.api.RemoteSuccessResponse
 import com.kaloglu.duels.data.remote.model.SampleModel

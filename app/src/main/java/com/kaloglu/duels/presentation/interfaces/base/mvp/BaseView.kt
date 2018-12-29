@@ -1,7 +1,7 @@
 package com.kaloglu.duels.presentation.interfaces.base.mvp
 
-import android.arch.lifecycle.LifecycleOwner
-import android.support.annotation.StringRes
+import androidx.lifecycle.LifecycleOwner
+import androidx.annotation.StringRes
 
 interface BaseView<in T> : LifecycleOwner {
     fun showSnackbar(@StringRes messageId: Int)

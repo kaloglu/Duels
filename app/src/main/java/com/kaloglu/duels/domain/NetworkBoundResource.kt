@@ -16,10 +16,10 @@
 
 package com.kaloglu.duels.domain
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MediatorLiveData
-import android.support.annotation.MainThread
-import android.support.annotation.WorkerThread
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.annotation.MainThread
+import androidx.annotation.WorkerThread
 import com.kaloglu.duels.api.RemoteEmptyResponse
 import com.kaloglu.duels.api.RemoteErrorResponse
 import com.kaloglu.duels.api.RemoteResponse
@@ -143,7 +143,7 @@ abstract class NetworkBoundResource<ResultType, RequestType, ParameterType>
 
     @Suppress("UNCHECKED_CAST")
     fun <T> observe(view: BaseView<T>): NetworkBoundResource<ResultType, RequestType, ParameterType> {
-        result.observe(view, android.arch.lifecycle.Observer {
+        result.observe(view, androidx.lifecycle.Observer {
             when (it?.status) {
                 Status.LOADING -> view.onLoading()
                 Status.SUCCESS -> view.onSuccess(it.data as T)

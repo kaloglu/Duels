@@ -1,9 +1,9 @@
 package com.kaloglu.duels.presentation.interfaces.base.mvp
 
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.LifecycleObserver
-import android.arch.lifecycle.OnLifecycleEvent
-import android.support.annotation.UiThread
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
+import androidx.annotation.UiThread
 
 interface BasePresenter<M, out V : BaseView<M>> : LifecycleObserver {
     val requestCodeForSignIn: Int

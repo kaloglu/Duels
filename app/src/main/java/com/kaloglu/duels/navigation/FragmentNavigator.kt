@@ -1,6 +1,6 @@
 package com.kaloglu.duels.navigation
 
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.FragmentManager
 import com.kaloglu.duels.R
 import com.kaloglu.duels.injection.scopes.PerActivity
 import com.kaloglu.duels.mobileui.base.BaseFragment
