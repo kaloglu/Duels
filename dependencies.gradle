@@ -49,6 +49,8 @@ def versions = [
 
         firebaseAuth        : '4.2.1',
 
+        ahBottomNavigation  : '2.3.3',
+
 ]
 
 def pluginLibs = [
@@ -107,10 +109,15 @@ def libraries = [
 
         javaxInject        : "javax.inject:javax.inject:$versions.javaxInject",
 
+        //Timber
         timber             : "com.jakewharton.timber:timber:$versions.timber",
 
+        //Firebase
         firebaseCore       : "com.google.firebase:firebase-core:$versions.firebase",
         firebaseAuth       : "com.firebaseui:firebase-ui-auth:$versions.firebaseAuth",
+
+        //BottomNavigation
+        ahBottomNavigation : "com.aurelhubert:ahbottomnavigation:$versions.ahBottomNavigation",
 
 ]
 ext.appDependencies = [
@@ -143,9 +150,10 @@ ext.appDependencies = [
         addDependency('implementation', libraries.firebaseCore),
         addDependency('implementation', libraries.firebaseAuth),
 
+        addDependency('implementation', libraries.ahBottomNavigation),
+
         //TODO: kullanılmazsa silinecek
         addDependency('implementation', libraries.javaxInject),
-
 
         //test debug for room
         addDependency('debugImplementation', 'com.amitshekhar.android:debug-db:1.0.4'),
