@@ -24,22 +24,9 @@
     <com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="match_parent"
             app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
-    <LinearLayout
-        android:id="@+id/emptyText"
-        android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_height="match_parent">
-
-        <Button
-            android:id="@+id/buttonSignOut"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/sign_out" />
-    </LinearLayout>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"
@@ -47,7 +34,6 @@
             android:layout_gravity="right|bottom"
             android:layout_marginBottom="88dp"
             android:src="@drawable/ic_add"
-            android:visibility="gone"
             app:useCompatPadding="true"/>
 
 	<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
