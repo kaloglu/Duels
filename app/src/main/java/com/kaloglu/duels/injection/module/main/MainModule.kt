@@ -1,7 +1,7 @@
 package com.kaloglu.duels.injection.module.main
 
-import com.kaloglu.duels.data.LocalStorage
 import com.kaloglu.duels.injection.module.ActivityModule
+import com.kaloglu.duels.injection.module.demo.DemoModule
 import com.kaloglu.duels.injection.scopes.PerActivity
 import com.kaloglu.duels.injection.scopes.PerFragment
 import com.kaloglu.duels.mobileui.base.BaseActivity
@@ -24,11 +24,8 @@ abstract class MainModule {
         @JvmStatic
         @Provides
         @PerActivity
-        fun presenter(
-                localStorage: LocalStorage,
-                activityNavigator: ActivityNavigator
-        ): MainContract.Presenter =
-                MainPresenter(localStorage, activityNavigator)
+        fun presenter(activityNavigator: ActivityNavigator): MainContract.Presenter =
+                MainPresenter(activityNavigator)
 
     }
 
@@ -37,7 +34,7 @@ abstract class MainModule {
     abstract fun main(activity: MainActivity): BaseActivity
 
     @PerFragment
-    @ContributesAndroidInjector()
+    @ContributesAndroidInjector(modules = [DemoModule::class])
     abstract fun contributesDemoFragment(): DemoFragment
 
 }

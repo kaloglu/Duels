@@ -4,9 +4,18 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
+    <LinearLayout
+            android:id="@+id/emptyText"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:gravity="center"
+            android:layout_height="match_parent">
+
+        <Button
+                android:id="@+id/buttonSignOut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/sign_out" />
+    </LinearLayout>
 
 </FrameLayout>

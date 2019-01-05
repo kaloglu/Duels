@@ -10,7 +10,6 @@ import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification
-import com.firebase.ui.auth.AuthUI
 import com.kaloglu.duels.R
 import com.kaloglu.duels.adapter.main.ViewPagerAdapter
 import com.kaloglu.duels.mobileui.base.BaseFragment
@@ -51,12 +50,6 @@ class MainActivity : BaseMvpActivity<Any, MainContract.Presenter>(), MainContrac
 //        setSupportActionBar(toolbar)
 //        toolbar.title = title
 //
-        buttonSignOut.setOnClickListener {
-            AuthUI.getInstance()
-                    .signOut(this)
-                    .addOnCompleteListener(presenter.signOut())
-        }
-
         adapter = ViewPagerAdapter(supportFragmentManager)
         view_pager.offscreenPageLimit = 3
         view_pager.adapter = adapter
@@ -115,7 +108,7 @@ class MainActivity : BaseMvpActivity<Any, MainContract.Presenter>(), MainContrac
             currentFragment = adapter.currentFragment
             currentFragment!!.willBeDisplayed()
 
-            if (position == 1) {
+            if (position == 0) {
 
                 fab.show()
                 fab.alpha = 0f
