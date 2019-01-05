@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                     xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                     xmlns:tools="http://schemas.android.com/tools"
-                                                     android:layout_width="match_parent"
-                                                     android:layout_height="match_parent"
-                                                     android:fitsSystemWindows="true"
-                                                     tools:context=".mobileui.main.MainActivity">
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".mobileui.main.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
@@ -21,36 +21,31 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <LinearLayout
-        android:id="@+id/emptyText"
-        android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_height="match_parent">
+    <com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
-        <Button
-            android:id="@+id/buttonSignOut"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/sign_out" />
-    </LinearLayout>
+            android:layout_gravity="right|bottom"
+            android:layout_marginBottom="88dp"
+            android:src="@drawable/ic_add"
+            app:useCompatPadding="true"/>
 
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-    </FrameLayout>
-	
 	<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
 				 android:id="@+id/activity_fragment_container"
 				 android:layout_width="match_parent"
 				 android:layout_height="match_parent" />
-	
-	<com.google.android.material.bottomnavigation.BottomNavigationView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content" />
+
+    <com.aurelhubert.ahbottomnavigation.AHBottomNavigation
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:selectedBackgroundVisible="false"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

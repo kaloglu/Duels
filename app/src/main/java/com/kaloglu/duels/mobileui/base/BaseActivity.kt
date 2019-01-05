@@ -1,12 +1,11 @@
 package com.kaloglu.duels.mobileui.base
 
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerAppCompatActivity
 
 abstract class BaseActivity : DaggerAppCompatActivity() {
-
-    //TODO: will be add @inject FragmentNavigator
 
     /**
      * Method to get activity's UI content frame layout resource id.
@@ -22,6 +21,8 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
      * @return The activity's content's resource id
      */
     protected abstract val baseFrameLayoutId: Int
+
+    protected abstract val snackbarLayoutId: Int
 
     /**
      * Get initial fragment instance.
@@ -64,9 +65,11 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
 
     fun showSnackbar(message: String) =
             Snackbar.make(
-                    findViewById(baseFrameLayoutId),
+                    findViewById(snackbarLayoutId),
                     message,
                     Snackbar.LENGTH_LONG
             ).show()
 
+    fun fetchColor(color: Int) =
+            ContextCompat.getColor(this, color)
 }

@@ -10,4 +10,7 @@
     <string name="anonymous_upgrade_merge_error">Şifresiz giriş işleminde sorun oldu.</string>
     <string name="email_mismatch_error">Bu mail ile eşleşen bi rkullanıcı bulunamadı.</string>
     <string name="sign_out">Çıkış</string>
+    <string name="nav_public">public</string>
+    <string name="nav_friends">friends</string>
+    <string name="nav_profile">profile</string>
 </resources>
