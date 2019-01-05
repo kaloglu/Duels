@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+            android:title="@string/nav_public"
+            android:icon="@drawable/ic_public" android:layout_height="wrap_content"/>
+    <item
+            android:title="@string/nav_friends"
+            android:icon="@drawable/ic_friends"/>
+    <item
+            android:title="@string/nav_profile"
+            android:icon="@drawable/ic_profile"/>
+</menu>

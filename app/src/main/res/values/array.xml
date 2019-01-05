@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="tab_colors">
+        <item name="tab_1">@color/pub</item>
+        <item name="tab_2">@color/friends</item>
+        <item name="tab_3">@color/profile</item>
+    </array>
+</resources>

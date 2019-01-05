@@ -12,6 +12,8 @@ import javax.inject.Inject
 //}
 abstract class BaseMvpActivity<M, P : BasePresenter<M, BaseView<M>>> : BaseActivity(), BaseView<M> {
 
+    protected var badgeVisible: Int = -1
+
     @Inject
     lateinit var presenter: P
 
@@ -32,6 +34,9 @@ abstract class BaseMvpActivity<M, P : BasePresenter<M, BaseView<M>>> : BaseActiv
 
     override val baseFrameLayoutId: Int
     get() = TODO("if use a contained")
+
+    override val snackbarLayoutId
+        get() = baseFrameLayoutId
 
     // Override this on child activities if needed.
     protected open fun onPresenterAttached() = Unit
