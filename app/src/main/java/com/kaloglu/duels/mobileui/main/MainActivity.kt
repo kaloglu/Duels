@@ -1,21 +1,21 @@
 package com.kaloglu.duels.mobileui.main
 
-import android.animation.Animator
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Handler
 import android.view.animation.OvershootInterpolator
-import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kaloglu.duels.R
 import com.kaloglu.duels.adapter.main.ViewPagerAdapter
 import com.kaloglu.duels.mobileui.base.BaseFragment
 import com.kaloglu.duels.mobileui.base.mvp.BaseMvpActivity
 import com.kaloglu.duels.mobileui.demo.DemoFragment
 import com.kaloglu.duels.presentation.interfaces.main.MainContract
+import com.kaloglu.duels.utils.with
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.random.Random
 
@@ -58,6 +58,10 @@ class MainActivity : BaseMvpActivity<Any, MainContract.Presenter>(), MainContrac
 
         createBottomNavigation()
 
+        fab.setOnClickListener {
+            showSnackbar("snackbar test")
+        }
+
     }
 
     private fun createBottomNavigation() {
@@ -76,7 +80,6 @@ class MainActivity : BaseMvpActivity<Any, MainContract.Presenter>(), MainContrac
         bottom_navigation.isBehaviorTranslationEnabled = true
 
         bottom_navigation.manageFloatingActionButtonBehavior(fab)
-
 
         bottom_navigation.setOnTabSelectedListener(AHBottomNavigation.OnTabSelectedListener { position, wasSelected ->
             if (currentFragment == null) {
@@ -108,53 +111,27 @@ class MainActivity : BaseMvpActivity<Any, MainContract.Presenter>(), MainContrac
             currentFragment = adapter.currentFragment
             currentFragment!!.willBeDisplayed()
 
-            if (position == 0) {
-
-                fab.show()
-                fab.alpha = 0f
-                fab.scaleX = 0f
-                fab.scaleY = 0f
-                fab.animate()
-                        .alpha(1f)
-                        .scaleX(1f)
-                        .scaleY(1f)
-                        .setDuration(300)
-                        .setInterpolator(OvershootInterpolator())
-                        .setListener(object : Animator.AnimatorListener {
-                            override fun onAnimationStart(animation: Animator) = Unit
-
-                            override fun onAnimationEnd(animation: Animator) =
-                                    fab.animate()
-                                            .setInterpolator(LinearOutSlowInInterpolator())
-                                            .start()
-
-                            override fun onAnimationCancel(animation: Animator) = Unit
-
-                            override fun onAnimationRepeat(animation: Animator) = Unit
-                        })
-                        .start()
-
-            } else if (fab.isShown) {
-                fab.animate()
-                        .alpha(0f)
-                        .scaleX(0f)
-                        .scaleY(0f)
-                        .setDuration(300)
-                        .setInterpolator(LinearOutSlowInInterpolator())
-                        .setListener(object : Animator.AnimatorListener {
-                            override fun onAnimationStart(animation: Animator) = Unit
-
-                            override fun onAnimationEnd(animation: Animator) = fab.hide()
-
-                            override fun onAnimationCancel(animation: Animator) = fab.hide()
-
-                            override fun onAnimationRepeat(animation: Animator) = Unit
-                        })
-                        .start()
-            }
+            manageFabAnimation(position)
 
             true
         })
+    }
+
+    private fun manageFabAnimation(position: Int) {
+        fab.with(
+                predicate = (position == 0),
+                value = 1f,
+                interpolator = OvershootInterpolator(),
+                onStart = FloatingActionButton::show,
+                onEnd = { it.with() }
+        )
+
+        fab.with(
+                predicate = (position != 0 && fab.isShown),
+                value = 0f,
+                onEnd = FloatingActionButton::hide,
+                onCancel = FloatingActionButton::hide
+        )
     }
 
     private fun addBadge(witch: Int, badgeCount: String) {
@@ -175,5 +152,4 @@ class MainActivity : BaseMvpActivity<Any, MainContract.Presenter>(), MainContrac
         @JvmStatic
         fun newIntent(context: Context): Intent = Intent(context, MainActivity::class.java)
     }
-
 }
