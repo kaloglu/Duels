@@ -16,9 +16,7 @@
 
 package com.kaloglu.duels.viewobjects
 
-import com.kaloglu.duels.viewobjects.Status.ERROR
-import com.kaloglu.duels.viewobjects.Status.LOADING
-import com.kaloglu.duels.viewobjects.Status.SUCCESS
+import com.kaloglu.duels.viewobjects.Status.*
 
 /**
  * A generic class that holds a value with its loading status.

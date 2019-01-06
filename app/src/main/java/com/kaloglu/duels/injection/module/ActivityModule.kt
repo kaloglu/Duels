@@ -2,8 +2,8 @@ package com.kaloglu.duels.injection.module
 
 import android.app.Activity
 import android.content.Context
-import androidx.fragment.app.FragmentManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import com.kaloglu.duels.injection.qualifier.ActivityContext
 import com.kaloglu.duels.injection.scopes.PerActivity
 import com.kaloglu.duels.mobileui.base.BaseActivity

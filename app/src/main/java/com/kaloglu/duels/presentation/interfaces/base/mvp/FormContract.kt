@@ -1,8 +1,8 @@
 package com.kaloglu.duels.presentation.interfaces.base.mvp
 
+import android.view.View
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
-import android.view.View
 
 interface FormContract {
     interface FormView<in T> : BaseView<T> {

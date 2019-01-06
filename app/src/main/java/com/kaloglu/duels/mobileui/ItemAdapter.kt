@@ -1,8 +1,8 @@
 package com.kaloglu.duels.mobileui
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 
 class ItemAdapter<M, VH : ItemAdapter.ItemViewHolder<M>> : RecyclerView.Adapter<VH>() {
 

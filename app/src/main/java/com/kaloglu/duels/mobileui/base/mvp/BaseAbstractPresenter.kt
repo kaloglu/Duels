@@ -1,7 +1,7 @@
 package com.kaloglu.duels.mobileui.base.mvp
 
-import androidx.lifecycle.Lifecycle
 import androidx.annotation.CallSuper
+import androidx.lifecycle.Lifecycle
 import com.kaloglu.duels.navigation.ActivityNavigator
 import com.kaloglu.duels.presentation.interfaces.base.mvp.BasePresenter
 import com.kaloglu.duels.presentation.interfaces.base.mvp.BaseView

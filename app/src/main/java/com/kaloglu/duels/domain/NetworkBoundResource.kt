@@ -16,10 +16,10 @@
 
 package com.kaloglu.duels.domain
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import com.kaloglu.duels.api.RemoteEmptyResponse
 import com.kaloglu.duels.api.RemoteErrorResponse
 import com.kaloglu.duels.api.RemoteResponse
