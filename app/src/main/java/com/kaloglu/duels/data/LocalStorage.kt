@@ -49,6 +49,6 @@ class LocalStorage(context: Context) {
                 else -> preferences[SAMPLE_PARAMETER_KEY] = ""
             }
 
-    fun cleaSample() = setSample(null)
+    fun clearSample() = setSample(null)
 
 }
