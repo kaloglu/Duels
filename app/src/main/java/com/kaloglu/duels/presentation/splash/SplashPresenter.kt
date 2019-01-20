@@ -4,12 +4,14 @@ import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.FirebaseUiException
 import com.google.firebase.auth.FirebaseAuth
 import com.kaloglu.duels.R
+import com.kaloglu.duels.injection.scopes.PerActivity
 import com.kaloglu.duels.mobileui.base.mvp.BaseAbstractPresenter
 import com.kaloglu.duels.navigation.ActivityNavigator
 import com.kaloglu.duels.presentation.interfaces.splash.SplashContract
 import com.kaloglu.duels.viewobjects.CachedSample
 import javax.inject.Inject
 
+@PerActivity
 class SplashPresenter @Inject constructor(
         private val firebaseAuth: FirebaseAuth,
         override val activityNavigator: ActivityNavigator
