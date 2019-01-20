@@ -5,8 +5,8 @@ import com.kaloglu.duels.navigation.ActivityNavigator
 import com.kaloglu.duels.presentation.interfaces.main.MainContract
 import javax.inject.Inject
 
-class MainPresenter @Inject constructor(activityNavigator: ActivityNavigator)
-    : BaseAbstractPresenter<Any, MainContract.View<Any>>(activityNavigator), MainContract.Presenter {
+class MainPresenter @Inject constructor(override val activityNavigator: ActivityNavigator)
+    : BaseAbstractPresenter<Any, MainContract.View<Any>>(), MainContract.Presenter {
 
     override fun getNextActivity() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

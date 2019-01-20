@@ -12,7 +12,7 @@ import java.util.*
 import javax.inject.Inject
 
 @PerActivity
-class ActivityNavigator @Inject constructor(private val activity: Activity) {
+class ActivityNavigator @Inject constructor(val activity: Activity) {
 
     fun finishCurrentActivity() =
             NavigationCreator(activity).finishThis()

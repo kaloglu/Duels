@@ -12,11 +12,11 @@ import javax.inject.Inject
 
 class SplashPresenter @Inject constructor(
         private val firebaseAuth: FirebaseAuth,
-        activityNavigator: ActivityNavigator
-) : BaseAbstractPresenter<CachedSample, SplashContract.View<CachedSample>>(activityNavigator), SplashContract.Presenter {
+        override val activityNavigator: ActivityNavigator
+) : BaseAbstractPresenter<CachedSample, SplashContract.View<CachedSample>>(), SplashContract.Presenter {
 
     override fun checkAuth() =
-            when  {
+            when {
                 firebaseAuth.currentUser == null -> getSignInActivity()
                 else -> getNextActivity()
             }

@@ -17,12 +17,15 @@ import com.kaloglu.duels.mobileui.demo.DemoFragment
 import com.kaloglu.duels.presentation.interfaces.main.MainContract
 import com.kaloglu.duels.utils.with
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 import kotlin.random.Random
 
 
 class MainActivity : BaseMvpActivity<Any, MainContract.Presenter>(), MainContract.View<Any> {
 
-    private lateinit var adapter: ViewPagerAdapter
+    @Inject
+    lateinit var adapter: ViewPagerAdapter
+
     private var currentFragment: DemoFragment? = null
 
     override fun onLoading() {
@@ -50,7 +53,6 @@ class MainActivity : BaseMvpActivity<Any, MainContract.Presenter>(), MainContrac
 //        setSupportActionBar(toolbar)
 //        toolbar.title = title
 //
-        adapter = ViewPagerAdapter(supportFragmentManager)
         view_pager.offscreenPageLimit = 3
         view_pager.adapter = adapter
 

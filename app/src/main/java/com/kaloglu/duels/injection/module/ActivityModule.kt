@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager
 import com.kaloglu.duels.injection.qualifier.ActivityContext
 import com.kaloglu.duels.injection.scopes.PerActivity
 import com.kaloglu.duels.mobileui.base.BaseActivity
+import com.kaloglu.duels.navigation.ActivityNavigator
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -20,7 +21,7 @@ abstract class ActivityModule {
         @JvmStatic
         @Provides
         @PerActivity
-        fun provideFragmentManager(activity: AppCompatActivity): FragmentManager =
+        fun fragmentManager(activity: AppCompatActivity): FragmentManager =
                 activity.supportFragmentManager
 
     }
