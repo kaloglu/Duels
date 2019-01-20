@@ -2,6 +2,7 @@ package com.kaloglu.duels.injection
 
 import android.app.Application
 import com.kaloglu.duels.DuelsApp
+import com.kaloglu.duels.injection.firestore.FirestoreModule
 import com.kaloglu.duels.injection.module.ActivityBindingModule
 import com.kaloglu.duels.injection.module.ApplicationModule
 import com.kaloglu.duels.injection.module.PreferencesModule
@@ -22,7 +23,8 @@ import dagger.android.support.AndroidSupportInjectionModule
     ActivityBindingModule::class,
     DataModule::class,
     CacheModule::class,
-    RemoteModule::class
+    RemoteModule::class,
+    FirestoreModule::class
 ])
 interface ApplicationComponent : AndroidInjector<DuelsApp> {
 
