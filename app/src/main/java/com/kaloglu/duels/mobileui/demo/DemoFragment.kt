@@ -10,7 +10,7 @@ import com.kaloglu.duels.presentation.interfaces.demo.DemoContract
 import kotlinx.android.synthetic.main.fragment_demo.*
 import javax.inject.Inject
 
-class DemoFragment @Inject constructor() : BaseMvpFragment<Any, DemoContract.Presenter>(), DemoContract.View<Any> {
+class DemoFragment : BaseMvpFragment<Any, DemoContract.Presenter>(), DemoContract.View<Any> {
 
     override fun showSnackbar(messageId: Int) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -55,29 +55,6 @@ class DemoFragment @Inject constructor() : BaseMvpFragment<Any, DemoContract.Pre
             fragment.arguments = b
             return fragment
         }
-    }
-
-    /**
-     * Refresh
-     */
-    fun refresh() {
-    }
-
-    /**
-     * Called when a fragment will be displayed
-     */
-    fun willBeDisplayed() {
-        // Do what you want here, for example animate the content
-        val fadeIn = AnimationUtils.loadAnimation(activity, R.anim.fade_in)
-        fragment_container.startAnimation(fadeIn)
-    }
-
-    /**
-     * Called when a fragment will be hidden
-     */
-    fun willBeHidden() {
-        val fadeOut = AnimationUtils.loadAnimation(activity, R.anim.fade_out)
-        fragment_container.startAnimation(fadeOut)
     }
 
 }

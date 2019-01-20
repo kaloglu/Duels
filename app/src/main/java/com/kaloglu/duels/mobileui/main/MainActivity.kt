@@ -11,9 +11,7 @@ import com.aurelhubert.ahbottomnavigation.notification.AHNotification
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kaloglu.duels.R
 import com.kaloglu.duels.adapter.main.ViewPagerAdapter
-import com.kaloglu.duels.mobileui.base.BaseFragment
 import com.kaloglu.duels.mobileui.base.mvp.BaseMvpActivity
-import com.kaloglu.duels.mobileui.demo.DemoFragment
 import com.kaloglu.duels.presentation.interfaces.main.MainContract
 import com.kaloglu.duels.utils.with
 import kotlinx.android.synthetic.main.activity_main.*
@@ -25,8 +23,6 @@ class MainActivity : BaseMvpActivity<Any, MainContract.Presenter>(), MainContrac
 
     @Inject
     lateinit var adapter: ViewPagerAdapter
-
-    private var currentFragment: DemoFragment? = null
 
     override fun onLoading() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -45,9 +41,6 @@ class MainActivity : BaseMvpActivity<Any, MainContract.Presenter>(), MainContrac
     override val baseFrameLayoutId = -1
 
     override val snackbarLayoutId = R.id.bottom_navigation
-
-    //TODO: add a fragment for initial if you need
-    override val containedFragment: BaseFragment? = null
 
     override fun initUserInterface() {
 //        setSupportActionBar(toolbar)
@@ -87,31 +80,34 @@ class MainActivity : BaseMvpActivity<Any, MainContract.Presenter>(), MainContrac
             if (currentFragment == null) {
                 currentFragment = adapter.currentFragment
             }
+
             if (position == badgeVisible)
                 bottom_navigation.setNotification(AHNotification(), badgeVisible)
-            else {
-                //Dummy
-                Handler().postDelayed({
-                    if (!wasSelected)
-                        addBadge(Random.nextInt(2), (Random.nextInt(9) + 1).toString())
+//            else {
+//                //Dummy
+//                Handler().postDelayed({
+//                    if (!wasSelected)
+//                        addBadge(Random.nextInt(2), (Random.nextInt(9) + 1).toString())
+//
+//                }, 2000)
+//            }
 
-                }, 2000)
-            }
             if (wasSelected) {
                 currentFragment!!.refresh()
                 return@OnTabSelectedListener true
             }
 
-            currentFragment?.willBeHidden()
+            currentFragment?.exitAnimation()
 
             view_pager.setCurrentItem(position, false)
 
             if (currentFragment == null) {
                 return@OnTabSelectedListener true
             }
-            addBadge(Random.nextInt(2), (Random.nextInt(9) + 1).toString())
+
+//            addBadge(Random.nextInt(2), (Random.nextInt(9) + 1).toString())
             currentFragment = adapter.currentFragment
-            currentFragment!!.willBeDisplayed()
+            currentFragment!!.enterAnimation()
 
             manageFabAnimation(position)
 

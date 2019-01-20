@@ -30,6 +30,7 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
      * @return Fragment
      */
     protected abstract val containedFragment: BaseFragment?
+    protected abstract var currentFragment: BaseFragment?
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

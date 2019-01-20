@@ -24,6 +24,10 @@ abstract class BaseMvpFragment<M, P : BasePresenter<M, BaseView<M>>> : BaseFragm
         super.onDestroyView()
     }
 
+    override fun refresh() = Unit
+    override fun enterAnimation() = Unit
+    override fun exitAnimation() = Unit
+
     // Override this on child fragments if needed.
     protected open fun onPresenterAttached() = Unit
 
