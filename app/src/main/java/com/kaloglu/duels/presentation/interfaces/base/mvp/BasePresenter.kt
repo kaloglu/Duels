@@ -65,4 +65,16 @@ interface BasePresenter<M, out V : BaseView<M>> : LifecycleObserver {
 
     @UiThread
     fun getSignInActivity()
+
+    @UiThread
+    fun loadingUIState()
+
+    @UiThread
+    fun emptyUIState()
+
+    @UiThread
+    fun contentUIState()
+
+    @UiThread
+    fun errorUIState()
 }
