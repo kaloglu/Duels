@@ -18,7 +18,7 @@ class DemoPresenter @Inject constructor(
 
     override fun signOut(): OnCompleteListener<Void> =
             OnCompleteListener {
-                localStorage.cleaSample()
+                localStorage.clearSample()
                 activityNavigator
                         .toSplashScreen()
                         .finishThis()
