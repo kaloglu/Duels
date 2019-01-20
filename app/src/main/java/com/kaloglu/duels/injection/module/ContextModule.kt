@@ -7,7 +7,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class PreferencesModule {
+class ContextModule {
     @Module
     companion object {
 
@@ -16,5 +16,6 @@ class PreferencesModule {
         @Provides
         fun providesLocalStorage(application: Application): LocalStorage =
                 LocalStorage(application)
+
     }
 }

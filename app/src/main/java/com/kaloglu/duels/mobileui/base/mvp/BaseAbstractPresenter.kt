@@ -8,9 +8,9 @@ import com.kaloglu.duels.presentation.interfaces.base.mvp.BaseView
 import java.lang.ref.WeakReference
 
 abstract class BaseAbstractPresenter<M, V : BaseView<M>>(
-        val activityNavigator: ActivityNavigator
 ) : BasePresenter<M, V> {
 
+    abstract val activityNavigator: ActivityNavigator
     private var viewRef: WeakReference<V>? = null
     private var viewLifecycleRef: WeakReference<Lifecycle?>? = null
 

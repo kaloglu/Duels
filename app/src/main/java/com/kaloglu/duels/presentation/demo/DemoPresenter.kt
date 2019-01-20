@@ -9,8 +9,8 @@ import javax.inject.Inject
 
 class DemoPresenter @Inject constructor(
         private val localStorage: LocalStorage,
-        activityNavigator: ActivityNavigator
-) : BaseAbstractPresenter<Any, DemoContract.View<Any>>(activityNavigator), DemoContract.Presenter {
+        override val activityNavigator: ActivityNavigator
+) : BaseAbstractPresenter<Any, DemoContract.View<Any>>(), DemoContract.Presenter {
 
     override fun getNextActivity() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

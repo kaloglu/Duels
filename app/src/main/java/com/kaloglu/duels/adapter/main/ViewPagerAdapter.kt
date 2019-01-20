@@ -6,11 +6,12 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.kaloglu.duels.mobileui.base.BaseFragment
 import com.kaloglu.duels.mobileui.demo.DemoFragment
 import java.util.*
+import javax.inject.Inject
 
 /**
  *
  */
-class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+class ViewPagerAdapter @Inject constructor(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
 
     private val fragments = ArrayList<DemoFragment>()
     /**

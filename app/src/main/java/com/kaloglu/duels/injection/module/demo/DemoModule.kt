@@ -7,6 +7,7 @@ import com.kaloglu.duels.presentation.demo.DemoPresenter
 import com.kaloglu.duels.presentation.interfaces.demo.DemoContract
 import dagger.Module
 import dagger.Provides
+
 @Module()
 abstract class DemoModule {
 
