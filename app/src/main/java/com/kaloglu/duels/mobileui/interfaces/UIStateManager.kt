@@ -23,10 +23,11 @@ class UIStateManager @Inject constructor(val context: Context) {
     private var errorLayout: Int? = null
 
     fun initStates(states: UIStates) {
-        sceneLayout = states.sceneLayout
+        sceneLayout = states.getSceneLayout()
         loadingLayout = states.loadingLayout
         emptyLayout = states.emptyLayout
         contentLayout = states.contentLayout
+        errorLayout = states.errorLayout
 
         if (hasLoadingUIState())
             loadingSet.clone(context, loadingLayout!!)
@@ -48,13 +49,13 @@ class UIStateManager @Inject constructor(val context: Context) {
     private fun hasErrorUIState() = errorLayout != null
 
     interface UIStates {
-        val sceneLayout: ConstraintLayout
         val loadingLayout: Int?
         val emptyLayout: Int?
         val contentLayout: Int?
         val errorLayout: Int?
 
-        fun getContext(): Context
+        fun getContext(): Context?
+        fun getSceneLayout(): ConstraintLayout
     }
 
     fun loadingUIState() {

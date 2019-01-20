@@ -32,6 +32,9 @@ abstract class BaseMvpActivity<M, P : BasePresenter<M, BaseView<M>>> : BaseActiv
     //TODO: override for initial if you need
     override val containedFragment: BaseFragment? = null
 
+    //TODO: override for pager current fragment if you need
+    override var currentFragment: BaseFragment? = null
+
     override val baseFrameLayoutId: Int
     get() = TODO("if use a contained")
 

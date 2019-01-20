@@ -43,4 +43,19 @@ abstract class BaseFragment : DaggerFragment() {
      */
     protected abstract fun initUserInterface(rootView: View)
 
+    /**
+     * Refresh when call again
+     */
+    abstract fun refresh()
+
+    /**
+     * Called when a fragment will be animate displayed
+     */
+    abstract fun enterAnimation()
+
+    /**
+     * Called when a fragment will be animate hidden
+     */
+    abstract fun exitAnimation()
+
 }

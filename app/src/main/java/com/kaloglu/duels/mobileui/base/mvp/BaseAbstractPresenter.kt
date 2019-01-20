@@ -25,7 +25,7 @@ abstract class BaseAbstractPresenter<M, V : BaseView<M>> : BasePresenter<M, V> {
         viewLifecycleRef?.get()?.addObserver(this)
 
         if (view is UIStateManager.UIStates) {
-            uiStateManager = UIStateManager(view.getContext())
+            uiStateManager = UIStateManager(view.getContext()!!)
             uiStateManager.initStates(view)
         }
     }

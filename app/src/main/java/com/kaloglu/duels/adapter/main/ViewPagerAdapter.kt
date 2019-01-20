@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.kaloglu.duels.mobileui.base.BaseFragment
 import com.kaloglu.duels.mobileui.demo.DemoFragment
+import com.kaloglu.duels.mobileui.tournaments.TournamentsFragment
 import java.util.*
 import javax.inject.Inject
 
@@ -13,16 +14,16 @@ import javax.inject.Inject
  */
 class ViewPagerAdapter @Inject constructor(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
 
-    private val fragments = ArrayList<DemoFragment>()
+    private val fragments = ArrayList<BaseFragment>()
     /**
      * Get the current fragment
      */
-    var currentFragment: DemoFragment? = null
+    var currentFragment: BaseFragment? = null
 
     init {
 
         fragments.clear()
-        fragments.add(DemoFragment.newInstance(0))
+        fragments.add(TournamentsFragment.newInstance())
         fragments.add(DemoFragment.newInstance(1))
         fragments.add(DemoFragment.newInstance(2))
     }
@@ -37,7 +38,7 @@ class ViewPagerAdapter @Inject constructor(fragmentManager: FragmentManager) : F
 
     override fun setPrimaryItem(container: ViewGroup, position: Int, `object`: Any) {
         if (currentFragment !== `object`) {
-            currentFragment = `object` as DemoFragment
+            currentFragment = `object` as BaseFragment
         }
         super.setPrimaryItem(container, position, `object`)
     }
