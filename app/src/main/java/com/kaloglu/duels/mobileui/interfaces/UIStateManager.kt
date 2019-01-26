@@ -1,92 +1,69 @@
 package com.kaloglu.duels.mobileui.interfaces
 
+import android.app.Activity
 import android.content.Context
+import android.view.View
+import androidx.annotation.UiThread
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.transition.TransitionManager
-import com.kaloglu.duels.injection.scopes.PerActivity
+import com.kaloglu.duels.injection.scopes.PerFragment
 import javax.inject.Inject
 
-@PerActivity
-class UIStateManager @Inject constructor(val context: Context) {
+@PerFragment
+class UIStateManager @Inject constructor(val context: Activity) {
 
-    private val loadingSet = ConstraintSet()
-    private val emptySet = ConstraintSet()
-    private val contentSet = ConstraintSet()
-    private val errorSet = ConstraintSet()
+    interface UIStatesView {
+        fun getLoadingContainer(): View?
+        fun getEmptyContainer(): View?
+        fun getContentContainer(): View?
+        fun getErrorContainer(): View?
 
-    private lateinit var sceneLayout: ConstraintLayout
-
-    private var loadingLayout: Int? = null
-    private var emptyLayout: Int? = null
-    private var contentLayout: Int? = null
-    private var errorLayout: Int? = null
-
-    fun initStates(states: UIStates) {
-        sceneLayout = states.getSceneLayout()
-        loadingLayout = states.loadingLayout
-        emptyLayout = states.emptyLayout
-        contentLayout = states.contentLayout
-        errorLayout = states.errorLayout
-
-        if (hasLoadingUIState())
-            loadingSet.clone(context, loadingLayout!!)
-
-        if (hasEmptyUIState())
-            emptySet.clone(context, emptyLayout!!)
-
-        if (hasContentUIState())
-            contentSet.clone(context, contentLayout!!)
-
-        if (hasErrorUIState())
-            contentSet.clone(context, errorLayout!!)
-
+        fun getSceneLayout(): ConstraintLayout?
     }
 
-    private fun hasLoadingUIState() = loadingLayout != null
-    private fun hasEmptyUIState() = emptyLayout != null
-    private fun hasContentUIState() = contentLayout != null
-    private fun hasErrorUIState() = errorLayout != null
+    interface UIStatesPresenter {
+        @UiThread
+        fun loadingUIState(): Unit?
 
-    interface UIStates {
-        val loadingLayout: Int?
-        val emptyLayout: Int?
-        val contentLayout: Int?
-        val errorLayout: Int?
+        @UiThread
+        fun emptyUIState(): Unit?
 
-        fun getContext(): Context?
-        fun getSceneLayout(): ConstraintLayout
+        @UiThread
+        fun contentUIState(): Unit?
+
+        @UiThread
+        fun errorUIState(): Unit?
     }
 
-    fun loadingUIState() {
-        if (!hasLoadingUIState()) return
+    private lateinit var statesView: UIStatesView
 
-        beginDelayed()
-        loadingSet.applyTo(sceneLayout)
+    fun initStates(statesView: UIStatesView) {
+        this.statesView = statesView
     }
 
-
-    fun emptyUIState() {
-        if (!hasEmptyUIState()) return
-
-        beginDelayed()
-        emptySet.applyTo(sceneLayout)
+    private fun showUIState(view: View) {
+        statesView.getSceneLayout()?.run {
+            beginDelayed(this)
+            hideAllState()
+            view.visibility = View.VISIBLE
+        }
     }
 
-    fun contentUIState() {
-        if (!hasContentUIState()) return
-
-        beginDelayed()
-        contentSet.applyTo(sceneLayout)
+    private fun hideAllState() {
+        statesView.getLoadingContainer()?.visibility = View.GONE
+        statesView.getEmptyContainer()?.visibility = View.GONE
+        statesView.getContentContainer()?.visibility = View.GONE
+        statesView.getErrorContainer()?.visibility = View.GONE
     }
 
-    fun errorUIState() {
-        if (!hasErrorUIState()) return
+    fun loadingUIState() = statesView.getLoadingContainer()?.run(::showUIState)
 
-        beginDelayed()
-        errorSet.applyTo(sceneLayout)
-    }
+    fun emptyUIState() = statesView.getEmptyContainer()?.run(::showUIState)
 
-    private fun beginDelayed() = TransitionManager.beginDelayedTransition(sceneLayout)
+    fun contentUIState() = statesView.getContentContainer()?.run(::showUIState)
+
+    fun errorUIState() = statesView.getErrorContainer()?.run(::showUIState)
+
+    private fun beginDelayed(constraintLayout: ConstraintLayout) = TransitionManager.beginDelayedTransition(constraintLayout)
 
 }

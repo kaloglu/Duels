@@ -10,6 +10,7 @@ import javax.inject.Inject
 
 class TournamentsPresenter @Inject constructor(
         private val localStorage: LocalStorage,
+        override var uiStateManager: UIStateManager?,
         override val activityNavigator: ActivityNavigator
 ) : BaseAbstractPresenter<Any, TournamentsContract.View<Any>>(), TournamentsContract.Presenter {
 
@@ -25,4 +26,13 @@ class TournamentsPresenter @Inject constructor(
                         .finishThis()
                         .navigate()
             }
+
+    override fun loadingUIState() = uiStateManager?.loadingUIState()
+
+    override fun emptyUIState() = uiStateManager?.emptyUIState()
+
+    override fun contentUIState() = uiStateManager?.contentUIState()
+
+    override fun errorUIState() = uiStateManager?.errorUIState()
+
 }

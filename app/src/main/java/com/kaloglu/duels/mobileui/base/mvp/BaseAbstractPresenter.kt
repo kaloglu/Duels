@@ -10,8 +10,8 @@ import java.lang.ref.WeakReference
 
 abstract class BaseAbstractPresenter<M, V : BaseView<M>> : BasePresenter<M, V> {
 
-    abstract val activityNavigator: ActivityNavigator
-    open lateinit var uiStateManager: UIStateManager
+    abstract val activityNavigator: ActivityNavigator?
+    open var uiStateManager: UIStateManager? = null
 
     private var viewRef: WeakReference<V>? = null
     private var viewLifecycleRef: WeakReference<Lifecycle?>? = null
@@ -24,9 +24,8 @@ abstract class BaseAbstractPresenter<M, V : BaseView<M>> : BasePresenter<M, V> {
 
         viewLifecycleRef?.get()?.addObserver(this)
 
-        if (view is UIStateManager.UIStates) {
-            uiStateManager = UIStateManager(view.getContext()!!)
-            uiStateManager.initStates(view)
+        if (view is UIStateManager.UIStatesView) {
+            uiStateManager?.initStates(view)
         }
     }
 
@@ -46,16 +45,8 @@ abstract class BaseAbstractPresenter<M, V : BaseView<M>> : BasePresenter<M, V> {
 
     override fun getSignInActivity() {
         activityNavigator
-                .toSignInActivity(requestCodeForSignIn)
-                .navigate()
+                ?.toSignInActivity(requestCodeForSignIn)
+                ?.navigate()
     }
-
-    override fun loadingUIState() = uiStateManager.loadingUIState()
-
-    override fun emptyUIState() = uiStateManager.emptyUIState()
-
-    override fun contentUIState() = uiStateManager.contentUIState()
-
-    override fun errorUIState() = uiStateManager.errorUIState()
 
 }
