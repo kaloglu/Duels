@@ -7,9 +7,9 @@ import com.kaloglu.duels.presentation.interfaces.base.mvp.BaseView
 
 interface TournamentsContract {
 
-    interface View<M> : BaseView<M>, UIStateManager.UIStates
+    interface View<M> : BaseView<M>, UIStateManager.UIStatesView
 
-    interface Presenter : BasePresenter<Any, View<Any>> {
+    interface Presenter : BasePresenter<Any, View<Any>>, UIStateManager.UIStatesPresenter {
         fun signOut(): OnCompleteListener<Void>
     }
 }

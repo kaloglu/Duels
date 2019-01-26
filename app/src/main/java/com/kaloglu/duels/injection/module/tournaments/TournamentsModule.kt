@@ -2,6 +2,7 @@ package com.kaloglu.duels.injection.module.tournaments
 
 import com.kaloglu.duels.data.LocalStorage
 import com.kaloglu.duels.injection.scopes.PerFragment
+import com.kaloglu.duels.mobileui.interfaces.UIStateManager
 import com.kaloglu.duels.navigation.ActivityNavigator
 import com.kaloglu.duels.presentation.interfaces.tournaments.TournamentsContract
 import com.kaloglu.duels.presentation.tournaments.TournamentsPresenter
@@ -17,8 +18,16 @@ abstract class TournamentsModule {
         @JvmStatic
         @Provides
         @PerFragment
-        fun presenter(localStorage: LocalStorage, activityNavigator: ActivityNavigator): TournamentsContract.Presenter =
-                TournamentsPresenter(localStorage, activityNavigator)
+        fun presenter(
+                localStorage: LocalStorage,
+                uiStateManager: UIStateManager,
+                activityNavigator: ActivityNavigator
+        ): TournamentsContract.Presenter =
+                TournamentsPresenter(
+                        localStorage,
+                        uiStateManager,
+                        activityNavigator
+                )
 
     }
 
