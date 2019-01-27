@@ -16,10 +16,8 @@ import com.kaloglu.duels.presentation.interfaces.main.MainContract
 import com.kaloglu.duels.utils.with
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
-import kotlin.random.Random
 
-
-class MainActivity : BaseMvpActivity<Any, MainContract.Presenter>(), MainContract.View<Any> {
+class MainActivity : BaseMvpActivity<Any, MainContract.Presenter>(), MainContract.View {
 
     @Inject
     lateinit var adapter: ViewPagerAdapter
@@ -28,7 +26,7 @@ class MainActivity : BaseMvpActivity<Any, MainContract.Presenter>(), MainContrac
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun onSuccess(data: Any?) {
+    override fun onSuccess(data: Any) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

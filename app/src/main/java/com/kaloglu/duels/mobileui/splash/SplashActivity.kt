@@ -8,9 +8,8 @@ import com.firebase.ui.auth.IdpResponse
 import com.kaloglu.duels.R
 import com.kaloglu.duels.mobileui.base.mvp.BaseMvpActivity
 import com.kaloglu.duels.presentation.interfaces.splash.SplashContract
-import com.kaloglu.duels.viewobjects.CachedSample
 
-class SplashActivity : BaseMvpActivity<CachedSample, SplashContract.Presenter>(), SplashContract.View<CachedSample> {
+class SplashActivity : BaseMvpActivity<Any, SplashContract.Presenter>(), SplashContract.View {
 
     override val contentResourceId = R.layout.activity_splash
     override val baseFrameLayoutId = R.id.sign_in_container
@@ -19,9 +18,9 @@ class SplashActivity : BaseMvpActivity<CachedSample, SplashContract.Presenter>()
 
     override fun onLoading() = showSnackbar("loading")
 
-    override fun onSuccess(data: CachedSample?) = presenter.getNextActivity()
+    override fun onSuccess(data: Any) = presenter.getNextActivity()
 
-    override fun onError(errorMessage: String?, data: CachedSample?) =
+    override fun onError(errorMessage: String?, data: Any?) =
             showSnackbar("hata: $errorMessage").also {
                 Handler().postDelayed(presenter::getSignInActivity, 1000)
             }
