@@ -3,7 +3,7 @@ package com.kaloglu.duels.data.repository.tournaments
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.kaloglu.duels.data.model.Tournament
-import com.kaloglu.duels.domain.tournaments.FireStoreLiveData
+import com.kaloglu.duels.domain.FireStoreLiveData
 import com.kaloglu.duels.injection.scopes.PerApplication
 import com.kaloglu.duels.data.filters.Filters
 import timber.log.Timber

@@ -1,4 +1,4 @@
-package com.kaloglu.duels.domain.tournaments
+package com.kaloglu.duels.domain
 
 import androidx.lifecycle.LiveData
 import com.google.firebase.firestore.*
@@ -6,7 +6,6 @@ import com.kaloglu.duels.data.model.BaseModel
 import com.kaloglu.duels.presentation.interfaces.base.mvp.BaseView
 import com.kaloglu.duels.viewobjects.Resource
 import com.kaloglu.duels.viewobjects.Status
-
 
 class FireStoreLiveData<T : BaseModel>(
         private val query: Query,
