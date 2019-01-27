@@ -1,18 +1,26 @@
 package com.kaloglu.duels.presentation.tournaments
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.tasks.OnCompleteListener
-import com.kaloglu.duels.data.LocalStorage
+import com.google.firebase.auth.FirebaseAuth
+import com.kaloglu.duels.data.filters.Filters
+import com.kaloglu.duels.data.model.Tournament
+import com.kaloglu.duels.data.repository.tournaments.TournamentsRepository
 import com.kaloglu.duels.mobileui.base.mvp.BaseAbstractPresenter
 import com.kaloglu.duels.mobileui.interfaces.UIStateManager
+import com.kaloglu.duels.mobileui.interfaces.UIStateManager.*
 import com.kaloglu.duels.navigation.ActivityNavigator
 import com.kaloglu.duels.presentation.interfaces.tournaments.TournamentsContract
 import javax.inject.Inject
 
 class TournamentsPresenter @Inject constructor(
-        private val localStorage: LocalStorage,
+        private val repository: TournamentsRepository,
         override var uiStateManager: UIStateManager?,
         override val activityNavigator: ActivityNavigator
-) : BaseAbstractPresenter<Any, TournamentsContract.View<Any>>(), TournamentsContract.Presenter {
+) : BaseAbstractPresenter<List<Tournament>, TournamentsContract.View>(), TournamentsContract.Presenter {
+    private lateinit var isSignedIn: LiveData<Boolean>
+    private val filters = MutableLiveData<Filters>()
 
     override fun getNextActivity() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -20,19 +28,25 @@ class TournamentsPresenter @Inject constructor(
 
     override fun signOut(): OnCompleteListener<Void> =
             OnCompleteListener {
-                localStorage.clearSample()
                 activityNavigator
                         .toSplashScreen()
                         .finishThis()
                         .navigate()
             }
 
-    override fun loadingUIState() = uiStateManager?.loadingUIState()
 
-    override fun emptyUIState() = uiStateManager?.emptyUIState()
+    override fun loadTournaments() {
+        getUIState(UIStateType.LOADING)
+        isSignedIn = object : LiveData<Boolean>() {
+            override fun onActive() {
+                super.onActive()
+                value = FirebaseAuth.getInstance().currentUser != null
+            }
+        }
 
-    override fun contentUIState() = uiStateManager?.contentUIState()
+        repository.getTournaments(null).observe(getView())
+    }
 
-    override fun errorUIState() = uiStateManager?.errorUIState()
+    override fun getUIState(state: UIStateManager.UIStateType) = uiStateManager?.getState(state)
 
 }

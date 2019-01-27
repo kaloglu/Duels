@@ -1,6 +1,6 @@
 package com.kaloglu.duels.injection.module.tournaments
 
-import com.kaloglu.duels.data.LocalStorage
+import com.kaloglu.duels.data.repository.tournaments.TournamentsRepository
 import com.kaloglu.duels.injection.scopes.PerFragment
 import com.kaloglu.duels.mobileui.interfaces.UIStateManager
 import com.kaloglu.duels.navigation.ActivityNavigator
@@ -19,12 +19,12 @@ abstract class TournamentsModule {
         @Provides
         @PerFragment
         fun presenter(
-                localStorage: LocalStorage,
+                repository: TournamentsRepository,
                 uiStateManager: UIStateManager,
                 activityNavigator: ActivityNavigator
         ): TournamentsContract.Presenter =
                 TournamentsPresenter(
-                        localStorage,
+                        repository,
                         uiStateManager,
                         activityNavigator
                 )
