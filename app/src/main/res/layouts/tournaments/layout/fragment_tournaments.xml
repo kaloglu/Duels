@@ -3,8 +3,8 @@
     android:id="@+id/tournamentsScene"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:paddingTop="100dp">
+    android:layout_marginTop="?android:attr/actionBarSize"
+    android:gravity="center">
 
     <include layout="@layout/tournaments_loading" />
 
