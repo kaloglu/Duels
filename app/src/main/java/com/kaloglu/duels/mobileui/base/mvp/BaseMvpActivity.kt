@@ -36,7 +36,7 @@ abstract class BaseMvpActivity<M, P : BasePresenter<M, BaseView<M>>> : BaseActiv
     override var currentFragment: BaseFragment? = null
 
     override val baseFrameLayoutId: Int
-    get() = TODO("if use a contained")
+        get() = TODO("if use a contained")
 
     override val snackbarLayoutId
         get() = baseFrameLayoutId

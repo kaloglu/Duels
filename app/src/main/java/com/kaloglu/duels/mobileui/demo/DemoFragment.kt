@@ -10,7 +10,7 @@ import com.kaloglu.duels.presentation.interfaces.demo.DemoContract
 import kotlinx.android.synthetic.main.fragment_demo.*
 import javax.inject.Inject
 
-class DemoFragment : BaseMvpFragment<Any, DemoContract.Presenter>(), DemoContract.View<Any> {
+class DemoFragment : BaseMvpFragment<Any?, DemoContract.View, DemoContract.Presenter>() {
 
     override fun showSnackbar(messageId: Int) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

@@ -9,7 +9,7 @@ import javax.inject.Inject
 @PerActivity
 class MainPresenter @Inject constructor(
         override val activityNavigator: ActivityNavigator
-) : BaseAbstractPresenter<Any, MainContract.View<Any>>(), MainContract.Presenter {
+) : BaseAbstractPresenter<Any, MainContract.View>(), MainContract.Presenter {
 
     override fun getNextActivity() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

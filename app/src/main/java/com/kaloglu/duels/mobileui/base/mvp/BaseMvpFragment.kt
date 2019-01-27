@@ -7,7 +7,8 @@ import com.kaloglu.duels.presentation.interfaces.base.mvp.BasePresenter
 import com.kaloglu.duels.presentation.interfaces.base.mvp.BaseView
 import javax.inject.Inject
 
-abstract class BaseMvpFragment<M, P : BasePresenter<M, BaseView<M>>> : BaseFragment(), BaseView<M> {
+abstract class BaseMvpFragment<M, out V : BaseView<M>, P : BasePresenter<M, V>>
+    : BaseFragment(), BaseView<M> {
 
     @Inject
     lateinit var presenter: P
@@ -27,6 +28,9 @@ abstract class BaseMvpFragment<M, P : BasePresenter<M, BaseView<M>>> : BaseFragm
     override fun refresh() = Unit
     override fun enterAnimation() = Unit
     override fun exitAnimation() = Unit
+
+    override fun showSnackbar(messageId: Int) = Unit
+    override fun showSnackbar(message: String) = Unit
 
     // Override this on child fragments if needed.
     protected open fun onPresenterAttached() = Unit

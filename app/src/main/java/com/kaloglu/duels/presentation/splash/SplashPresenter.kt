@@ -8,14 +8,13 @@ import com.kaloglu.duels.injection.scopes.PerActivity
 import com.kaloglu.duels.mobileui.base.mvp.BaseAbstractPresenter
 import com.kaloglu.duels.navigation.ActivityNavigator
 import com.kaloglu.duels.presentation.interfaces.splash.SplashContract
-import com.kaloglu.duels.viewobjects.CachedSample
 import javax.inject.Inject
 
 @PerActivity
 class SplashPresenter @Inject constructor(
         private val firebaseAuth: FirebaseAuth,
         override val activityNavigator: ActivityNavigator
-) : BaseAbstractPresenter<CachedSample, SplashContract.View<CachedSample>>(), SplashContract.Presenter {
+) : BaseAbstractPresenter<Any,SplashContract.View>(), SplashContract.Presenter {
 
     override fun checkAuth() =
             when {

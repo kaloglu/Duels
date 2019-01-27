@@ -5,7 +5,7 @@ import com.kaloglu.duels.presentation.interfaces.base.mvp.BaseView
 
 interface MainContract {
 
-    interface View<M> : BaseView<M>
+    interface View : BaseView<Any>
 
-    interface Presenter : BasePresenter<Any, View<Any>>
+    interface Presenter : BasePresenter<Any, View>
 }

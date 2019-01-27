@@ -7,9 +7,9 @@ import com.kaloglu.duels.viewobjects.CachedSample
 
 interface SplashContract {
 
-    interface View<M> : BaseView<M>
+    interface View : BaseView<Any>
 
-    interface Presenter : BasePresenter<CachedSample, View<CachedSample>> {
+    interface Presenter : BasePresenter<Any, View> {
         fun checkAuth()
         fun showError(error: FirebaseUiException)
     }

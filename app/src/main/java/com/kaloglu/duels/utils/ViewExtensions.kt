@@ -1,6 +1,9 @@
 package com.kaloglu.duels.utils
 
 import android.animation.Animator
+import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.animation.Interpolator
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -21,7 +24,7 @@ fun FloatingActionButton.with(
 ) {
     if (!predicate)
         return
-    
+
     animate().apply {
         if (value != null) {
             alpha(value)
@@ -43,3 +46,11 @@ fun FloatingActionButton.with(
     }.start()
 }
 
+@JvmOverloads
+fun View?.show(show: Boolean = true) {
+    this?.visibility = if (show) VISIBLE else GONE
+}
+
+fun View?.hide() = show(false)
+
+fun hide(vararg views: View?) = views.forEach { it?.hide() }
