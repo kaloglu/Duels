@@ -6,6 +6,7 @@ import com.kaloglu.duels.injection.scopes.PerApplication
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
+import com.google.firebase.firestore.FirebaseFirestoreSettings
 
 @Module
 internal class FirestoreModule {
@@ -14,15 +15,18 @@ internal class FirestoreModule {
     @Provides
     fun providesFirestore(): FirebaseFirestore {
         FirebaseFirestore.setLoggingEnabled(true)
-        return FirebaseFirestore.getInstance()
+        val fireStoreDb = FirebaseFirestore.getInstance()
+        fireStoreDb.firestoreSettings = FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(true)
+                .build()
+        return fireStoreDb
     }
 
     @PerApplication
     @Provides
     @Named("tournaments")
-    fun providesTournaments(): CollectionReference {
-        FirebaseFirestore.setLoggingEnabled(true)
-        return FirebaseFirestore.getInstance().collection("tournaments")
+    fun providesTournaments(fireStoreDb: FirebaseFirestore): CollectionReference {
+        return fireStoreDb.collection("tournaments")
     }
 
 }
