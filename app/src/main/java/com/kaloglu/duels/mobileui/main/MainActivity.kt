@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Handler
 import android.view.animation.OvershootInterpolator
+import androidx.core.content.ContextCompat
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification
@@ -48,11 +49,11 @@ class MainActivity : BaseMvpActivity<MainContract.Presenter>(), MainContract.Vie
         navigationAdapter.setupWithBottomNavigation(bottom_navigation, tabColors)
 
         bottom_navigation.defaultBackgroundColor = Color.WHITE
-        bottom_navigation.accentColor = fetchColor(R.color.colorAccent)
+        bottom_navigation.accentColor = ContextCompat.getColor(this, R.color.colorAccent)
 //  Enables color Reveal effect
         bottom_navigation.isColored = true
 // Colors for selected (active) and non-selected items (in color reveal mode).
-//        bottom_navigation.setColoredModeColors(Color.WHITE, fetchColor(R.color.bottomtab_item_resting))
+//        bottom_navigation.setColoredModeColors(Color.WHITE, ContextCompat.getColor(this, R.color.bottomtab_item_resting))
         bottom_navigation.titleState = AHBottomNavigation.TitleState.SHOW_WHEN_ACTIVE_FORCE
         bottom_navigation.isTranslucentNavigationEnabled = true
         bottom_navigation.isBehaviorTranslationEnabled = true

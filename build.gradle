@@ -10,7 +10,9 @@ buildscript {
         classpath gradlePlugins.android
         classpath gradlePlugins.kotlin
         classpath gradlePlugins.google
+        classpath gradlePlugins.sonar
     }
+
 }
 
 allprojects {
@@ -19,18 +21,6 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
-}
-
-subprojects {
-    project.configurations.all {
-        resolutionStrategy.eachDependency { details ->
-
-            if (details.requested.group == 'com.android.support' && !details.requested.name.startsWith('multidex')) {
-                print(details.requested.group)
-                details.useVersion '27.1.1'
-            }
-        }
-    }
 }
 
 gradle.projectsEvaluated {

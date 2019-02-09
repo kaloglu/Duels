@@ -36,7 +36,4 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
     @UiThread
     fun showSnackbar(message: String) = Snackbar.make(findViewById(snackbarLayoutId), message, Snackbar.LENGTH_LONG).show()
 
-    @UiThread
-    fun fetchColor(color: Int) = ContextCompat.getColor(this, color)
-
 }
