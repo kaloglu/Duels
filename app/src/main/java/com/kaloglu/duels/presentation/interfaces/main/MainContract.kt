@@ -1,11 +1,11 @@
 package com.kaloglu.duels.presentation.interfaces.main
 
-import com.kaloglu.duels.presentation.interfaces.base.mvp.BasePresenter
-import com.kaloglu.duels.presentation.interfaces.base.mvp.BaseView
+import com.kaloglu.duels.presentation.interfaces.activity.mvp.ActivityPresenter
+import com.kaloglu.duels.presentation.interfaces.activity.mvp.ActivityView
 
 interface MainContract {
 
-    interface View : BaseView<Any>
+    interface View : ActivityView
 
-    interface Presenter : BasePresenter<Any, View>
+    interface Presenter : ActivityPresenter<View>
 }

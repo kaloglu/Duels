@@ -7,9 +7,7 @@ import com.kaloglu.duels.presentation.interfaces.base.mvp.BasePresenter
 import com.kaloglu.duels.presentation.interfaces.base.mvp.BaseView
 import javax.inject.Inject
 
-abstract class BaseMvpFragment<M, out V : BaseView<M>, P : BasePresenter<M, V>>
-    : BaseFragment(), BaseView<M> {
-
+abstract class BaseMvpFragment<P : BasePresenter<BaseView>> : BaseFragment(), BaseView {
     @Inject
     lateinit var presenter: P
 

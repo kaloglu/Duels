@@ -28,7 +28,7 @@ abstract class DataModule {
                 sampleMapper: SampleMapper,
                 sampleDao: SampleDao,
                 executor: ExecutorFactory
-        ): NetworkBoundResource<CachedSample, SampleModel, String> =
+        ): NetworkBoundResource<CachedSample, SampleModel, Any> =
                 SampleRepository(localStorage, sampleServiceFirebase, sampleMapper, sampleDao, executor)
 
         @JvmStatic

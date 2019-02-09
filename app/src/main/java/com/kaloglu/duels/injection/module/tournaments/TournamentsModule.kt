@@ -3,7 +3,7 @@ package com.kaloglu.duels.injection.module.tournaments
 import com.kaloglu.duels.data.repository.tournaments.TournamentsRepository
 import com.kaloglu.duels.injection.scopes.PerFragment
 import com.kaloglu.duels.mobileui.interfaces.UIStateManager
-import com.kaloglu.duels.navigation.ActivityNavigator
+import com.kaloglu.duels.presentation.base.GenericDependencies
 import com.kaloglu.duels.presentation.interfaces.tournaments.TournamentsContract
 import com.kaloglu.duels.presentation.tournaments.TournamentsPresenter
 import dagger.Module
@@ -21,12 +21,12 @@ abstract class TournamentsModule {
         fun presenter(
                 repository: TournamentsRepository,
                 uiStateManager: UIStateManager,
-                activityNavigator: ActivityNavigator
+                genericDependencies:GenericDependencies
         ): TournamentsContract.Presenter =
                 TournamentsPresenter(
                         repository,
                         uiStateManager,
-                        activityNavigator
+                        genericDependencies
                 )
 
     }

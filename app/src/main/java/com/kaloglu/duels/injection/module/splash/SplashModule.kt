@@ -5,7 +5,7 @@ import com.kaloglu.duels.injection.module.ActivityModule
 import com.kaloglu.duels.injection.scopes.PerActivity
 import com.kaloglu.duels.mobileui.base.BaseActivity
 import com.kaloglu.duels.mobileui.splash.SplashActivity
-import com.kaloglu.duels.navigation.ActivityNavigator
+import com.kaloglu.duels.presentation.base.GenericDependencies
 import com.kaloglu.duels.presentation.interfaces.splash.SplashContract
 import com.kaloglu.duels.presentation.splash.SplashPresenter
 import dagger.Binds
@@ -21,11 +21,8 @@ abstract class SplashModule {
         @JvmStatic
         @Provides
         @PerActivity
-        fun presenter(
-                firebaseAuth: FirebaseAuth,
-                activityNavigator: ActivityNavigator
-        ): SplashContract.Presenter =
-                SplashPresenter(firebaseAuth, activityNavigator)
+        fun presenter(firebaseAuth: FirebaseAuth, genericDependencies: GenericDependencies):
+                SplashContract.Presenter = SplashPresenter(firebaseAuth, genericDependencies)
 
     }
 

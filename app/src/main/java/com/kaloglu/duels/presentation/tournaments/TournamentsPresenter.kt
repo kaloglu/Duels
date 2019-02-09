@@ -5,20 +5,19 @@ import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.kaloglu.duels.data.filters.Filters
-import com.kaloglu.duels.data.model.Tournament
 import com.kaloglu.duels.data.repository.tournaments.TournamentsRepository
 import com.kaloglu.duels.mobileui.base.mvp.BaseAbstractPresenter
 import com.kaloglu.duels.mobileui.interfaces.UIStateManager
-import com.kaloglu.duels.mobileui.interfaces.UIStateManager.*
-import com.kaloglu.duels.navigation.ActivityNavigator
+import com.kaloglu.duels.mobileui.interfaces.UIStateManager.UIStateType
+import com.kaloglu.duels.presentation.base.GenericDependencies
 import com.kaloglu.duels.presentation.interfaces.tournaments.TournamentsContract
 import javax.inject.Inject
 
 class TournamentsPresenter @Inject constructor(
         private val repository: TournamentsRepository,
         override var uiStateManager: UIStateManager?,
-        override val activityNavigator: ActivityNavigator
-) : BaseAbstractPresenter<List<Tournament>, TournamentsContract.View>(), TournamentsContract.Presenter {
+        override val genericDependencies: GenericDependencies
+) : BaseAbstractPresenter<TournamentsContract.View>(), TournamentsContract.Presenter {
     private lateinit var isSignedIn: LiveData<Boolean>
     private val filters = MutableLiveData<Filters>()
 

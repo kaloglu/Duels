@@ -2,13 +2,13 @@ package com.kaloglu.duels.injection.module.demo
 
 import com.kaloglu.duels.data.LocalStorage
 import com.kaloglu.duels.injection.scopes.PerFragment
-import com.kaloglu.duels.navigation.ActivityNavigator
+import com.kaloglu.duels.presentation.base.GenericDependencies
 import com.kaloglu.duels.presentation.demo.DemoPresenter
 import com.kaloglu.duels.presentation.interfaces.demo.DemoContract
 import dagger.Module
 import dagger.Provides
 
-@Module()
+@Module
 abstract class DemoModule {
 
     @Module
@@ -17,11 +17,8 @@ abstract class DemoModule {
         @JvmStatic
         @Provides
         @PerFragment
-        fun presenter(
-                localStorage: LocalStorage,
-                activityNavigator: ActivityNavigator
-        ): DemoContract.Presenter =
-                DemoPresenter(localStorage, activityNavigator)
+        fun presenter(localStorage: LocalStorage, genericDependencies: GenericDependencies):
+                DemoContract.Presenter = DemoPresenter(localStorage, genericDependencies)
 
     }
 

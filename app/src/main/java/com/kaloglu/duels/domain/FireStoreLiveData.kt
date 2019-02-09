@@ -3,7 +3,7 @@ package com.kaloglu.duels.domain
 import androidx.lifecycle.LiveData
 import com.google.firebase.firestore.*
 import com.kaloglu.duels.data.model.BaseModel
-import com.kaloglu.duels.presentation.interfaces.base.mvp.BaseView
+import com.kaloglu.duels.presentation.interfaces.base.mvp.ResponseLiveDataView
 import com.kaloglu.duels.viewobjects.Resource
 import com.kaloglu.duels.viewobjects.Status
 
@@ -45,7 +45,7 @@ class FireStoreLiveData<T : BaseModel>(
                     ?.toList()
 
     @Suppress("UNCHECKED_CAST")
-    fun <T> observe(view: BaseView<T>) {
+    fun <T> observe(view: ResponseLiveDataView<T>) {
         observe(view, androidx.lifecycle.Observer {
             when (it?.status) {
                 Status.LOADING -> view.onLoading()

@@ -7,11 +7,10 @@ import android.widget.RelativeLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.snackbar.Snackbar
 
-
 /**
  * Created by kaloglu on 6.01.2019.
  */
-class RelativeLayoutBehavior(context: Context, attrs: AttributeSet) : CoordinatorLayout.Behavior<RelativeLayout>() {
+class RelativeLayoutBehavior(context: Context, attrs: AttributeSet) : CoordinatorLayout.Behavior<RelativeLayout>(context, attrs) {
 
     override fun layoutDependsOn(parent: CoordinatorLayout, child: RelativeLayout, dependency: View): Boolean {
         return dependency is Snackbar.SnackbarLayout

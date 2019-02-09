@@ -18,9 +18,9 @@ class SampleRepository @Inject constructor(
         private val sampleMapper: SampleMapper,
         private val sampleDao: SampleDao,
         override val executorFactory: ExecutorFactory
-) : NetworkBoundResource<CachedSample, SampleModel, String>(executorFactory) {
+) : NetworkBoundResource<CachedSample, SampleModel, Any>(executorFactory) {
 
-    override var param: Param<String?> = Param("")
+    override lateinit var requestParam: Any
 
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
     override fun saveCallResult(sampleModel: SampleModel) {
