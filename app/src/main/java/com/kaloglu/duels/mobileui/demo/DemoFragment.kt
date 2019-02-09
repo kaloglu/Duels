@@ -2,13 +2,11 @@ package com.kaloglu.duels.mobileui.demo
 
 import android.os.Bundle
 import android.view.View
-import android.view.animation.AnimationUtils
 import com.firebase.ui.auth.AuthUI
 import com.kaloglu.duels.R
 import com.kaloglu.duels.mobileui.base.mvp.BaseMvpFragment
 import com.kaloglu.duels.presentation.interfaces.demo.DemoContract
 import kotlinx.android.synthetic.main.fragment_demo.*
-import javax.inject.Inject
 
 class DemoFragment : BaseMvpFragment<Any?, DemoContract.View, DemoContract.Presenter>() {
 
