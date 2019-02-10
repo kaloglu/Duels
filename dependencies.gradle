@@ -9,12 +9,14 @@ ext.app = [
 
 ext.repository = [
         jitpack: 'https://jitpack.io',
+        sonar  : 'https://plugins.gradle.org/m2/',
 ]
 
 ext.addRepos = { RepositoryHandler handler ->
     handler.google()
     handler.jcenter()
     handler.maven { url repository.jitpack }
+    handler.maven { url repository.sonar }
 }
 
 ext.java = [
@@ -53,6 +55,8 @@ def versions = [
 
         ahBottomNavigation  : '2.3.3',
 
+        sonar               : '2.7',
+
 ]
 
 def pluginLibs = [
@@ -63,7 +67,10 @@ def pluginLibs = [
         android: "com.android.tools.build:gradle:$versions.gradlePlugin",
 
         // Kotlin Gradle Plugin
-        kotlin : "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
+        kotlin : "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin",
+
+        //Sonar Cloud Plugin
+        sonar  : "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:$versions.sonar"
 ]
 
 
@@ -71,6 +78,7 @@ ext.gradlePlugins = [
         android: pluginLibs.android,
         kotlin : pluginLibs.kotlin,
         google : pluginLibs.google,
+        sonar  : pluginLibs.sonar,
 ]
 
 
