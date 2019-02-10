@@ -10,6 +10,7 @@ ext.app = [
 ext.repository = [
         jitpack: 'https://jitpack.io',
         sonar  : 'https://plugins.gradle.org/m2/',
+        fabric : 'https://maven.fabric.io/public',
 ]
 
 ext.addRepos = { RepositoryHandler handler ->
@@ -17,6 +18,7 @@ ext.addRepos = { RepositoryHandler handler ->
     handler.jcenter()
     handler.maven { url repository.jitpack }
     handler.maven { url repository.sonar }
+    handler.maven { url repository.fabric }
 }
 
 ext.java = [
@@ -25,62 +27,46 @@ ext.java = [
 ]
 
 def versions = [
-        googleServicesPlugin: '4.0.1',
-
+        googleServicesPlugin: '4.2.0',
         gradlePlugin        : '3.2.1',
-
         multidex            : '2.0.0',
-
         kotlin              : '1.3.10',
-
         supportLibrary      : '1.0.0',
-
         supportLibraryRC01  : '1.0.0-rc01',
-
         constraintLayout    : '1.1.2',
-
         archComp            : '2.0.0-rc01',
-
         dagger              : '2.16',
-
         javaxInject         : '1',
-
         timber              : '4.5.1',
-
-        firebase            : '16.0.5',
-
+        firebase            : '16.0.7',
         firebaseAuth        : '4.2.1',
-
         fireStore           : '17.1.5',
-
         ahBottomNavigation  : '2.3.3',
-
         sonar               : '2.7',
-
+        fabricGradle        : '1.26.1',
+        fabric              : '2.9.9'
 ]
 
 def pluginLibs = [
         //Google Services Gradle Plugin
         google : "com.google.gms:google-services:$versions.googleServicesPlugin",
-
         // Android Gradle Plugin
         android: "com.android.tools.build:gradle:$versions.gradlePlugin",
-
         // Kotlin Gradle Plugin
         kotlin : "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin",
-
         //Sonar Cloud Plugin
-        sonar  : "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:$versions.sonar"
+        sonar  : "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:$versions.sonar",
+        //Fabric Plugin
+        fabric : "io.fabric.tools:gradle:$versions.fabricGradle"
 ]
-
 
 ext.gradlePlugins = [
         android: pluginLibs.android,
         kotlin : pluginLibs.kotlin,
         google : pluginLibs.google,
         sonar  : pluginLibs.sonar,
+        fabric : pluginLibs.fabric
 ]
-
 
 def libraries = [
         // Multidex Support
@@ -132,6 +118,9 @@ def libraries = [
         //BottomNavigation
         ahBottomNavigation : "com.aurelhubert:ahbottomnavigation:$versions.ahBottomNavigation",
 
+        //Fabric
+        fabric             : "com.crashlytics.sdk.android:crashlytics:${versions.fabric}@aar"
+
 ]
 ext.appDependencies = [
         addDependency('implementation', libraries.multidex),
@@ -166,17 +155,21 @@ ext.appDependencies = [
         addDependency('implementation', libraries.fireStore),
 
         addDependency('implementation', libraries.ahBottomNavigation),
+        addDependency('implementation', libraries.fabric, { transitive = true }),
 
         //TODO: kullanılmazsa silinecek
         addDependency('implementation', libraries.javaxInject),
 
         //test debug for room
-        addDependency('debugImplementation', 'com.amitshekhar.android:debug-db:1.0.4'),
+        addDependency('debugImplementation', 'com.amitshekhar.android:debug-db:1.0.4')
 ]
-
 
 static def addDependency(config, dependency) {
     [configuration: config, dependency: dependency]
+}
+
+static def addDependency(config, dependency, options) {
+    [configuration: config, dependency: dependency, options: options]
 }
 
 ext.addDependencies = { DependencyHandler handler, dependencies ->
