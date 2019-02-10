@@ -3,8 +3,10 @@
 /local.properties
 /.idea/
 .DS_Store
-/build
 /captures
 .externalNativeBuild
 
 .sonar/
+/app/build/
+/build/
+/gradle/

@@ -10,7 +10,6 @@ buildscript {
         classpath gradlePlugins.android
         classpath gradlePlugins.kotlin
         classpath gradlePlugins.google
-        classpath gradlePlugins.sonar
         classpath gradlePlugins.fabric
     }
 
