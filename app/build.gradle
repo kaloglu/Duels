@@ -23,7 +23,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         ext.betaDistributionGroupAliases = "beta-android"
-        ext.betaDistributionReleaseNotesFilePath = "../beta_release_notes.txt"
+        ext.betaDistributionReleaseNotesFilePath = file('../beta_release_notes.txt').absolutePath
     }
     buildTypes {
         release {
