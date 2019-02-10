@@ -18,15 +18,6 @@ class SplashActivity : BaseMvpActivity<SplashContract.Presenter>(), SplashContra
 
     override fun initUserInterface() = Unit
 
-//    override fun onLoading() = showSnackbar("loading")
-//
-//    override fun onSuccess(data: Any) = presenter.getNextActivity()
-//
-//    override fun onError(errorMessage: String?, data: Any?) =
-//            showSnackbar("hata: $errorMessage").also {
-//                Handler().postDelayed(presenter::getSignInActivity, 1000)
-//            }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) =
             super.onActivityResult(requestCode, resultCode, data)
                     .also {

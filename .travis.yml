@@ -1,7 +1,7 @@
 language: android
 jdk: oraclejdk8
 sudo: required
-dist: precise
+dist: trusty
 android:
   components:
   - platform-tools
@@ -15,6 +15,11 @@ licenses:
 - android-sdk-preview-license-c81a61d9
 - android-sdk-license-.+
 - google-gdk-license-.+
+addons:
+  sonarcloud:
+    organization: "kaloglu-github" # the key of the org you chose at step #3
+before_script:
+- sonar-scanner -Dsonar.verbose=true -X
 script:
 - ./gradlew assembleRelease --stacktrace --no-daemon
 after_script:
