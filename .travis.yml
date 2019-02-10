@@ -18,11 +18,10 @@ licenses:
 addons:
   sonarcloud:
     organization: "kaloglu-github" # the key of the org you chose at step #3
-before_script:
-- sonar-scanner -Dsonar.verbose=true -X
 script:
 - ./gradlew assembleRelease --stacktrace --no-daemon
 after_script:
+- sonar-scanner -Dsonar.verbose=true -X
 - ./gradlew crashlyticsUploadDistributionRelease
 before_install:
 - chmod +x gradlew
