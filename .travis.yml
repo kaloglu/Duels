@@ -1,5 +1,7 @@
 language: android
 jdk: oraclejdk8
+sudo: required
+dist: precise
 android:
   components:
   - platform-tools
@@ -13,7 +15,7 @@ licenses:
 - android-sdk-preview-license-c81a61d9
 - android-sdk-license-.+
 - google-gdk-license-.+
-  script
+script:
 - ./gradlew assembleRelease --stacktrace --no-daemon
 after_script:
 - ./gradlew crashlyticsUploadDistributionRelease
