@@ -23,7 +23,7 @@ script:
 after_script:
 #- ./gradlew sonarqube
 - sonar-scanner -Dsonar.verbose=true -X
-- ./gradlew crashlyticsUploadDistributionRelease
+- ./gradlew crashlyticsUploadDistributionProdRelease
 before_install:
 - chmod +x gradlew
 branches:
