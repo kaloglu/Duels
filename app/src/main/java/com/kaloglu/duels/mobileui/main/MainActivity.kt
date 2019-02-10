@@ -17,22 +17,10 @@ import com.kaloglu.duels.utils.with
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
-class MainActivity : BaseMvpActivity<Any, MainContract.Presenter>(), MainContract.View {
+class MainActivity : BaseMvpActivity<MainContract.Presenter>(), MainContract.View {
 
     @Inject
     lateinit var adapter: ViewPagerAdapter
-
-    override fun onLoading() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onSuccess(data: Any) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onError(errorMessage: String?, data: Any?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
     override val contentResourceId = R.layout.activity_main
 
@@ -41,9 +29,6 @@ class MainActivity : BaseMvpActivity<Any, MainContract.Presenter>(), MainContrac
     override val snackbarLayoutId = R.id.bottom_navigation
 
     override fun initUserInterface() {
-//        setSupportActionBar(toolbar)
-//        toolbar.title = title
-//
         view_pager.offscreenPageLimit = 3
         view_pager.adapter = adapter
 

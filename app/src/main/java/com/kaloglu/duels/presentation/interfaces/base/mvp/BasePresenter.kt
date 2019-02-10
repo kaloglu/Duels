@@ -4,17 +4,39 @@ import androidx.annotation.UiThread
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
+import com.google.android.gms.tasks.OnCompleteListener
+import com.kaloglu.duels.mobileui.base.BaseFragment
+import com.kaloglu.duels.presentation.base.GenericDependencies
 
-interface BasePresenter<M, out V : BaseView<M>> : LifecycleObserver {
+interface BasePresenter<out V : BaseView> : LifecycleObserver {
+
+    val genericDependencies: GenericDependencies?
+
+    val activityNavigator
+        get() = genericDependencies!!.activityNavigator
+
+    val fragmentNavigator
+        get() = genericDependencies!!.fragmentNavigator
+
     val requestCodeForSignIn: Int
         get() = 9999
 
     @UiThread
-    fun attachView(view: BaseView<M>)
+    fun attachView(view: BaseView)
+
+    @UiThread
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    fun attachLifecycle()
 
     @UiThread
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    fun detachLifecycle()
+
+    @UiThread
     fun detachView()
+
+    @UiThread
+    fun getLifeCycle(): Lifecycle
 
     /**
      * Gets the attached view. You should to [isViewAttached] to avoid exceptions.
@@ -33,37 +55,17 @@ interface BasePresenter<M, out V : BaseView<M>> : LifecycleObserver {
     @UiThread
     fun isViewAttached(): Boolean
 
-    /**
-     * Gets the attached lifeCycle. You should to [isLifeCycleAttached] to avoid exceptions.
-     *
-     * @return the lifeCycle if it is attached
-     * @throws [IllegalArgumentException] if no view is attached
-     */
-
-    /*
-
     @UiThread
-    fun getLifeCycle(): Lifecycle
-
-    */
-
-    /**
-     * Checks if a lifeCycle is attached to this presenter.
-     *
-     * @return false if no lifeCycle is attached
-     */
-
-    /*
-
-    @UiThread
-    fun isLifeCycleAttached(): Boolean
-
-    */
+    fun getSignInActivity()
 
     @UiThread
     fun getNextActivity()
 
     @UiThread
-    fun getSignInActivity()
+    fun showFragment(fragment: BaseFragment?)
+
+    @UiThread
+    fun signOut(): OnCompleteListener<Void>
+
 
 }

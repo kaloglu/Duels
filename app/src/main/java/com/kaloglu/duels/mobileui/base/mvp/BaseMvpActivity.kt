@@ -3,14 +3,14 @@ package com.kaloglu.duels.mobileui.base.mvp
 import android.os.Bundle
 import com.kaloglu.duels.mobileui.base.BaseActivity
 import com.kaloglu.duels.mobileui.base.BaseFragment
-import com.kaloglu.duels.presentation.interfaces.base.mvp.BasePresenter
-import com.kaloglu.duels.presentation.interfaces.base.mvp.BaseView
+import com.kaloglu.duels.presentation.interfaces.activity.mvp.ActivityPresenter
+import com.kaloglu.duels.presentation.interfaces.activity.mvp.ActivityView
 import javax.inject.Inject
 
-//class GenericBar<S : GenericInterface<out FooInterface>> {
-//    var s: S? = null
-//}
-abstract class BaseMvpActivity<M, P : BasePresenter<M, BaseView<M>>> : BaseActivity(), BaseView<M> {
+abstract class BaseMvpActivity<P : ActivityPresenter<ActivityView>> : BaseActivity(), ActivityView {
+
+    //TODO: override for initial if you need
+    override val containedFragment: BaseFragment? = null
 
     protected var badgeVisible: Int = -1
 
@@ -21,6 +21,10 @@ abstract class BaseMvpActivity<M, P : BasePresenter<M, BaseView<M>>> : BaseActiv
         super.onCreate(savedInstanceState)
         presenter.attachView(this)
         onPresenterAttached()
+        savedInstanceState ?: let {
+            if (containedFragment != null)
+                presenter.showFragment(containedFragment!!)
+        }
     }
 
     override fun onDestroy() {
@@ -29,17 +33,11 @@ abstract class BaseMvpActivity<M, P : BasePresenter<M, BaseView<M>>> : BaseActiv
         super.onDestroy()
     }
 
-    //TODO: override for initial if you need
-    override val containedFragment: BaseFragment? = null
-
     //TODO: override for pager current fragment if you need
     override var currentFragment: BaseFragment? = null
 
     override val baseFrameLayoutId: Int
         get() = TODO("if use a contained")
-
-    override val snackbarLayoutId
-        get() = baseFrameLayoutId
 
     // Override this on child activities if needed.
     protected open fun onPresenterAttached() = Unit

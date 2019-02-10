@@ -9,7 +9,7 @@ import com.kaloglu.duels.mobileui.base.BaseActivity
 import com.kaloglu.duels.mobileui.demo.DemoFragment
 import com.kaloglu.duels.mobileui.main.MainActivity
 import com.kaloglu.duels.mobileui.tournaments.TournamentsFragment
-import com.kaloglu.duels.navigation.ActivityNavigator
+import com.kaloglu.duels.presentation.base.GenericDependencies
 import com.kaloglu.duels.presentation.interfaces.main.MainContract
 import com.kaloglu.duels.presentation.main.MainPresenter
 import dagger.Binds
@@ -26,8 +26,8 @@ abstract class MainModule {
         @JvmStatic
         @Provides
         @PerActivity
-        fun presenter(activityNavigator: ActivityNavigator): MainContract.Presenter =
-                MainPresenter(activityNavigator)
+        fun presenter(genericDependencies: GenericDependencies):
+                MainContract.Presenter = MainPresenter(genericDependencies)
 
     }
 

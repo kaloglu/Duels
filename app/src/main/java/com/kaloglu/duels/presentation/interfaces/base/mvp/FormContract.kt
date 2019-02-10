@@ -5,7 +5,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 
 interface FormContract {
-    interface FormView<in T> : BaseView<T> {
+    interface FormView<in T> : ResponseLiveDataView<T> {
 
         var submitButtonView: View
 
@@ -27,7 +27,7 @@ interface FormContract {
 
     }
 
-    interface FormPresenter<T, V : FormView<T>> : BasePresenter<T, V> {
+    interface FormPresenter<T, V : FormView<T>> : BasePresenter<V> {
 
         private fun getSubmitButton() = getView().getSubmitButton()
 

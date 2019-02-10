@@ -5,7 +5,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.kaloglu.duels.R
 import com.kaloglu.duels.data.model.Tournament
 import com.kaloglu.duels.mobileui.base.mvp.BaseMvpFragment
-import com.kaloglu.duels.mobileui.interfaces.UIStateManager.*
+import com.kaloglu.duels.mobileui.interfaces.UIStateManager.UIStateType
 import com.kaloglu.duels.presentation.interfaces.tournaments.TournamentsContract
 import kotlinx.android.synthetic.main.fragment_tournaments.*
 import kotlinx.android.synthetic.main.tournaments_content.*
@@ -13,8 +13,7 @@ import kotlinx.android.synthetic.main.tournaments_empty.*
 import kotlinx.android.synthetic.main.tournaments_loading.*
 
 class TournamentsFragment
-    : BaseMvpFragment<List<Tournament>, TournamentsContract.View, TournamentsContract.Presenter>()
-        , TournamentsContract.View {
+    : BaseMvpFragment<TournamentsContract.Presenter>(), TournamentsContract.View {
 
     override val resourceLayoutId = R.layout.fragment_tournaments
 
@@ -28,9 +27,7 @@ class TournamentsFragment
                 UIStateType.ERROR -> null
             }
 
-    override fun initUserInterface(rootView: View) {
-
-    }
+    override fun initUserInterface(rootView: View) = Unit
 
     override fun onLoading() {
         presenter.getUIState(UIStateType.LOADING)

@@ -1,16 +1,18 @@
 package com.kaloglu.duels.presentation.interfaces.splash
 
+import android.content.Intent
 import com.firebase.ui.auth.FirebaseUiException
-import com.kaloglu.duels.presentation.interfaces.base.mvp.BasePresenter
-import com.kaloglu.duels.presentation.interfaces.base.mvp.BaseView
-import com.kaloglu.duels.viewobjects.CachedSample
+import com.kaloglu.duels.presentation.interfaces.activity.mvp.ActivityPresenter
+import com.kaloglu.duels.presentation.interfaces.activity.mvp.ActivityView
 
 interface SplashContract {
 
-    interface View : BaseView<Any>
+    interface View : ActivityView {
+        fun handleSignInResult(data: Intent?, resultCode: Int)
+    }
 
-    interface Presenter : BasePresenter<Any, View> {
+    interface Presenter : ActivityPresenter<View> {
         fun checkAuth()
-        fun showError(error: FirebaseUiException)
+        fun showError(firebaseUiException: FirebaseUiException)
     }
 }

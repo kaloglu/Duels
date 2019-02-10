@@ -2,33 +2,19 @@ package com.kaloglu.duels.mobileui.demo
 
 import android.os.Bundle
 import android.view.View
-import android.view.animation.AnimationUtils
 import com.firebase.ui.auth.AuthUI
 import com.kaloglu.duels.R
 import com.kaloglu.duels.mobileui.base.mvp.BaseMvpFragment
 import com.kaloglu.duels.presentation.interfaces.demo.DemoContract
 import kotlinx.android.synthetic.main.fragment_demo.*
-import javax.inject.Inject
 
-class DemoFragment : BaseMvpFragment<Any?, DemoContract.View, DemoContract.Presenter>() {
+class DemoFragment : BaseMvpFragment<DemoContract.Presenter>() {
 
     override fun showSnackbar(messageId: Int) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun showSnackbar(message: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onLoading() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onSuccess(data: Any?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onError(errorMessage: String?, data: Any?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

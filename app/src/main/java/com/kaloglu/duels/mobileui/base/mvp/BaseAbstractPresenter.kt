@@ -1,39 +1,45 @@
 package com.kaloglu.duels.mobileui.base.mvp
 
 import androidx.annotation.CallSuper
-import androidx.lifecycle.Lifecycle
+import com.google.android.gms.tasks.OnCompleteListener
+import com.kaloglu.duels.mobileui.base.BaseFragment
 import com.kaloglu.duels.mobileui.interfaces.UIStateManager
-import com.kaloglu.duels.navigation.ActivityNavigator
+import com.kaloglu.duels.presentation.base.GenericDependencies
 import com.kaloglu.duels.presentation.interfaces.base.mvp.BasePresenter
 import com.kaloglu.duels.presentation.interfaces.base.mvp.BaseView
+import com.kaloglu.duels.utils.checkInjection
 import java.lang.ref.WeakReference
 
-abstract class BaseAbstractPresenter<M, V : BaseView<M>> : BasePresenter<M, V> {
+abstract class BaseAbstractPresenter<V : BaseView> : BasePresenter<V> {
 
-    abstract val activityNavigator: ActivityNavigator?
+    override val genericDependencies: GenericDependencies? = null
+        get() = GenericDependencies::class.java.checkInjection(field)
+
     open var uiStateManager: UIStateManager? = null
 
     private var viewRef: WeakReference<V>? = null
-    private var viewLifecycleRef: WeakReference<Lifecycle?>? = null
 
-    @Suppress("UNCHECKED_CAST")
     @CallSuper
-    override fun attachView(view: BaseView<M>) {
+    @Suppress("UNCHECKED_CAST")
+    override fun attachView(view: BaseView) {
         viewRef = WeakReference(view as V)
-        viewLifecycleRef = WeakReference(viewRef?.get()?.lifecycle)
-
-        viewLifecycleRef?.get()?.addObserver(this)
-
         if (view is UIStateManager.UIStatesView) {
             uiStateManager?.initStates(view)
         }
     }
 
     @CallSuper
+    override fun attachLifecycle() =
+            getLifeCycle().addObserver(this)
+
+    @CallSuper
+    override fun detachLifecycle() =
+            getLifeCycle().removeObserver(this)
+
+    @CallSuper
     override fun detachView() {
         viewRef?.clear()
         viewRef = null
-        viewLifecycleRef = null
     }
 
     override fun getView() = when {
@@ -43,10 +49,32 @@ abstract class BaseAbstractPresenter<M, V : BaseView<M>> : BasePresenter<M, V> {
 
     override fun isViewAttached() = viewRef != null && viewRef?.get() != null
 
+    override fun getLifeCycle() = getView().lifecycle
+
+    override fun signOut(): OnCompleteListener<Void> =
+            OnCompleteListener {
+                genericDependencies!!
+                        .activityNavigator
+                        .toSplashScreen()
+                        .finishThis()
+                        .navigate()
+            }
+
+    override fun getNextActivity() {
+        TODO("getNextActivity() not implemented at ${this.javaClass.name}")
+    }
+
     override fun getSignInActivity() {
         activityNavigator
-                ?.toSignInActivity(requestCodeForSignIn)
-                ?.navigate()
+                .toSignInActivity(requestCodeForSignIn)
+                .navigate()
+    }
+
+    override fun showFragment(fragment: BaseFragment?) {
+        fragment?.let {
+            fragmentNavigator
+                    .showFragment(fragment)
+        }
     }
 
 }
