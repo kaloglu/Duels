@@ -59,7 +59,7 @@ dependencies {
 static def getSourceDirectories() {
     def directories = new ArrayList<>()
     directories.add('src/main/res')
-    def layoutsDir = new File('App/src/main/res/layout')
+    def layoutsDir = new File('app/src/main/res/layout')
 
     layoutsDir.eachDir {
         directories.add(it.canonicalPath)
