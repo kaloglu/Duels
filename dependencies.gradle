@@ -26,53 +26,33 @@ ext.java = [
 
 def versions = [
         googleServicesPlugin: '4.0.1',
-
         gradlePlugin        : '3.2.1',
-
         multidex            : '2.0.0',
-
         kotlin              : '1.3.10',
-
         supportLibrary      : '1.0.0',
-
         supportLibraryRC01  : '1.0.0-rc01',
-
         constraintLayout    : '1.1.2',
-
         archComp            : '2.0.0-rc01',
-
         dagger              : '2.16',
-
         javaxInject         : '1',
-
         timber              : '4.5.1',
-
         firebase            : '16.0.5',
-
         firebaseAuth        : '4.2.1',
-
         fireStore           : '17.1.5',
-
         ahBottomNavigation  : '2.3.3',
-
-        sonar               : '2.7',
-
+        sonar               : '2.7'
 ]
 
 def pluginLibs = [
         //Google Services Gradle Plugin
         google : "com.google.gms:google-services:$versions.googleServicesPlugin",
-
         // Android Gradle Plugin
         android: "com.android.tools.build:gradle:$versions.gradlePlugin",
-
         // Kotlin Gradle Plugin
         kotlin : "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin",
-
         //Sonar Cloud Plugin
         sonar  : "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:$versions.sonar"
 ]
-
 
 ext.gradlePlugins = [
         android: pluginLibs.android,
@@ -80,7 +60,6 @@ ext.gradlePlugins = [
         google : pluginLibs.google,
         sonar  : pluginLibs.sonar,
 ]
-
 
 def libraries = [
         // Multidex Support
@@ -130,7 +109,7 @@ def libraries = [
         fireStore          : "com.google.firebase:firebase-firestore:$versions.fireStore",
 
         //BottomNavigation
-        ahBottomNavigation : "com.aurelhubert:ahbottomnavigation:$versions.ahBottomNavigation",
+        ahBottomNavigation : "com.aurelhubert:ahbottomnavigation:$versions.ahBottomNavigation"
 
 ]
 ext.appDependencies = [
@@ -171,9 +150,8 @@ ext.appDependencies = [
         addDependency('implementation', libraries.javaxInject),
 
         //test debug for room
-        addDependency('debugImplementation', 'com.amitshekhar.android:debug-db:1.0.4'),
+        addDependency('debugImplementation', 'com.amitshekhar.android:debug-db:1.0.4')
 ]
-
 
 static def addDependency(config, dependency) {
     [configuration: config, dependency: dependency]
