@@ -15,8 +15,11 @@ licenses:
 - google-gdk-license-.+
   script
 - ./gradlew assembleRelease --stacktrace --no-daemon
+after_script:
+- ./gradlew crashlyticsUploadDistributionRelease
 before_install:
 - chmod +x gradlew
 branches:
   only:
   - master
+  - develop
