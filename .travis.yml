@@ -21,7 +21,8 @@ addons:
 script:
 - ./gradlew assembleRelease --stacktrace --no-daemon
 after_script:
-- ./gradlew sonarqube
+#- ./gradlew sonarqube
+ - sonar-scanner -Dsonar.verbose=true -X
 - ./gradlew crashlyticsUploadDistributionRelease
 before_install:
 - chmod +x gradlew
