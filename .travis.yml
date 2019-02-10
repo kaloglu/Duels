@@ -1,7 +1,7 @@
 language: android
 jdk: oraclejdk8
 sudo: required
-dist: precise
+dist: trusty
 android:
   components:
   - platform-tools
@@ -17,13 +17,11 @@ licenses:
 - google-gdk-license-.+
 addons:
   sonarcloud:
-    projectKey: "kaloglu_Duels"
     organization: "kaloglu-github" # the key of the org you chose at step #3
-    token:
-      secure: a4852ae268f95fe79309f959d87bbab36ba122e0 # encrypted value of your token
+before_script:
+- sonar-scanner -Dsonar.verbose=true -X
 script:
 - ./gradlew assembleRelease --stacktrace --no-daemon
-- sonar-scanner
 after_script:
 - ./gradlew crashlyticsUploadDistributionRelease
 before_install:
