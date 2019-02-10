@@ -15,8 +15,14 @@ licenses:
 - android-sdk-preview-license-c81a61d9
 - android-sdk-license-.+
 - google-gdk-license-.+
+addons:
+  sonarcloud:
+    organization: "kaloglu_Duels" # the key of the org you chose at step #3
+    token:
+      secure: a4852ae268f95fe79309f959d87bbab36ba122e0 # encrypted value of your token
 script:
 - ./gradlew assembleRelease --stacktrace --no-daemon
+- sonar-scanner
 after_script:
 - ./gradlew crashlyticsUploadDistributionRelease
 before_install:
