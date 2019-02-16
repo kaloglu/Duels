@@ -6,18 +6,15 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'io.fabric'
+apply from: 'generateVersion.gradle'
 
 android {
-    signingConfigs {
-        firebaseBeta {
-            keyAlias '.betakey'
-            keyPassword '.betakey'
-            storeFile file('/Users/kaloglu/projects/Duels/.betakey')
-            storePassword '.betakey'
-        }
-    }
+
+    def generatedVersionName = generateVersionName()
+
     compileSdkVersion app.compileSdk
     buildToolsVersion app.buildTools
+
     defaultConfig {
         applicationId "com.kaloglu.duels"
 
@@ -27,9 +24,21 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         versionCode 1
-        versionName "1.0.0"
+        versionName generatedVersionName
+
+        multiDexEnabled true
 
     }
+
+    signingConfigs {
+        firebaseBeta {
+            storeFile file('.betakey')
+            keyAlias '.betakey'
+            keyPassword '.betakey'
+            storePassword '.betakey'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -37,6 +46,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         beta {
+            signingConfig signingConfigs.firebaseBeta
             ext.betaDistributionGroupAliases = "beta-android"
             ext.betaDistributionBetaNotesFilePath = file('../beta_release_notes.txt').absolutePath
         }
@@ -92,3 +102,17 @@ static def getSourceDirectories(dimensionName) {
 }
 
 apply plugin: 'com.google.gms.google-services'
+
+
+task postBeta {
+    doLast {
+        incrementVersion()
+    }
+}
+
+android.applicationVariants.all { variant ->
+    variant.outputs.all {
+        def flavor = variant.productFlavors[0].name.capitalize()
+        outputFileName = "DuelsAndroid-${flavor}-${variant.versionName}.apk"
+    }
+}

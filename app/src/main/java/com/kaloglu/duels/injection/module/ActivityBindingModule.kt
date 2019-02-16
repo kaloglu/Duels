@@ -15,7 +15,6 @@ abstract class ActivityBindingModule {
     @ContributesAndroidInjector(modules = [SplashModule::class])
     abstract fun contributesSplashActivity(): SplashActivity
 
-
     @PerActivity
     @ContributesAndroidInjector(modules = [MainModule::class])
     abstract fun contributesMainActivity(): MainActivity

@@ -5,7 +5,7 @@ import com.google.firebase.firestore.*
 import com.kaloglu.duels.data.model.BaseModel
 import com.kaloglu.duels.presentation.interfaces.base.mvp.ResponseLiveDataView
 import com.kaloglu.duels.viewobjects.Resource
-import com.kaloglu.duels.viewobjects.Status
+import com.kaloglu.duels.domain.enums.Status
 
 class FireStoreLiveData<T : BaseModel>(
         private val query: Query,

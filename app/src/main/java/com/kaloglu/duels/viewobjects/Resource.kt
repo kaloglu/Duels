@@ -16,7 +16,8 @@
 
 package com.kaloglu.duels.viewobjects
 
-import com.kaloglu.duels.viewobjects.Status.*
+import com.kaloglu.duels.domain.enums.Status
+import com.kaloglu.duels.domain.enums.Status.*
 
 /**
  * A generic class that holds a value with its loading status.
