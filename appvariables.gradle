@@ -1,5 +1,0 @@
-ext.networkProtocol = '"firebase"'
-ext.endpoint = '""'
-
-ext.localdb = '"DuelsDB"'
-

@@ -19,11 +19,11 @@ addons:
   sonarcloud:
     organization: "kaloglu-github" # the key of the org you chose at step #3
 script:
-- ./gradlew assembleRelease --stacktrace --no-daemon
+- ./gradlew assembleFirebaseBeta --stacktrace --no-daemon
 after_script:
 #- ./gradlew sonarqube
 - sonar-scanner -Dsonar.verbose=true -X
-- ./gradlew crashlyticsUploadDistributionProdRelease
+- ./gradlew crashlyticsUploadDistributionFirebaseBeta
 before_install:
 - chmod +x gradlew
 branches:
