@@ -3,15 +3,14 @@ package com.kaloglu.duels.data
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import com.kaloglu.duels.viewobjects.CachedSample
 
 class LocalStorage(context: Context) {
 
     private val preferences = PreferenceManager.getDefaultSharedPreferences(context)
 
-    companion object {
-        const val SAMPLE_PARAMETER_KEY = "email"
-    }
+//    companion object {
+//        const val SAMPLE_PARAMETER_KEY = "email"
+//    }
 
     inline operator fun <reified T> SharedPreferences.get(key: String, defaultValue: T): T {
         return when {
@@ -40,15 +39,15 @@ class LocalStorage(context: Context) {
         }
     }
 
-    fun getSample() = preferences[SAMPLE_PARAMETER_KEY, ""]
-
-    fun setSample(cachedSample: CachedSample?) =
-            when {
-                cachedSample?.sampleParameter.isNullOrEmpty().not() ->
-                    preferences[SAMPLE_PARAMETER_KEY] = cachedSample?.sampleParameter
-                else -> preferences[SAMPLE_PARAMETER_KEY] = ""
-            }
-
-    fun clearSample() = setSample(null)
+//    fun getSample() = preferences[SAMPLE_PARAMETER_KEY, ""]
+//
+//    fun setSample(cachedSample: CachedSample?) =
+//            when {
+//                cachedSample?.sampleParameter.isNullOrEmpty().not() ->
+//                    preferences[SAMPLE_PARAMETER_KEY] = cachedSample?.sampleParameter
+//                else -> preferences[SAMPLE_PARAMETER_KEY] = ""
+//            }
+//
+//    fun clearSample() = setSample(null)
 
 }

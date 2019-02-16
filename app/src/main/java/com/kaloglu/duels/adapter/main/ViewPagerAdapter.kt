@@ -4,7 +4,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.kaloglu.duels.mobileui.base.BaseFragment
-import com.kaloglu.duels.mobileui.demo.DemoFragment
 import com.kaloglu.duels.mobileui.tournaments.TournamentsFragment
 import java.util.*
 import javax.inject.Inject
