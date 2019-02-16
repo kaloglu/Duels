@@ -2,7 +2,6 @@ package com.kaloglu.duels.injection.module.data.cache
 
 import android.app.Application
 import androidx.room.Room
-import com.kaloglu.duels.BuildConfig
 import com.kaloglu.duels.data.cache.db.DuelsDb
 import com.kaloglu.duels.data.cache.sample.SampleDao
 import com.kaloglu.duels.injection.scopes.PerApplication
@@ -20,7 +19,7 @@ abstract class CacheModule {
         @Provides
         fun provideDb(app: Application): DuelsDb {
             return Room
-                    .databaseBuilder(app, DuelsDb::class.java, BuildConfig.LOCAL_DB)
+                    .databaseBuilder(app, DuelsDb::class.java, "DBName")
                     .fallbackToDestructiveMigration()
                     .build()
         }

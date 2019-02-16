@@ -8,67 +8,82 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'io.fabric'
 
 android {
+    signingConfigs {
+        firebaseBeta {
+            keyAlias '.betakey'
+            keyPassword '.betakey'
+            storeFile file('/Users/kaloglu/projects/Duels/.betakey')
+            storePassword '.betakey'
+        }
+    }
     compileSdkVersion app.compileSdk
     buildToolsVersion app.buildTools
-
     defaultConfig {
         applicationId "com.kaloglu.duels"
 
         minSdkVersion app.minSdk
         targetSdkVersion app.targetSdk
 
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
         versionCode 1
         versionName "1.0.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        ext.betaDistributionGroupAliases = "beta-android"
-        ext.betaDistributionReleaseNotesFilePath = file('../beta_release_notes.txt').absolutePath
     }
     buildTypes {
         release {
             minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        beta {
+            ext.betaDistributionGroupAliases = "beta-android"
+            ext.betaDistributionBetaNotesFilePath = file('../beta_release_notes.txt').absolutePath
+        }
+        betaDebug {
+            debuggable true
+            applicationIdSuffix ".debug"
+        }
     }
+
     compileOptions {
         sourceCompatibility java.sourceCompatibility
         targetCompatibility java.targetCompatibility
     }
+
     flavorDimensions 'default'
     productFlavors {
-        prod {
+        firebase {
             dimension 'default'
-            buildConfigField 'String', 'NETWORK_PROTOCOL', networkProtocol
-            buildConfigField 'String', 'END_POINT', endpoint
-            buildConfigField 'String', 'LOCAL_DB', localdb
+            buildConfigField 'String', 'NETWORK_PROTOCOL', '"firebase"'
         }
 
     }
-
-    sourceSets{
-        main{
-            res.srcDirs = getSourceDirectories()
+    sourceSets {
+        main {
+            res.srcDirs = getSourceDirectories('main')
         }
-    }
 
+    }
 }
 
 dependencies {
     addDependencies(dependencies, appDependencies)
 }
 
-static def getSourceDirectories() {
+static def getSourceDirectories(dimensionName) {
     def directories = new ArrayList<>()
-    directories.add('src/main/res')
-    def layoutsDir = new File('app/src/main/res/layout')
-
-    layoutsDir.eachDir {
-        directories.add(it.canonicalPath)
-        def fragmentsDir = new File(it.canonicalPath + '/fragments')
-        if (fragmentsDir.exists()) {
-            fragmentsDir.eachDir {
-                directories.add(it.canonicalPath)
+    def resRoot = 'src/' + dimensionName + '/res'
+    directories.add(resRoot)
+    def layoutsDir = new File('app/' + resRoot + '/layout')
+    if (layoutsDir.exists()) {
+        layoutsDir.eachDir {
+            directories.add(it.canonicalPath)
+            def fragmentsDir = new File(it.canonicalPath + '/fragments')
+            if (fragmentsDir.exists()) {
+                fragmentsDir.eachDir {
+                    directories.add(it.canonicalPath)
+                }
             }
         }
     }

@@ -2,7 +2,6 @@
 
 buildscript {
     apply from: 'dependencies.gradle'
-    apply from: 'appvariables.gradle'
 
     addRepos(repositories)
 
