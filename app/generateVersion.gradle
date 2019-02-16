@@ -1,0 +1,42 @@
+def VERSION_PROPERTY_FILE = "${project.rootDir}/app/version.properties"
+
+ext.generateVersionName = {
+    def versionMajor = readProperty(VERSION_PROPERTY_FILE, 'VERSION_MAJOR')
+    def versionMinor = readProperty(VERSION_PROPERTY_FILE, 'VERSION_MINOR')
+    def versionPatch = readProperty(VERSION_PROPERTY_FILE, 'VERSION_PATCH')
+
+    return versionMajor + "." + versionMinor + "." + versionPatch
+}
+
+ext.incrementVersion = {
+    def versionPatch = readProperty(VERSION_PROPERTY_FILE, 'VERSION_PATCH')
+    def newVersionPatch = versionPatch.toInteger() + 1
+    writeProperty(VERSION_PROPERTY_FILE, 'VERSION_PATCH', newVersionPatch.toString())
+}
+
+def readProperty(propertiesFilePath, propertyName) {
+    def propertiesFile = file(propertiesFilePath)
+    def properties = loadProperties(propertiesFile)
+    return properties[propertyName]
+}
+
+def writeProperty(propertiesFilePath, propertyName, propertyValue) {
+    def propertiesFile = file(propertiesFilePath)
+    def properties = loadProperties(propertiesFile)
+    properties[propertyName] = propertyValue
+    properties.store(propertiesFile.newWriter(), null)
+}
+
+static def loadProperties(propertiesFile) {
+    if (propertiesFile.canRead()) {
+        def properties = new Properties()
+        properties.load(new FileInputStream(propertiesFile))
+        return properties
+    } else {
+        throw new GradleException('Could not read ' + propertiesFile)
+    }
+}
+
+ext.log = { task, msg ->
+    println(':' + task + ' - ' + msg)
+}
