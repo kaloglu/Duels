@@ -14,20 +14,17 @@
  * limitations under the License.
  */
 
-package com.kaloglu.duels.viewobjects
+package com.kaloglu.duels.domain.enums
 
-import androidx.room.Entity
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
-import java.util.*
-
-@Entity(tableName = "user", primaryKeys = ["sampleParameter"])
-data class CachedSample(
-        @field:SerializedName("sampleParamater")
-        val sampleParameter: String,
-        @field:Expose()
-        val lastRefresh: Date = Date()
-) {
-    fun dataExpired(maxRefreshTime: Date) = lastRefresh <= maxRefreshTime
+/**
+ * Status of a resource that is provided to the UI.
+ *
+ *
+ * These are usually created by the Repository classes where they return
+ * `LiveData<Resource<T>>` to pass back the latest data to the UI with its fetch status.
+ */
+enum class Status {
+    SUCCESS,
+    ERROR,
+    LOADING
 }
-

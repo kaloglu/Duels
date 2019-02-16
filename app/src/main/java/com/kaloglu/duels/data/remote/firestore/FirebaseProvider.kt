@@ -2,7 +2,7 @@ package com.kaloglu.duels.data.remote.firestore
 
 import android.app.Application
 import com.kaloglu.duels.data.remote.NetworkProvider
-import com.kaloglu.duels.firebase.SampleServiceFirebase
+import com.kaloglu.duels.services.SampleServiceFirebase
 
 class FirebaseProvider(private val application: Application) : NetworkProvider() {
 

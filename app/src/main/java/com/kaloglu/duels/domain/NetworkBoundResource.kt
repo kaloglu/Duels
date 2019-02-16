@@ -26,7 +26,7 @@ import com.kaloglu.duels.api.RemoteResponse
 import com.kaloglu.duels.api.RemoteSuccessResponse
 import com.kaloglu.duels.presentation.interfaces.base.mvp.ResponseLiveDataView
 import com.kaloglu.duels.viewobjects.Resource
-import com.kaloglu.duels.viewobjects.Status
+import com.kaloglu.duels.domain.enums.Status
 import java.util.*
 
 /**

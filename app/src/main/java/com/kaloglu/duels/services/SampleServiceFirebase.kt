@@ -1,4 +1,4 @@
-package com.kaloglu.duels.firebase
+package com.kaloglu.duels.services
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.LiveData

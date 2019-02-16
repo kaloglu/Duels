@@ -24,8 +24,6 @@ class ViewPagerAdapter @Inject constructor(fragmentManager: FragmentManager) : F
 
         fragments.clear()
         fragments.add(TournamentsFragment.newInstance())
-        fragments.add(DemoFragment.newInstance(1))
-        fragments.add(DemoFragment.newInstance(2))
     }
 
     override fun getItem(position: Int): BaseFragment {
