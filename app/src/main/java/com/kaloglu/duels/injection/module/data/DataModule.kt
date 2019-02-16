@@ -5,7 +5,6 @@ import com.kaloglu.duels.injection.scopes.PerApplication
 import dagger.Module
 import dagger.Provides
 
-
 @Module
 abstract class DataModule {
     @Module
@@ -16,6 +15,4 @@ abstract class DataModule {
         @PerApplication
         fun provideExecutorFactory() = ExecutorFactory()
     }
-
-
 }

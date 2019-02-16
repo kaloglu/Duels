@@ -28,6 +28,6 @@ abstract class SplashModule {
 
     @Binds
     @PerActivity
-    abstract fun main(activity: SplashActivity): BaseActivity
+    abstract fun splash(activity: SplashActivity): BaseActivity
 
 }
