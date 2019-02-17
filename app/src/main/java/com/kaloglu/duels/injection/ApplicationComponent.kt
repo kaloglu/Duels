@@ -5,7 +5,6 @@ import com.kaloglu.duels.DuelsApp
 import com.kaloglu.duels.injection.module.ActivityBindingModule
 import com.kaloglu.duels.injection.module.ApplicationModule
 import com.kaloglu.duels.injection.module.ContextModule
-import com.kaloglu.duels.injection.module.data.DataModule
 import com.kaloglu.duels.injection.module.data.FirebaseModule
 import com.kaloglu.duels.injection.scopes.PerApplication
 import dagger.BindsInstance
@@ -19,7 +18,6 @@ import dagger.android.support.AndroidSupportInjectionModule
     ActivityBindingModule::class,
     ApplicationModule::class,
     ContextModule::class,
-    DataModule::class,
     FirebaseModule::class
 ])
 interface ApplicationComponent : AndroidInjector<DuelsApp> {

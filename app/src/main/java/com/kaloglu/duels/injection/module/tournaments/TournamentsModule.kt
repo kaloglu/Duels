@@ -1,7 +1,5 @@
 package com.kaloglu.duels.injection.module.tournaments
 
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.kaloglu.duels.data.repository.tournaments.TournamentsRepository
 import com.kaloglu.duels.injection.scopes.PerFragment
 import com.kaloglu.duels.mobileui.base.BaseFragment

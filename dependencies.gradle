@@ -120,6 +120,7 @@ ext.appDependencies = [
         addDependency('implementation', libraries.multidex),
 
         addDependency('implementation', libraries.kotlin),
+        addDependency('implementation', libraries.kotlinReflect),
 
         addDependency('implementation', libraries.appCompatV7),
         addDependency('implementation', libraries.supportDesign),

@@ -29,9 +29,7 @@ class TournamentsFragment
 
     override fun initUserInterface(rootView: View) = Unit
 
-    override fun onLoading() {
-        presenter.getUIState(UIStateType.LOADING)
-    }
+    override fun onLoading() = presenter.getUIState(UIStateType.LOADING)
 
     override fun onSuccess(data: List<Tournament>) {
         when (data.isNullOrEmpty()) {
@@ -40,9 +38,8 @@ class TournamentsFragment
         }
     }
 
-    override fun onError(errorMessage: String?, data: List<Tournament>?) {
-        presenter.getUIState(UIStateType.ERROR)
-    }
+    override fun onError(errorMessage: String?, data: List<Tournament>?) =
+            presenter.getUIState(UIStateType.ERROR)
 
     override fun onPresenterAttached() {
         super.onPresenterAttached()

@@ -9,8 +9,12 @@ import com.kaloglu.duels.data.filters.Filters
 import timber.log.Timber
 import javax.inject.Inject
 
+typealias T = Tournament
 @PerApplication
-class TournamentsRepository @Inject constructor(private val firestore: FirebaseFirestore) {
+class TournamentsRepository @Inject constructor(
+        private val firestore: FirebaseFirestore,
+        @field:Named(TableNames.TOURNAMENTS) private val tournamentsRef: CollectionReference
+) : Repository<T> {
 
     fun getTournaments(filters: Filters?): FireStoreLiveData<Tournament> =
             FireStoreLiveData(toQuery(filters), Tournament::class.java)
@@ -34,7 +38,7 @@ class TournamentsRepository @Inject constructor(private val firestore: FirebaseF
 
     fun addTournament(tournament: Tournament/*, collabrators:List<Collabrator>*/) {
         val batch = firestore.batch()
-        val restRef = firestore.collection("tournaments").document()
+        val restRef = tournamentsRef.document()
 
         // Add restaurant
         batch.set(restRef, tournament)
@@ -50,7 +54,7 @@ class TournamentsRepository @Inject constructor(private val firestore: FirebaseF
     }
 
     fun removeTournament(id: String) {
-        firestore.collection("tournaments").document(id).delete()
+        tournamentsRef.document(id).delete()
     }
 }
 

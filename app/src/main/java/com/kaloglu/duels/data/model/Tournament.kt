@@ -14,6 +14,6 @@ data class Tournament constructor(
 
     companion object {
 
-        val FIELD_NAME = "name"
+        const val FIELD_NAME = "name"
     }
 }
