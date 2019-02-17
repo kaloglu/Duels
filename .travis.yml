@@ -21,9 +21,11 @@ addons:
 script:
 - ./gradlew assembleFirebaseBeta --stacktrace --no-daemon
 - ./gradlew crashlyticsUploadDistributionFirebaseBeta
-after_script:
+before_script:
 - ./gradlew postBeta
+after_script:
 - sonar-scanner -Dsonar.verbose=true -X
+- ./gradlew assembleFirebaseBeta coveralls
 before_install:
 - chmod +x gradlew
 branches:
