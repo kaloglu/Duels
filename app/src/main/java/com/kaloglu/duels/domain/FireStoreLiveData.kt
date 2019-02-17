@@ -14,11 +14,10 @@ class FireStoreLiveData<T : BaseModel>(
     private var registration: ListenerRegistration? = null
 
     override fun onEvent(snapshots: QuerySnapshot?, e: FirebaseFirestoreException?) {
-        if (e != null) {
-            value = Resource.error(e.localizedMessage, documentToList(snapshots))
-            return
+        value = when (e) {
+            null -> Resource.success(documentToList(snapshots) ?: listOf())
+            else -> Resource.error(e.localizedMessage, documentToList(snapshots))
         }
-        value = Resource.success(documentToList(snapshots) ?: listOf())
     }
 
     override fun onActive() {

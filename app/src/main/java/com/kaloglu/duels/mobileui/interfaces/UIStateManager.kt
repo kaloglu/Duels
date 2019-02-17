@@ -29,7 +29,7 @@ class UIStateManager @Inject constructor(val context: Activity) {
     interface UIStatesPresenter {
 
         @UiThread
-        fun getUIState(state: UIStateType): Unit?
+        fun getUIState(state: UIStateType)
     }
 
     fun initStates(statesView: UIStatesView) {

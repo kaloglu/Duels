@@ -47,5 +47,6 @@ class TournamentsPresenter @Inject constructor(
     }
 
     override fun getUIState(state: UIStateManager.UIStateType) = uiStateManager?.getState(state)
+            ?: Unit
 
 }
