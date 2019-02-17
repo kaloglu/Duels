@@ -1,20 +1,23 @@
 package com.kaloglu.duels.data.repository.tournaments
 
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.kaloglu.duels.data.filters.Filters
 import com.kaloglu.duels.data.model.Tournament
 import com.kaloglu.duels.domain.FireStoreLiveData
+import com.kaloglu.duels.domain.TableNames
 import com.kaloglu.duels.injection.scopes.PerApplication
-import com.kaloglu.duels.data.filters.Filters
 import timber.log.Timber
 import javax.inject.Inject
+import javax.inject.Named
 
 typealias T = Tournament
 @PerApplication
 class TournamentsRepository @Inject constructor(
         private val firestore: FirebaseFirestore,
-        @field:Named(TableNames.TOURNAMENTS) private val tournamentsRef: CollectionReference
-) : Repository<T> {
+        @Named(TableNames.TOURNAMENTS) private val tournamentsRef: CollectionReference
+) {
 
     fun getTournaments(filters: Filters?): FireStoreLiveData<Tournament> =
             FireStoreLiveData(toQuery(filters), Tournament::class.java)
