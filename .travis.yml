@@ -18,11 +18,14 @@ licenses:
 addons:
   sonarcloud:
     organization: "kaloglu-github" # the key of the org you chose at step #3
+after_success:
+  - ./gradlew postBeta
+  - git add -u
+  - git commit -m "[ci skip] version changed"
+  - git push
 script:
 - ./gradlew assembleFirebaseBeta --stacktrace --no-daemon
 - ./gradlew crashlyticsUploadDistributionFirebaseBeta
-before_script:
-- ./gradlew postBeta
 after_script:
 - sonar-scanner -Dsonar.verbose=true -X
 - ./gradlew assembleFirebaseBeta coveralls
