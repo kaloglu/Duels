@@ -7,14 +7,26 @@ set -e
     echo 'checkout $TRAVIS_BRANCH'
     git checkout $TRAVIS_BRANCH
 
-latest=$(git tag  -l --merged master --sort='-*authordate' | head -n1)
-echo 'ver =》 ${latest}'
-semver_parts=(${latest//./ })
-major=${semver_parts[0]}
-minor=${semver_parts[1]}
-patch=${semver_parts[2]}
+file="./app/version.properties"
+
+if [ -f "$file" ]
+then
+  echo "$file found."
+
+  while IFS='=' read -r key value
+  do
+    key=$(echo $key | tr '.' '_')
+    eval ${key}=\${value}
+  done < "$file"
+
+  echo "major       = " ${VERSION_MAJOR}
+  echo "minor       = " ${VERSION_MINOR}
+  echo "patch       = " ${VERSION_PATCH}
+else
+  echo "$file not found."
+fi
  
-version=${major}.${minor}.${patch}
+version=${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}
  
 echo 'final ver =》 ${version}'
 
