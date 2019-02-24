@@ -20,15 +20,7 @@ addons:
     organization: "kaloglu-github" # the key of the org you chose at step #3
 after_success:
   - ./gradlew postBeta
-  - MESSAGE=$(git log --format=%B -n 1 $TRAVIS_COMMIT)
-  - git config user.email "travis@kaloglu.com"
-  - git config user.name "travis"
-  - git add -u
-  - git commit -m "[ci skip] ${MESSAGE}"
-  - git branch temp-branch
-  - git checkout master
-  - git merge temp-branch
-  - git push "https://kaloglu:${GITHUB_READ_REPO}@github.com/kaloglu/Duels.git" master > /dev/null 2>&1
+  - ./commit.sh
 script:
 - ./gradlew assembleFirebaseBeta --stacktrace --no-daemon
 - ./gradlew crashlyticsUploadDistributionFirebaseBeta
@@ -36,7 +28,7 @@ after_script:
 - sonar-scanner -Dsonar.verbose=true -X
 # - ./gradlew assembleFirebaseBeta coveralls
 before_install:
-- chmod +x gradlew
+- chmod +x gradlew commit.sh
 branches:
   only:
   - master
