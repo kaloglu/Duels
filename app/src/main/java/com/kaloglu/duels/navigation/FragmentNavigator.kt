@@ -1,5 +1,6 @@
 package com.kaloglu.duels.navigation
 
+import android.transition.Transition
 import androidx.fragment.app.FragmentManager
 import com.kaloglu.duels.injection.scopes.PerActivity
 import com.kaloglu.duels.injection.scopes.PerFragment
@@ -12,22 +13,45 @@ abstract class FragmentNavigator constructor(
         private val containerId: Int
 ) {
 
-    fun showFragment(fragment: BaseFragment) =
-            fragmentManager.beginTransaction()
-                    .setReorderingAllowed(true) // setAllowOptimization before 26.1.0
-                    .replace(containerId, fragment)
-                    .addToBackStack(fragment.fragmentTag)
-                    .commit()
+    interface FragmentCallback {
+        fun onClearFragmentContainer()
+        fun onFillFragmentContainer()
+    }
+
+    private var callback: FragmentCallback? = null
+
+    fun setCallback(callback: FragmentCallback?): FragmentNavigator {
+        this.callback = callback
+        return this
+    }
+
+    fun showFragment(fragment: BaseFragment): FragmentNavigator {
+        fragmentManager.beginTransaction()
+                .setReorderingAllowed(true) // setAllowOptimization before 26.1.0
+                .replace(containerId, fragment)
+                .addToBackStack(fragment.fragmentTag)
+                .commit()
+
+        callback?.onFillFragmentContainer()
+
+        return this
+    }
 
 
-    fun popBackStack() = fragmentManager.popBackStack()
+    fun popBackStack(): FragmentNavigator {
+        if (fragmentManager.backStackEntryCount == 1)
+            callback?.onClearFragmentContainer()
 
-    fun clearPopStack() {
-        var count = fragmentManager.backStackEntryCount
-        while (count > 1) {
-            fragmentManager.popBackStack()
-            count--
+        fragmentManager.popBackStack()
+
+        return this
+    }
+
+    fun clearPopStack(): FragmentNavigator {
+        while (fragmentManager.backStackEntryCount > 0) {
+            popBackStack()
         }
+        return this
     }
 
 }

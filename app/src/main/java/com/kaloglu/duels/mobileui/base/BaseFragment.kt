@@ -41,7 +41,7 @@ abstract class BaseFragment : DaggerFragment() {
      *
      * @param rootView The fragment's root view
      */
-    protected abstract fun initUserInterface(rootView: View)
+    protected open fun initUserInterface(rootView: View) = Unit
 
     /**
      * Refresh when call again

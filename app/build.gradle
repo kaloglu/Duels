@@ -7,6 +7,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'io.fabric'
 apply from: 'generateVersion.gradle'
+apply from: 'sourceDirectories.gradle'
 
 android {
 
@@ -79,26 +80,6 @@ android {
 
 dependencies {
     addDependencies(dependencies, appDependencies)
-}
-
-static def getSourceDirectories(dimensionName) {
-    def directories = new ArrayList<>()
-    def resRoot = 'src/' + dimensionName + '/res'
-    directories.add(resRoot)
-    def layoutsDir = new File('app/' + resRoot + '/layout')
-    if (layoutsDir.exists()) {
-        layoutsDir.eachDir {
-            directories.add(it.canonicalPath)
-            def fragmentsDir = new File(it.canonicalPath + '/fragments')
-            if (fragmentsDir.exists()) {
-                fragmentsDir.eachDir {
-                    directories.add(it.canonicalPath)
-                }
-            }
-        }
-    }
-
-    return directories
 }
 
 apply plugin: 'com.google.gms.google-services'

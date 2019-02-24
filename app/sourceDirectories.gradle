@@ -1,0 +1,36 @@
+ext.getSourceDirectories = { String dimensionName ->
+    getSourceDirectories(dimensionName)
+}
+
+static def getSourceDirectories(dimensionName) {
+    def directories = new ArrayList<>()
+//resources Root
+    def resRoot = "src/$dimensionName/res"
+//layouts Root
+    def layoutRoot = "app/$resRoot/layout"
+//activity layouts
+    def activities = new File("$layoutRoot/activities")
+//fragment layouts
+    def fragments = new File("$layoutRoot/fragments")
+
+    //resources Root
+    directories.add(resRoot)
+
+    //layouts Root
+    directories.add(layoutRoot)
+
+    //activity layouts
+    if (activities.exists()) {
+        activities.eachDir {
+            directories.add(it.canonicalPath)
+        }
+    }
+
+    //fragment layouts
+    if (fragments.exists()) {
+        fragments.eachDir {
+            directories.add(it.canonicalPath)
+        }
+    }
+    return directories
+}

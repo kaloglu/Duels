@@ -22,6 +22,8 @@ class UIStateManager @Inject constructor(val context: Activity) {
 
     interface UIStatesView {
 
+        fun getCurrentState() = currentState
+
         fun getSceneLayout(): ConstraintLayout?
         fun getContainer(uiStateType: UIStateType): View?
     }
@@ -39,6 +41,7 @@ class UIStateManager @Inject constructor(val context: Activity) {
     fun getState(state: UIStateType) = statesView.showUIState(state)
 
     private fun UIStatesView.showUIState(state: UIStateType) {
+        currentState = state
         getSceneLayout()?.let(TransitionManager::beginDelayedTransition)
         hideAllState(this)
         getContainer(state).show()
@@ -55,6 +58,15 @@ class UIStateManager @Inject constructor(val context: Activity) {
     }
 
     private fun View?.hide() = show(false)
+
+    companion object {
+        private var currentState: UIStateType = UIStateType.LOADING
+
+        @JvmStatic
+        fun setCurrentState(state: UIStateType) {
+            currentState = state
+        }
+    }
 
 }
 

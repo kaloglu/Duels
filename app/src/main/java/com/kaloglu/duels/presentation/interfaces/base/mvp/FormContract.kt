@@ -1,11 +1,10 @@
 package com.kaloglu.duels.presentation.interfaces.base.mvp
 
 import android.view.View
-import androidx.annotation.ColorRes
-import androidx.annotation.StringRes
+import com.kaloglu.duels.data.model.BaseModel
 
 interface FormContract {
-    interface FormView<in T> : ResponseLiveDataView<T> {
+    interface FormView<T> : BaseView {
 
         var submitButtonView: View
 
@@ -22,12 +21,9 @@ interface FormContract {
 
         fun getSubmitButton() = submitButtonView
 
-        fun showInfoAlert(@StringRes stringResId: Int, @ColorRes colorResId: Int)
-
-
     }
 
-    interface FormPresenter<T, V : FormView<T>> : BasePresenter<V> {
+    interface FormPresenter<T : BaseModel, V : FormView<T>> : BasePresenter<V> {
 
         private fun getSubmitButton() = getView().getSubmitButton()
 
@@ -41,12 +37,50 @@ interface FormContract {
             submitButton.isEnabled = canSubmitForm()
         }
 
+        /**
+         * If you need check length, pattern, etc...
+         * e.g :
+         * - password need minimum length
+         * - email need pattern
+         *
+         * *Example :*
+         * <pre>
+         * {@code
+         *     when {
+         *         !isValidField() -> {
+         *             showInvalidFieldError()
+         *             false
+         *         }
+         *         !isValidOtherField() -> {
+         *             showInvalidOtherFieldError()
+         *             false
+         *         }
+         *     else -> true
+         *     }
+         * }
+         * </pre>
+         * */
         fun isFormValid(): Boolean
 
+        /**
+         * If you need minimum length or check something for enable submit button.
+         * e.g :
+         * - password need minimum length
+         * - email need pattern
+         *
+         * Example :
+         * <pre>
+         * {@code
+         *     when {
+         *         getView().getFieldValue().isEmpty() -> false
+         *         getView().getOtherFieldValue().isEmpty() -> false
+         *         else -> true
+         * }
+         * </pre>
+         * */
         fun canSubmitForm(): Boolean
 
         fun onSubmitForm()
 
-        fun showSuccessDialog()
     }
 }

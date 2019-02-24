@@ -5,14 +5,12 @@ import com.google.firebase.firestore.IgnoreExtraProperties
 import com.kaloglu.duels.utils.empty
 
 /**
- * Tournament POJO.
+ * Player POJO.
  */
 @IgnoreExtraProperties
-data class Tournament constructor(
+data class Team constructor(
         val name: String? = String.empty
 ) : BaseModel() {
-    val players: List<Player> = emptyList()
-    val teams: List<Team> = emptyList()
 
     companion object {
 

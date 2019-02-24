@@ -3,21 +3,22 @@ package com.kaloglu.duels.domain
 import androidx.lifecycle.LiveData
 import com.google.firebase.firestore.*
 import com.kaloglu.duels.data.model.BaseModel
-import com.kaloglu.duels.presentation.interfaces.base.mvp.ResponseLiveDataView
+import com.kaloglu.duels.data.model.withId
 import com.kaloglu.duels.viewobjects.Resource
-import com.kaloglu.duels.domain.enums.Status
 
-class FireStoreLiveData<T : BaseModel>(
+class FireStoreLiveList<T : BaseModel>(
         private val query: Query,
         private val type: Class<T>
 ) : LiveData<Resource<List<T>>>(), EventListener<QuerySnapshot> {
     private var registration: ListenerRegistration? = null
 
     override fun onEvent(snapshots: QuerySnapshot?, e: FirebaseFirestoreException?) {
-        value = when (e) {
-            null -> Resource.success(documentToList(snapshots) ?: listOf())
-            else -> Resource.error(e.localizedMessage, documentToList(snapshots))
-        }
+        val listData = documentToList(snapshots)
+        value =when {
+                    e != null -> Resource.error(e.localizedMessage, listData)
+                    listData.isNullOrEmpty() -> Resource.empty()
+                    else -> Resource.success(listData)
+                }
     }
 
     override fun onActive() {
@@ -38,20 +39,8 @@ class FireStoreLiveData<T : BaseModel>(
             snapshots
                     ?.takeIf { !it.isEmpty }
                     ?.documents
-                    ?.mapTo(mutableListOf<T>()) {
-                        it.toObject(type)!!.withId(it.id)
+                    ?.map {
+                        val toObject = it.toObject(type)!!
+                        toObject.withId(it.id)
                     }
-                    ?.toList()
-
-    @Suppress("UNCHECKED_CAST")
-    fun <T> observe(view: ResponseLiveDataView<T>) {
-        observe(view, androidx.lifecycle.Observer {
-            when (it?.status) {
-                Status.LOADING -> view.onLoading()
-                Status.SUCCESS -> view.onSuccess(it.data as T)
-                Status.ERROR -> view.onError(it.message, it.data as T)
-                null -> TODO("should define ${it?.status}")
-            }
-        })
-    }
 }
