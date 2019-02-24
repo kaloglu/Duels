@@ -8,29 +8,15 @@ set -e
     git checkout $TRAVIS_BRANCH
 
 latest=$(git tag  -l --merged master --sort='-*authordate' | head -n1)
- 
+echo 'ver =》 ${latest}'
 semver_parts=(${latest//./ })
 major=${semver_parts[0]}
 minor=${semver_parts[1]}
 patch=${semver_parts[2]}
  
-count=$(git rev-list HEAD ^${latest} --ancestry-path ${latest} --count)
-version=""
+version=${major}.${minor}.${patch}
  
-case $branch in
-   "master")
-      version=${major}.$((minor+1)).0
-      ;;
-   "feature/*")
-      version=${major}.${minor}.${patch}-${branch}-${count}
-      ;;
-   *)
-      >&2 echo "unsupported branch type"
-      exit 1
-      ;;
-esac
- 
-echo ${version}
+echo 'final ver =》 ${version}'
 
 if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then
     ./gradlew postBeta
