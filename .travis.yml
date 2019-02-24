@@ -22,6 +22,7 @@ script:
 - git log $(git describe --tags --abbrev=0)..HEAD --oneline > beta_release_notes.txt
 - ./gradlew assembleFirebaseBeta --stacktrace --no-daemon
 - ./gradlew crashlyticsUploadDistributionFirebaseBeta
+#- ./commit.sh
 after_script:
 - sonar-scanner -Dsonar.verbose=true -X
 # - ./gradlew assembleFirebaseBeta coveralls
@@ -38,6 +39,7 @@ cache:
   - '$HOME/.gradle'
   - '.gradle'
 deploy:
+skip_cleanup: true
 - on:
   branch: master
   provider: script
