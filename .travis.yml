@@ -18,12 +18,8 @@ licenses:
 addons:
   sonarcloud:
     organization: "kaloglu-github" # the key of the org you chose at step #3
-after_success:
-  - ./gradlew postBeta
-  - ./commit.sh
 script:
 - ./gradlew assembleFirebaseBeta --stacktrace --no-daemon
-- ./gradlew crashlyticsUploadDistributionFirebaseBeta
 after_script:
 - sonar-scanner -Dsonar.verbose=true -X
 # - ./gradlew assembleFirebaseBeta coveralls
@@ -34,8 +30,15 @@ branches:
   - master
   - develop
 cache:
-    directories:
-    - '$HOME/.m2/repository'
-    - '$HOME/.sonar/cache'
-    - '$HOME/.gradle'
-    - '.gradle'
+  directories:
+  - '$HOME/.m2/repository'
+  - '$HOME/.sonar/cache'
+  - '$HOME/.gradle'
+  - '.gradle'
+deploy:
+- on:
+  branch: master
+  provider: script
+  condition: -z $(git tag --points-at $TRAVIS_COMMIT)
+  script: ./commit.sh
+  tags: true
