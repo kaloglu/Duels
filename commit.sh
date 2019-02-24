@@ -28,19 +28,19 @@ fi
  
 version=${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}
  
-echo 'final ver =》 ${version}'
+echo 'final ver =》 '.${version}
 
 if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then
     ./gradlew postBeta
-    echo 'log $TRAVIS_COMMIT'
+    echo 'log '.$TRAVIS_COMMIT
     git log --format=%B -n 1 $TRAVIS_COMMIT > beta_release_notes.txt
     echo 'add -u'
     git add . -u
-    echo 'tag version ${version}'
+    echo 'tag version '.${version}
     git commit -m "[ci skip] Setting version to ${version}"
-    echo 'push release $TRAVIS_BRANCH'
+    echo 'push release '.$TRAVIS_BRANCH
     git push -f release $TRAVIS_BRANCH 2>&1
 fi
-    echo 'tagged version ${version}'
+    echo 'tagged version '.${version}
     git tag v${version} -a -m "Tagging version v${version}"
     git push -f release $TRAVIS_BRANCH --tags 2>&1
