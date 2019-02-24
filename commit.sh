@@ -33,7 +33,6 @@ echo 'final ver =》 '.${version}
 if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then
     ./gradlew postBeta
     echo 'log '.$TRAVIS_COMMIT
-    git log --format=%B -n 1 $TRAVIS_COMMIT > beta_release_notes.txt
     echo 'add -u'
     git add . -u
     echo 'tag version '.${version}
