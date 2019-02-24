@@ -23,6 +23,7 @@ script:
 - ./gradlew assembleFirebaseBeta --stacktrace --no-daemon
 - ./gradlew crashlyticsUploadDistributionFirebaseBeta
 #- ./commit.sh
+
 after_script:
 - sonar-scanner -Dsonar.verbose=true -X
 # - ./gradlew assembleFirebaseBeta coveralls
@@ -38,6 +39,7 @@ cache:
   - '$HOME/.sonar/cache'
   - '$HOME/.gradle'
   - '.gradle'
+  
 deploy:
 skip_cleanup: true
 - on:
