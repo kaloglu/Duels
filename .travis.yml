@@ -28,13 +28,13 @@ after_success:
   - git branch temp-branch
   - git checkout master
   - git merge temp-branch
-  - git push "https://$GITHUB_READ_REPO@github.com/kaloglu/Duels.git" master > /dev/null 2>&1
+  - git push "https://kaloglu:${GITHUB_READ_REPO}@github.com/kaloglu/Duels.git" master > /dev/null 2>&1
 script:
 - ./gradlew assembleFirebaseBeta --stacktrace --no-daemon
 - ./gradlew crashlyticsUploadDistributionFirebaseBeta
 after_script:
 - sonar-scanner -Dsonar.verbose=true -X
-- ./gradlew assembleFirebaseBeta coveralls
+# - ./gradlew assembleFirebaseBeta coveralls
 before_install:
 - chmod +x gradlew
 branches:
