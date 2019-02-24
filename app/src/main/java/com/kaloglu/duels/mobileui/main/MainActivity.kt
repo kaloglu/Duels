@@ -9,12 +9,13 @@ import androidx.core.content.ContextCompat
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kaloglu.duels.R
 import com.kaloglu.duels.adapter.main.ViewPagerAdapter
 import com.kaloglu.duels.mobileui.base.mvp.BaseMvpActivity
 import com.kaloglu.duels.presentation.interfaces.main.MainContract
-import com.kaloglu.duels.utils.with
+import com.kaloglu.duels.utils.hide
+import com.kaloglu.duels.utils.show
+import com.kaloglu.duels.utils.withAnimation
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -38,9 +39,24 @@ class MainActivity : BaseMvpActivity<MainContract.Presenter>(), MainContract.Vie
         createBottomNavigation()
 
         fab.setOnClickListener {
-            showSnackbar("snackbar test")
+            presenter.newTournament()
         }
 
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        if (supportFragmentManager.backStackEntryCount < 1)
+            presenter.onClearFragmentContainer()
+    }
+
+    override fun showContentContainer(show: Boolean) {
+        content_container.withAnimation(
+                alpha = (if (show) 1 else 0).toFloat(),
+                onStart = { if (show) it.show() },
+                onEnd = { if (!show) it.hide() }
+        )
     }
 
     private fun createBottomNavigation() {
@@ -100,19 +116,20 @@ class MainActivity : BaseMvpActivity<MainContract.Presenter>(), MainContract.Vie
     }
 
     private fun manageFabAnimation(position: Int) {
-        fab.with(
+        fab.withAnimation(
                 predicate = (position == 0),
-                value = 1f,
+                alpha = 1f,
+                scale = 1f,
                 interpolator = OvershootInterpolator(),
-                onStart = FloatingActionButton::show,
-                onEnd = { it.with() }
+                onStart = { it.show() }
         )
 
-        fab.with(
+        fab.withAnimation(
                 predicate = (position != 0 && fab.isShown),
-                value = 0f,
-                onEnd = FloatingActionButton::hide,
-                onCancel = FloatingActionButton::hide
+                alpha = 0f,
+                scale = 0f,
+                onEnd = { it.hide() },
+                onCancel = { it.hide() }
         )
     }
 

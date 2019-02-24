@@ -13,4 +13,7 @@
     <string name="nav_tournament">Tournaments</string>
     <string name="nav_friends">Friends</string>
     <string name="nav_profile">Profile</string>
+    <string name="tournament_form_name_hint">Tournament Name</string>
+    <string name="tournament_form_submit_text">Create new tournament</string>
+    <string name="tournament_form_success_message">İşlem Başarılı!</string>
 </resources>

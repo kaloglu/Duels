@@ -29,9 +29,24 @@ abstract class FirebaseModule {
         @JvmStatic
         @PerApplication
         @Provides
-        @Named(TableNames.TOURNAMENTS)
+        @Named(TableNames.TOURNAMENT_LIST)
         fun tournamentsCollection(firestore: FirebaseFirestore) =
-                firestore.collection(TableNames.TOURNAMENTS)
+                firestore.collection(TableNames.TOURNAMENT_LIST)
+
+        @JvmStatic
+        @PerApplication
+        @Provides
+        @Named(TableNames.PLAYER_LIST)
+        fun playersCollection(firestore: FirebaseFirestore) =
+                firestore.collection(TableNames.PLAYER_LIST)
+
+        @JvmStatic
+        @PerApplication
+        @Provides
+        @Named(TableNames.TEAM_LIST)
+        fun teamsCollection(firestore: FirebaseFirestore) =
+                firestore.collection(TableNames.TEAM_LIST)
+
     }
 
 }

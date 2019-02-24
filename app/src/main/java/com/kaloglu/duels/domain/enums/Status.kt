@@ -26,5 +26,6 @@ package com.kaloglu.duels.domain.enums
 enum class Status {
     SUCCESS,
     ERROR,
+    EMPTY,
     LOADING
 }

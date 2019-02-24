@@ -1,25 +1,23 @@
-package com.kaloglu.duels.presentation.tournaments
+package com.kaloglu.duels.presentation.tournament
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
-import com.kaloglu.duels.data.filters.Filters
-import com.kaloglu.duels.data.repository.tournaments.TournamentsRepository
+import com.kaloglu.duels.data.repository.tournament.TournamentRepository
 import com.kaloglu.duels.mobileui.base.mvp.BaseAbstractPresenter
 import com.kaloglu.duels.mobileui.interfaces.UIStateManager
 import com.kaloglu.duels.mobileui.interfaces.UIStateManager.UIStateType
 import com.kaloglu.duels.presentation.base.GenericDependencies
-import com.kaloglu.duels.presentation.interfaces.tournaments.TournamentsContract
+import com.kaloglu.duels.presentation.interfaces.tournament.TournamentContract
+import com.kaloglu.duels.utils.observe
 import javax.inject.Inject
 
-class TournamentsPresenter @Inject constructor(
-        private val repository: TournamentsRepository,
+class TournamentListPresenter @Inject constructor(
+        private val repository: TournamentRepository,
         override var uiStateManager: UIStateManager?,
         override val genericDependencies: GenericDependencies
-) : BaseAbstractPresenter<TournamentsContract.View>(), TournamentsContract.Presenter {
+) : BaseAbstractPresenter<TournamentContract.ListView>(), TournamentContract.ListPresenter {
     private lateinit var isSignedIn: LiveData<Boolean>
-    private val filters = MutableLiveData<Filters>()
 
     override fun getNextActivity() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -34,7 +32,7 @@ class TournamentsPresenter @Inject constructor(
             }
 
 
-    override fun loadTournaments() {
+    override fun observeTournamentList() {
         getUIState(UIStateType.LOADING)
         isSignedIn = object : LiveData<Boolean>() {
             override fun onActive() {
@@ -43,7 +41,7 @@ class TournamentsPresenter @Inject constructor(
             }
         }
 
-        repository.getTournaments(null).observe(getView())
+        repository.getTournamentList(null).observe(getView())
     }
 
     override fun getUIState(state: UIStateManager.UIStateType) = uiStateManager?.getState(state)

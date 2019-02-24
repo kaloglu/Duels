@@ -61,7 +61,7 @@ abstract class BaseAbstractPresenter<V : BaseView> : BasePresenter<V> {
             }
 
     override fun getNextActivity() {
-        TODO("getNextActivity() not implemented at ${this.javaClass.name}")
+        TODO("getNextActivity() should override at ${this.javaClass.name}")
     }
 
     override fun getSignInActivity() {

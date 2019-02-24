@@ -12,8 +12,10 @@ import com.kaloglu.duels.utils.empty
 @IgnoreExtraProperties
 open class BaseModel(
         @Exclude var id: String? = String.empty
-) {
+)
 
-    fun <T : BaseModel> withId(id: String): T =
-            BaseModel(id) as T
+fun <T : BaseModel> T.withId(id: String): T {
+    this.id = id
+    return this
 }
+

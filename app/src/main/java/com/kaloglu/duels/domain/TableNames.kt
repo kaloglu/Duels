@@ -1,7 +1,7 @@
 package com.kaloglu.duels.domain
 
 object TableNames {
-    const val TOURNAMENTS = "tournaments"
-    const val PLAYERS = "players"
-    const val TEAM = "team"
+    const val TOURNAMENT_LIST = "tournamentList"
+    const val PLAYER_LIST = "players"
+    const val TEAM_LIST = "teams"
 }

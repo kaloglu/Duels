@@ -6,42 +6,45 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.animation.Interpolator
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 /**
  * Created by kaloglu on 6.01.2019.
  */
 
 @JvmOverloads
-fun FloatingActionButton.with(
+fun View.withAnimation(
         predicate: Boolean = true,
-        value: Float? = null,
+        alpha: Float? = null,
+        scale: Float? = null,
         interpolator: Interpolator = LinearOutSlowInInterpolator(),
-        onStart: (FloatingActionButton) -> Unit = {},
-        onEnd: (FloatingActionButton) -> Unit = {},
-        onCancel: (FloatingActionButton) -> Unit = {},
-        onRepeat: (FloatingActionButton) -> Unit = {}
+        onStart: (View) -> Unit = {},
+        onEnd: (View) -> Unit = {},
+        onCancel: (View) -> Unit = {},
+        onRepeat: (View) -> Unit = {}
 ) {
     if (!predicate)
         return
 
     animate().apply {
-        if (value != null) {
-            alpha(value)
-            scaleX(value)
-            scaleY(value)
+        if (alpha != null) {
+            alpha(alpha)
+        }
+
+        if (scale != null) {
+            scaleX(scale)
+            scaleY(scale)
         }
 
         duration = 300
         setInterpolator(interpolator)
         setListener(object : Animator.AnimatorListener {
-            override fun onAnimationStart(animation: Animator) = onStart(this@with)
+            override fun onAnimationStart(animation: Animator) = onStart(this@withAnimation)
 
-            override fun onAnimationEnd(animation: Animator) = onEnd(this@with)
+            override fun onAnimationEnd(animation: Animator) = onEnd(this@withAnimation)
 
-            override fun onAnimationCancel(animation: Animator) = onCancel(this@with)
+            override fun onAnimationCancel(animation: Animator) = onCancel(this@withAnimation)
 
-            override fun onAnimationRepeat(animation: Animator) = onRepeat(this@with)
+            override fun onAnimationRepeat(animation: Animator) = onRepeat(this@withAnimation)
         })
     }.start()
 }

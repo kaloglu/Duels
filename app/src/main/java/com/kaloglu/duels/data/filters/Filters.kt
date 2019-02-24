@@ -7,7 +7,9 @@ import com.google.firebase.firestore.Query
  */
 class Filters {
 
+    var filterByEqualTo: Map<String, *>? = null
     var sortDirection: Query.Direction? = null
+    var sortBy: String? = null
     val name: String? = null
 
     companion object {
@@ -15,7 +17,7 @@ class Filters {
         val default: Filters
             get() {
                 val filters = Filters()
-                filters.sortDirection = Query.Direction.DESCENDING
+                filters.sortDirection = Query.Direction.ASCENDING
 
                 return filters
             }
