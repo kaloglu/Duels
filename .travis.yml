@@ -19,7 +19,8 @@ addons:
   sonarcloud:
     organization: "kaloglu-github" # the key of the org you chose at step #3
 script:
-- ./gradlew assembleFirebaseBeta --stacktrace --no-daemon
+- git log $(git describe --tags --abbrev=0)..HEAD --oneline > beta_release_notes.txt
+- ./gradlewgit log $(git describe --tags --abbrev=0)..HEAD --oneline > beta_release_notes.txt assembleFirebaseBeta --stacktrace --no-daemon
 - ./gradlew crashlyticsUploadDistributionBeta
 after_script:
 - sonar-scanner -Dsonar.verbose=true -X
