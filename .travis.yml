@@ -20,7 +20,7 @@ addons:
     organization: "kaloglu-github" # the key of the org you chose at step #3
 script:
 - ./gradlew assembleFirebaseBeta --stacktrace --no-daemon
-- ./gradlew crashlyticsUploadDistributionFirebaseBeta
+- ./gradlew crashlyticsUploadDistributionBeta
 after_script:
 - sonar-scanner -Dsonar.verbose=true -X
 # - ./gradlew assembleFirebaseBeta coveralls
