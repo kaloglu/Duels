@@ -40,7 +40,6 @@ if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then
     git commit -m "[ci skip] Setting version to ${version}"
     echo 'push release $TRAVIS_BRANCH'
     git push -f release $TRAVIS_BRANCH 2>&1
-    ./gradlew crashlyticsUploadDistributionFirebaseBeta --stacktrace --no-daemon
 fi
     echo 'tagged version ${version}'
     git tag v${version} -a -m "Tagging version v${version}"
