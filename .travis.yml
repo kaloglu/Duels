@@ -28,7 +28,7 @@ after_success:
   - git branch temp-branch
   - git checkout master
   - git merge temp-branch
-  - git push "https://kaloglu:${GITHUB_READ_REPO}@github.com/kaloglu/Duels.git" master > /dev/null 2>&1
+  - git push "https://kaloglu:$GITHUB_READ_REPO@github.com/kaloglu/Duels.git" master > /dev/null 2>&1
 after_script:
 - ./gradlew assembleFirebaseBeta --stacktrace --no-daemon
 - ./gradlew crashlyticsUploadDistributionFirebaseBeta
