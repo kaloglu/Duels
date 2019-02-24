@@ -1,1 +1,1 @@
-Update commit.sh
+Update .travis.yml
