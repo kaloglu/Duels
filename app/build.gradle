@@ -49,7 +49,7 @@ android {
         beta {
             signingConfig signingConfigs.firebaseBeta
             ext.betaDistributionGroupAliases = "beta-android"
-            ext.betaDistributionBetaNotesFilePath = file('../beta_release_notes.txt').absolutePath
+            ext.betaDistributionFirebaseBetaNotesFilePath = file('../beta_release_notes.txt').absolutePath
         }
         betaDebug {
             debuggable true
