@@ -1,5 +1,6 @@
 package com.kaloglu.duels.mobileui.tournament
 
+import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.kaloglu.duels.R
 import com.kaloglu.duels.data.model.Tournament
@@ -18,13 +19,14 @@ class TournamentListFragment
 
     override fun getSceneLayout(): ConstraintLayout? = tournamentListScene
 
-    override fun getContainer(uiStateType: UIStateType) =
-            when (uiStateType) {
-                UIStateType.LOADING -> loading
-                UIStateType.EMPTY -> empty
-                UIStateType.CONTENT -> content
-                UIStateType.ERROR -> null
-            }
+    override fun getContainer(uiStateType: UIStateType): LinearLayout? {
+        return when (uiStateType) {
+            UIStateType.LOADING -> loading
+            UIStateType.EMPTY -> empty
+            UIStateType.CONTENT -> content
+            UIStateType.ERROR -> null
+        }
+    }
 
     override fun onLoading() = presenter.getUIState(UIStateType.LOADING)
 

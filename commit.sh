@@ -9,14 +9,14 @@ set -e
 
 file="./app/version.properties"
 
-if [ -f "$file" ]
+if [[ -f "$file" ]]
 then
   echo "$file found."
 
   while IFS='=' read -r key value
   do
-    key=$(echo $key | tr '.' '_')
-    eval ${key}=\${value}
+    key=$(echo ${key} | tr '.' '_')
+    eval ${key}=\$value
   done < "$file"
 
   echo "major       = " ${VERSION_MAJOR}
@@ -30,7 +30,7 @@ version=${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}
  
 echo 'final ver =》 '.${version}
 
-if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then
+if [[ "$TRAVIS_BRANCH" = "master" && "$TRAVIS_PULL_REQUEST" = "false" ]]; then
     ./gradlew postBeta
     echo 'log '.$TRAVIS_COMMIT
     echo 'add -u'
@@ -41,5 +41,5 @@ if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then
     git push -f release $TRAVIS_BRANCH 2>&1
 fi
     echo 'tagged version '.${version}
-    git tag v${version} -a -m "Tagging version v${version}"
+    git tag beta/${version} -a -m "Tagging version beta/${version}"
     git push -f release $TRAVIS_BRANCH --tags 2>&1
