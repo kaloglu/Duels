@@ -1,11 +1,17 @@
 package com.kaloglu.duels.utils
 
 import android.animation.Animator
+import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.ViewGroup
 import android.view.animation.Interpolator
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.kaloglu.duels.data.model.BaseModel
+import com.kaloglu.duels.utils.adapter.BaseRecyclerViewAdapter
 
 /**
  * Created by kaloglu on 6.01.2019.
@@ -57,3 +63,22 @@ fun View?.show(show: Boolean = true) {
 fun View?.hide() = show(false)
 
 fun hide(vararg views: View?) = views.forEach { it?.hide() }
+
+@JvmOverloads
+fun ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false): View {
+    return LayoutInflater.from(context).inflate(layoutId, this, attachToRoot)
+}
+
+@JvmOverloads
+fun <A : BaseRecyclerViewAdapter<M, VH>,
+        VH : BaseRecyclerViewAdapter.ViewHolder<M>,
+        M : BaseModel>
+        RecyclerView.setup(
+        adapter: A,
+        layoutManager: RecyclerView.LayoutManager? = null
+): A {
+    this.layoutManager = layoutManager ?: LinearLayoutManager(context)
+    this.adapter = adapter
+
+    return adapter
+}

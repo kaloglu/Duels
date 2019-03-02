@@ -33,7 +33,7 @@ class TournamentListPresenter @Inject constructor(
 
 
     override fun observeTournamentList() {
-        getUIState(UIStateType.LOADING)
+        getView().onLoading()
         isSignedIn = object : LiveData<Boolean>() {
             override fun onActive() {
                 super.onActive()
@@ -44,7 +44,8 @@ class TournamentListPresenter @Inject constructor(
         repository.getTournamentList(null).observe(getView())
     }
 
-    override fun getUIState(state: UIStateManager.UIStateType) = uiStateManager?.getState(state)
-            ?: Unit
+    override fun getUIState(state: UIStateManager.UIStateType) {
+        uiStateManager?.getState(state)
+    }
 
 }
