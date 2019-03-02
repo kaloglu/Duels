@@ -18,9 +18,6 @@ licenses:
 addons:
   sonarcloud:
     organization: "kaloglu-github" # the key of the org you chose at step #3
-script:
-- git log $(git describe --tags --abbrev=0)..HEAD --oneline > beta_release_notes.txt
-- ./gradlew clean assembleFirebaseBeta crashlyticsUploadDistributionFirebaseBeta
 #- ./commit.sh
 after_script:
 - sonar-scanner -Dsonar.verbose=true -X

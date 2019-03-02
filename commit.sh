@@ -31,7 +31,8 @@ version=${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}
 echo 'final ver =》 '.${version}
 
 if [[ "$TRAVIS_BRANCH" = "master" && "$TRAVIS_PULL_REQUEST" = "false" ]]; then
-    ./gradlew postBeta
+    git log $(git describe --tags --abbrev=0)..HEAD --oneline > beta_release_notes.txt
+    ./gradlew clean assembleFirebaseBeta postBeta crashlyticsUploadDistributionFirebaseBeta
     echo 'log '.$TRAVIS_COMMIT
     echo 'add -u'
     git add . -u
