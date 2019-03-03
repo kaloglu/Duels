@@ -26,8 +26,8 @@ if [[ "$TRAVIS_BRANCH" = "master" && "$TRAVIS_PULL_REQUEST" = "false" ]]; then
     version=${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}
 
     git log $(git describe --tags --abbrev=0)..HEAD --oneline > beta_release_notes.txt
-    ./gradlew crashlyticsUploadDistributionFirebaseBeta
     ./gradlew postBeta
+    ./gradlew clean assembleFirebaseBeta crashlyticsUploadDistributionFirebaseBeta
     git add . -u
     git commit -m "[ci skip] ${version}"
     git push -f release $TRAVIS_BRANCH 2>&1
