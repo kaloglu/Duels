@@ -9,6 +9,8 @@ import com.kaloglu.duels.data.model.Tournament
 import com.kaloglu.duels.mobileui.base.mvp.BaseMvpFragment
 import com.kaloglu.duels.mobileui.interfaces.UIStateManager.UIStateType
 import com.kaloglu.duels.presentation.interfaces.tournament.TournamentContract
+import com.kaloglu.duels.utils.setItemClickListener
+import com.kaloglu.duels.utils.setViewClickListener
 import com.kaloglu.duels.utils.setup
 import kotlinx.android.synthetic.main.fragment_tournament_list.*
 import kotlinx.android.synthetic.main.tournament_list_content.*
@@ -40,7 +42,7 @@ class TournamentListFragment
     override fun onSuccess(data: List<Tournament>) {
         presenter.getUIState(UIStateType.CONTENT)
 
-        adapter.setItems(data)
+        adapter.items = data
     }
 
     override fun onError(errorMessage: String?, data: List<Tournament>?) =
@@ -48,13 +50,33 @@ class TournamentListFragment
 
 
     override fun initUserInterface(rootView: View) {
-        adapter = recyclerViewTournamentList.setup(TournamentListAdapter())
+        adapter = recyclerViewTournamentList
+                .setup(TournamentListAdapter())
+
+        adapter
+                .setItemClickListener(::onClickItem)
+                .setViewClickListener(::onClickView)
+    }
+
+    override fun onClickItem(item: Tournament) = openTournament(item)
+
+    override fun onClickView(item: Tournament, view: View) {
+//        BottomSheetDialog(view.context).run {
+//            setContentView(
+//                    layoutInflater.inflate(R.layout.tournament_bottom_sheet_dialog, null)
+//            )
+//            show()
+//        }
+
+        presenter.removeTournament(item)
     }
 
     override fun onPresenterAttached() {
         super.onPresenterAttached()
         presenter.observeTournamentList()
     }
+
+    private fun openTournament(model: Tournament) = presenter.openTournament(model)
 
     companion object {
         fun newInstance() =

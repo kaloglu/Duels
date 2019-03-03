@@ -68,4 +68,7 @@
             app:selectedBackgroundVisible="false" />
     </RelativeLayout>
 
+    <!-- Adding bottom sheet after main content -->
+    <include layout="@layout/tournament_bottom_sheet_dialog" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
