@@ -1,3 +1,7 @@
+0a57db0 Update commit.sh
+517e705 [ci skip]
+7732463 Update commit.sh
+1e7c272 [ci skip] 1.0.15
 3509004 Update tournament_list_item.xml
 707d65a Merge pull request #48 from kaloglu/feature/tournament_list
 3ac8188 Add List view
