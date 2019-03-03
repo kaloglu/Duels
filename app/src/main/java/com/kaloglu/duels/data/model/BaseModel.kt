@@ -11,7 +11,7 @@ import com.kaloglu.duels.utils.empty
 @Suppress("UNCHECKED_CAST")
 @IgnoreExtraProperties
 open class BaseModel(
-        @Exclude var id: String? = String.empty
+        @Exclude var id: String = String.empty
 )
 
 fun <T : BaseModel> T.withId(id: String): T {

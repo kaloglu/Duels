@@ -15,7 +15,7 @@ class ItemAdapter<M, VH : ItemAdapter.ItemViewHolder<M>> : RecyclerView.Adapter<
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-            TODO("should be add ViewHolder unless once")
+            TODO("should be add BaseViewHolder unless once")
 
     override fun getItemCount() = values.size
 

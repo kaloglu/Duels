@@ -3,6 +3,7 @@ package com.kaloglu.duels.data.model
 import com.google.firebase.firestore.IgnoreExtraProperties
 
 import com.kaloglu.duels.utils.empty
+import java.io.Serializable
 
 /**
  * Tournament POJO.
@@ -10,7 +11,7 @@ import com.kaloglu.duels.utils.empty
 @IgnoreExtraProperties
 data class Tournament constructor(
         val name: String? = String.empty
-) : BaseModel() {
+) : BaseModel(), Serializable {
     val players: List<Player> = emptyList()
     val teams: List<Team> = emptyList()
 

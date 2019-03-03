@@ -32,12 +32,13 @@ def versions = [
         supportLibrary      : '1.0.0',
         supportLibraryRC01  : '1.0.0-rc01',
         constraintLayout    : '1.1.2',
-        archComp            : '2.0.0-rc01',
+        room                : '2.0.0',
+        lifecycle           : '2.0.0',
         dagger              : '2.16',
         javaxInject         : '1',
         timber              : '4.5.1',
         firebase            : '16.0.7',
-        firebaseAuth        : '4.2.1',
+        firebaseUI          : '4.2.1',
         fireStore           : '17.1.5',
         ahBottomNavigation  : '2.3.3',
         fabricGradle        : '1.26.1',
@@ -82,17 +83,16 @@ def libraries = [
         constraintLayout   : "androidx.constraintlayout:constraintlayout:$versions.constraintLayout",
 
         // Room
-        roomRuntime        : "androidx.room:room-runtime:$versions.archComp",
-        roomCompiler       : "androidx.room:room-compiler:$versions.archComp",
+        roomRuntime        : "androidx.room:room-runtime:$versions.room",
+        roomCompiler       : "androidx.room:room-compiler:$versions.room",
 
         // LifeCycle
-        lifecycleCommon    : "androidx.lifecycle:lifecycle-common:$versions.archComp",
-        lifecycleRuntime   : "androidx.lifecycle:lifecycle-runtime:$versions.archComp",
-        lifeCycleExtensions: "androidx.lifecycle:lifecycle-extensions:$versions.archComp",
-        lifeCycleCompiler  : "androidx.lifecycle:lifecycle-compiler:$versions.archComp",
+        lifecycleCommon    : "androidx.lifecycle:lifecycle-common:$versions.lifecycle",
+        lifecycleRuntime   : "androidx.lifecycle:lifecycle-runtime:$versions.lifecycle",
+        lifeCycleExtensions: "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle",
+        lifeCycleCompiler  : "androidx.lifecycle:lifecycle-compiler:$versions.lifecycle",
 
         // Dagger
-
         dagger             : "com.google.dagger:dagger:$versions.dagger",
         daggerAndroid      : "com.google.dagger:dagger-android:$versions.dagger",
         daggerSupport      : "com.google.dagger:dagger-android-support:$versions.dagger",
@@ -106,8 +106,10 @@ def libraries = [
 
         //Firebase
         firebaseCore       : "com.google.firebase:firebase-core:$versions.firebase",
-        firebaseAuth       : "com.firebaseui:firebase-ui-auth:$versions.firebaseAuth",
         fireStore          : "com.google.firebase:firebase-firestore:$versions.fireStore",
+
+        //FirebaseUI
+        firebaseAuth       : "com.firebaseui:firebase-ui-auth:$versions.firebaseUI",
 
         //BottomNavigation
         ahBottomNavigation : "com.aurelhubert:ahbottomnavigation:$versions.ahBottomNavigation",
@@ -146,8 +148,8 @@ ext.appDependencies = [
         addDependency('implementation', libraries.timber),
 
         addDependency('implementation', libraries.firebaseCore),
-        addDependency('implementation', libraries.firebaseAuth),
         addDependency('implementation', libraries.fireStore),
+        addDependency('implementation', libraries.firebaseAuth),
 
         addDependency('implementation', libraries.ahBottomNavigation),
         addDependency('implementation', libraries.fabric, { transitive = true }),

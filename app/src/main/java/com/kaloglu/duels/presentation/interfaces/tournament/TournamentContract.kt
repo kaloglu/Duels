@@ -18,9 +18,14 @@ interface TournamentContract {
 
     }
 
-    interface ListView : ResponseLiveListView<Tournament>, UIStateManager.UIStatesView
+    interface ListView : ResponseLiveListView<Tournament>, UIStateManager.UIStatesView {
+        fun onClickView(item: Tournament, view: android.view.View)
+        fun onClickItem(item: Tournament)
+    }
 
     interface ListPresenter : BasePresenter<ListView>, UIStateManager.UIStatesPresenter {
         fun observeTournamentList()
+        fun openTournament(model: Tournament)
+        fun removeTournament(item: Tournament)
     }
 }
