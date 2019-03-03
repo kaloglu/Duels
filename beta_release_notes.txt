@@ -1,2 +1,6 @@
-61fe394 fix ci
-6106e90 Fix twice upload crashlytics
+3509004 Update tournament_list_item.xml
+707d65a Merge pull request #48 from kaloglu/feature/tournament_list
+3ac8188 Add List view
+0954a91 Show tournament list
+3c22980 [ci skip] Categorize layouts
+28c333f change travis yml
