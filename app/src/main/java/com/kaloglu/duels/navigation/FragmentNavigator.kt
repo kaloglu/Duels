@@ -1,6 +1,5 @@
 package com.kaloglu.duels.navigation
 
-import android.transition.Transition
 import androidx.fragment.app.FragmentManager
 import com.kaloglu.duels.injection.scopes.PerActivity
 import com.kaloglu.duels.injection.scopes.PerFragment
