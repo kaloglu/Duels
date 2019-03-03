@@ -1,6 +1,7 @@
 #!/bin/bash
 if [[ "$TRAVIS_BRANCH" = "master" && "$TRAVIS_PULL_REQUEST" = "false" ]]; then
     set -e
+    ./gradlew postBeta
     git config --global user.email "build@travis-ci.com"
     git config --global user.name "Travis CI"
     git remote add release "https://$GH_TOKEN@github.com/kaloglu/Duels.git"
@@ -31,5 +32,4 @@ if [[ "$TRAVIS_BRANCH" = "master" && "$TRAVIS_PULL_REQUEST" = "false" ]]; then
     git push -f release $TRAVIS_BRANCH 2>&1
     git tag beta/${version} -a -m "[ci tagging] beta/${version}"
     git push -f release $TRAVIS_BRANCH --tags 2>&1
-    ./gradlew postBeta
 fi
