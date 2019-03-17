@@ -3,11 +3,11 @@ package com.kaloglu.duels.mobileui.base.mvp
 import android.os.Bundle
 import android.view.View
 import com.kaloglu.duels.mobileui.base.BaseFragment
-import com.kaloglu.duels.presentation.interfaces.base.mvp.BasePresenter
-import com.kaloglu.duels.presentation.interfaces.base.mvp.BaseView
+import com.kaloglu.duels.presentation.interfaces.base.mvp.MvpPresenter
+import com.kaloglu.duels.presentation.interfaces.base.mvp.MvpView
 import javax.inject.Inject
 
-abstract class BaseMvpFragment<P : BasePresenter<BaseView>> : BaseFragment(), BaseView {
+abstract class BaseMvpFragment<P : MvpPresenter<MvpView>> : BaseFragment(), MvpView {
     @Inject
     lateinit var presenter: P
 

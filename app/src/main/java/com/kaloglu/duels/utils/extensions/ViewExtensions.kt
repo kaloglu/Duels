@@ -1,4 +1,6 @@
-package com.kaloglu.duels.utils
+@file:JvmName("ViewUtil")
+
+package com.kaloglu.duels.utils.extensions
 
 import android.animation.Animator
 import android.content.Context
@@ -12,7 +14,7 @@ import android.widget.Toast
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.kaloglu.duels.data.model.BaseModel
+import com.kaloglu.duels.domain.model.base.BaseModel
 import com.kaloglu.duels.utils.adapter.BaseRecyclerAdapter
 
 /**

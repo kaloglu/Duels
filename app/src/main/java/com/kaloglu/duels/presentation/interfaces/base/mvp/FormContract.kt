@@ -1,10 +1,10 @@
 package com.kaloglu.duels.presentation.interfaces.base.mvp
 
 import android.view.View
-import com.kaloglu.duels.data.model.BaseModel
+import com.kaloglu.duels.domain.model.base.BaseModel
 
 interface FormContract {
-    interface FormView<T> : BaseView {
+    interface FormView : MvpView {
 
         var submitButtonView: View
 
@@ -23,7 +23,7 @@ interface FormContract {
 
     }
 
-    interface FormPresenter<T : BaseModel, V : FormView<T>> : BasePresenter<V> {
+    interface FormPresenter<T : BaseModel, V : FormView> : MvpPresenter<V> {
 
         private fun getSubmitButton() = getView().getSubmitButton()
 
