@@ -3,7 +3,7 @@ package com.kaloglu.duels.utils.adapter
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.kaloglu.duels.data.model.BaseModel
+import com.kaloglu.duels.domain.model.base.BaseModel
 import kotlin.properties.Delegates
 
 abstract class BaseRecyclerAdapter<M : BaseModel, VH : BaseViewHolder<M>>

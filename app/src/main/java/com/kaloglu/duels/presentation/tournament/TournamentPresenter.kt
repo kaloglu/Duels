@@ -3,7 +3,7 @@ package com.kaloglu.duels.presentation.tournament
 import com.kaloglu.duels.R
 import com.kaloglu.duels.data.model.Tournament
 import com.kaloglu.duels.data.repository.tournament.TournamentRepository
-import com.kaloglu.duels.mobileui.base.mvp.BaseAbstractPresenter
+import com.kaloglu.duels.presentation.base.BasePresenter
 import com.kaloglu.duels.presentation.base.GenericDependencies
 import com.kaloglu.duels.presentation.interfaces.tournament.TournamentContract
 import javax.inject.Inject
@@ -11,7 +11,7 @@ import javax.inject.Inject
 class TournamentPresenter @Inject constructor(
         private val repository: TournamentRepository,
         override val genericDependencies: GenericDependencies
-) : BaseAbstractPresenter<TournamentContract.View>(), TournamentContract.Presenter {
+) : BasePresenter<TournamentContract.View>(), TournamentContract.Presenter {
 
     override fun isFormValid(): Boolean = true
 

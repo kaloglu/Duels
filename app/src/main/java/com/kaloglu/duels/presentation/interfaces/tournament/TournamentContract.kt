@@ -2,8 +2,8 @@ package com.kaloglu.duels.presentation.interfaces.tournament
 
 import com.kaloglu.duels.data.model.Tournament
 import com.kaloglu.duels.mobileui.interfaces.UIStateManager
-import com.kaloglu.duels.presentation.interfaces.base.mvp.BasePresenter
 import com.kaloglu.duels.presentation.interfaces.base.mvp.FormContract
+import com.kaloglu.duels.presentation.interfaces.base.mvp.MvpPresenter
 import com.kaloglu.duels.presentation.interfaces.base.mvp.ResponseLiveListView
 
 interface TournamentContract {
@@ -23,7 +23,7 @@ interface TournamentContract {
         fun onClickItem(item: Tournament)
     }
 
-    interface ListPresenter : BasePresenter<ListView>, UIStateManager.UIStatesPresenter {
+    interface ListPresenter : MvpPresenter<ListView>, UIStateManager.UIStatesPresenter {
         fun observeTournamentList()
         fun openTournament(model: Tournament)
         fun removeTournament(item: Tournament)

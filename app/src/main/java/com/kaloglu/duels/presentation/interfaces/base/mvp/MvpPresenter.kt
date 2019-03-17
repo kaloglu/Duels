@@ -8,7 +8,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.kaloglu.duels.mobileui.base.BaseFragment
 import com.kaloglu.duels.presentation.base.GenericDependencies
 
-interface BasePresenter<out V : BaseView> : LifecycleObserver {
+interface MvpPresenter<out V : MvpView> : LifecycleObserver {
 
     val genericDependencies: GenericDependencies?
 
@@ -22,7 +22,7 @@ interface BasePresenter<out V : BaseView> : LifecycleObserver {
         get() = 9999
 
     @UiThread
-    fun attachView(view: BaseView)
+    fun attachView(view: MvpView)
 
     @UiThread
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)

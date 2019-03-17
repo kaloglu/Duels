@@ -9,9 +9,9 @@ import com.kaloglu.duels.data.model.Tournament
 import com.kaloglu.duels.mobileui.base.mvp.BaseMvpFragment
 import com.kaloglu.duels.mobileui.interfaces.UIStateManager.UIStateType
 import com.kaloglu.duels.presentation.interfaces.tournament.TournamentContract
-import com.kaloglu.duels.utils.setItemClickListener
-import com.kaloglu.duels.utils.setViewClickListener
-import com.kaloglu.duels.utils.setup
+import com.kaloglu.duels.utils.extensions.setItemClickListener
+import com.kaloglu.duels.utils.extensions.setViewClickListener
+import com.kaloglu.duels.utils.extensions.setup
 import kotlinx.android.synthetic.main.fragment_tournament_list.*
 import kotlinx.android.synthetic.main.tournament_list_content.*
 import kotlinx.android.synthetic.main.tournament_list_empty.*
@@ -79,8 +79,7 @@ class TournamentListFragment
     private fun openTournament(model: Tournament) = presenter.openTournament(model)
 
     companion object {
-        fun newInstance() =
-                TournamentListFragment()
+        fun newInstance() = TournamentListFragment()
     }
 
 }

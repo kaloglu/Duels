@@ -13,9 +13,9 @@ import com.kaloglu.duels.R
 import com.kaloglu.duels.adapter.main.ViewPagerAdapter
 import com.kaloglu.duels.mobileui.base.mvp.BaseMvpActivity
 import com.kaloglu.duels.presentation.interfaces.main.MainContract
-import com.kaloglu.duels.utils.hide
-import com.kaloglu.duels.utils.show
-import com.kaloglu.duels.utils.withAnimation
+import com.kaloglu.duels.utils.extensions.hide
+import com.kaloglu.duels.utils.extensions.show
+import com.kaloglu.duels.utils.extensions.withAnimation
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
