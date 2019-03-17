@@ -3,11 +3,11 @@ package com.kaloglu.duels.mobileui.base.mvp
 import android.os.Bundle
 import com.kaloglu.duels.mobileui.base.BaseActivity
 import com.kaloglu.duels.mobileui.base.BaseFragment
-import com.kaloglu.duels.presentation.interfaces.activity.mvp.ActivityPresenter
-import com.kaloglu.duels.presentation.interfaces.activity.mvp.ActivityView
+import com.kaloglu.duels.presentation.interfaces.base.mvp.MvpPresenter
+import com.kaloglu.duels.presentation.interfaces.base.mvp.MvpView
 import javax.inject.Inject
 
-abstract class BaseMvpActivity<P : ActivityPresenter<ActivityView>> : BaseActivity(), ActivityView {
+abstract class BaseMvpActivity<P : MvpPresenter<MvpView>> : BaseActivity(), MvpView {
 
     //TODO: override for initial if you need
     override val containedFragment: BaseFragment? = null

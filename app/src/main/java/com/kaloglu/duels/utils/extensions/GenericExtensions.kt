@@ -1,9 +1,11 @@
-package com.kaloglu.duels.utils
+@file:JvmName("Utility")
+
+package com.kaloglu.duels.utils.extensions
 
 import androidx.lifecycle.Observer
-import com.kaloglu.duels.data.model.BaseModel
 import com.kaloglu.duels.domain.FireStoreLiveList
 import com.kaloglu.duels.domain.enums.Status
+import com.kaloglu.duels.domain.model.base.BaseModel
 import com.kaloglu.duels.presentation.interfaces.base.mvp.ResponseLiveListView
 
 /**

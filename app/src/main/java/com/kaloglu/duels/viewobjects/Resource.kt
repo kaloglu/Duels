@@ -21,21 +21,21 @@ import com.kaloglu.duels.domain.enums.Status.*
 
 /**
  * A generic class that holds a value with its loading status.
- * @param <T>
-</T> */
-data class Resource<out T>(val status: Status, val data: T? = null, val message: String? = null) {
+ * @param <M>
+</M> */
+data class Resource<out M>(val status: Status, val data: M? = null, val message: String? = null) {
     companion object {
-        fun <T> success(data: T?): Resource<T> {
+        fun <M> success(data: M?): Resource<M> {
             return when (data) {
                 null -> empty()
                 else -> Resource(SUCCESS, data, null)
             }
         }
 
-        fun <T> error(msg: String, data: T? = null) = Resource(ERROR, data, msg)
+        fun <M> error(msg: String, data: M? = null) = Resource(ERROR, data, msg)
 
-        fun <T> loading(data: T? = null) = Resource(LOADING, data, null)
+        fun <M> loading(data: M? = null) = Resource(LOADING, data, null)
 
-        fun <T> empty() = Resource<T>(EMPTY)
+        fun <M> empty() = Resource<M>(EMPTY)
     }
 }

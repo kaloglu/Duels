@@ -1,30 +1,32 @@
-package com.kaloglu.duels.mobileui.base.mvp
+package com.kaloglu.duels.presentation.base
 
 import androidx.annotation.CallSuper
 import com.google.android.gms.tasks.OnCompleteListener
 import com.kaloglu.duels.mobileui.base.BaseFragment
 import com.kaloglu.duels.mobileui.interfaces.UIStateManager
-import com.kaloglu.duels.presentation.base.GenericDependencies
-import com.kaloglu.duels.presentation.interfaces.base.mvp.BasePresenter
-import com.kaloglu.duels.presentation.interfaces.base.mvp.BaseView
-import com.kaloglu.duels.utils.checkInjection
+import com.kaloglu.duels.presentation.interfaces.base.mvp.MvpPresenter
+import com.kaloglu.duels.presentation.interfaces.base.mvp.MvpView
+import com.kaloglu.duels.utils.extensions.checkInjection
 import java.lang.ref.WeakReference
 
-abstract class BaseAbstractPresenter<V : BaseView> : BasePresenter<V> {
+/**
+ * Base implementation for presenter
+ * */
+abstract class BasePresenter<V : MvpView> : MvpPresenter<V> {
 
     override val genericDependencies: GenericDependencies? = null
         get() = GenericDependencies::class.java.checkInjection(field)
 
-    open var uiStateManager: UIStateManager? = null
+    override lateinit var uiStateManager: UIStateManager
 
     private var viewRef: WeakReference<V>? = null
 
     @CallSuper
     @Suppress("UNCHECKED_CAST")
-    override fun attachView(view: BaseView) {
+    override fun attachView(view: MvpView) {
         viewRef = WeakReference(view as V)
-        if (view is UIStateManager.UIStatesView) {
-            uiStateManager?.initStates(view)
+        when (view) {
+            is UIStateManager.UIStatesView -> uiStateManager.initStates(view)
         }
     }
 
@@ -43,7 +45,7 @@ abstract class BaseAbstractPresenter<V : BaseView> : BasePresenter<V> {
     }
 
     override fun getView() = when {
-        isViewAttached() -> viewRef!!.get()!!
+        isViewAttached() -> viewRef?.get()!!
         else -> throw IllegalArgumentException()
     }
 
@@ -53,8 +55,7 @@ abstract class BaseAbstractPresenter<V : BaseView> : BasePresenter<V> {
 
     override fun signOut(): OnCompleteListener<Void> =
             OnCompleteListener {
-                genericDependencies!!
-                        .activityNavigator
+                activityNavigator
                         .toSplashScreen()
                         .finishThis()
                         .navigate()

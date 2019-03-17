@@ -2,8 +2,7 @@ package com.kaloglu.duels.domain
 
 import androidx.lifecycle.LiveData
 import com.google.firebase.firestore.*
-import com.kaloglu.duels.data.model.BaseModel
-import com.kaloglu.duels.data.model.withId
+import com.kaloglu.duels.domain.model.base.BaseModel
 import com.kaloglu.duels.viewobjects.Resource
 
 class FireStoreLiveList<T : BaseModel>(
@@ -14,11 +13,11 @@ class FireStoreLiveList<T : BaseModel>(
 
     override fun onEvent(snapshots: QuerySnapshot?, e: FirebaseFirestoreException?) {
         val listData = documentToList(snapshots)
-        value =when {
-                    e != null -> Resource.error(e.localizedMessage, listData)
-                    listData.isNullOrEmpty() -> Resource.empty()
-                    else -> Resource.success(listData)
-                }
+        value = when {
+            e != null -> Resource.error(e.localizedMessage, listData)
+            listData.isNullOrEmpty() -> Resource.empty()
+            else -> Resource.success(listData)
+        }
     }
 
     override fun onActive() {
@@ -41,6 +40,7 @@ class FireStoreLiveList<T : BaseModel>(
                     ?.documents
                     ?.map {
                         val toObject = it.toObject(type)!!
-                        toObject.withId(it.id)
+                        toObject.id = it.id
+                        toObject
                     }
 }

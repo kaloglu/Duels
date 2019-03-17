@@ -1,11 +1,11 @@
 package com.kaloglu.duels.presentation.interfaces.base.mvp
 
-import com.kaloglu.duels.data.model.BaseModel
+import com.kaloglu.duels.domain.model.base.BaseModel
 
-interface ResponseLiveListView<T : BaseModel> : BaseView {
+interface ResponseLiveListView<M : BaseModel> : MvpView {
     fun onLoading()
-    fun onSuccess(data: List<T>)
+    fun onSuccess(data: List<M>)
     fun onEmpty()
-    fun onError(errorMessage: String?, data: List<T>?)
+    fun onError(errorMessage: String?, data: List<M>?)
 
 }

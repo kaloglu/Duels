@@ -5,7 +5,7 @@ import com.firebase.ui.auth.FirebaseUiException
 import com.google.firebase.auth.FirebaseAuth
 import com.kaloglu.duels.R
 import com.kaloglu.duels.injection.scopes.PerActivity
-import com.kaloglu.duels.mobileui.base.mvp.ActivityAbstractPresenter
+import com.kaloglu.duels.presentation.base.BasePresenter
 import com.kaloglu.duels.presentation.base.GenericDependencies
 import com.kaloglu.duels.presentation.interfaces.splash.SplashContract
 import javax.inject.Inject
@@ -14,7 +14,7 @@ import javax.inject.Inject
 class SplashPresenter @Inject constructor(
         private val firebaseAuth: FirebaseAuth,
         override val genericDependencies: GenericDependencies
-) : ActivityAbstractPresenter<SplashContract.View>(), SplashContract.Presenter {
+) : BasePresenter<SplashContract.View>(), SplashContract.Presenter {
 
     override fun checkAuth() =
             when {

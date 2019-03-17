@@ -6,9 +6,10 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import com.google.android.gms.tasks.OnCompleteListener
 import com.kaloglu.duels.mobileui.base.BaseFragment
+import com.kaloglu.duels.mobileui.interfaces.UIStateManager
 import com.kaloglu.duels.presentation.base.GenericDependencies
 
-interface BasePresenter<out V : BaseView> : LifecycleObserver {
+interface MvpPresenter<out V : MvpView> : LifecycleObserver {
 
     val genericDependencies: GenericDependencies?
 
@@ -21,8 +22,10 @@ interface BasePresenter<out V : BaseView> : LifecycleObserver {
     val requestCodeForSignIn: Int
         get() = 9999
 
+    var uiStateManager: UIStateManager
+
     @UiThread
-    fun attachView(view: BaseView)
+    fun attachView(view: MvpView)
 
     @UiThread
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
@@ -66,6 +69,4 @@ interface BasePresenter<out V : BaseView> : LifecycleObserver {
 
     @UiThread
     fun signOut(): OnCompleteListener<Void>
-
-
 }

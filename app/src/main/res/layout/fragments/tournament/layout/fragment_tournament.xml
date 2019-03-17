@@ -19,12 +19,18 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/tournament_form_name_hint">
+            android:hint="@string/tournament_form_name_hint"
+            app:counterEnabled="true"
+            app:counterMaxLength="50">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tournamentForm_Name"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:imeActionId="@integer/create_tournament"
+                android:imeActionLabel="Create"
+                android:inputType="text"
+                android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 

@@ -2,7 +2,7 @@ package com.kaloglu.duels.utils.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.kaloglu.duels.data.model.BaseModel
+import com.kaloglu.duels.domain.model.base.BaseModel
 
 interface DiffAdapter {
 
