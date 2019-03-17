@@ -1,12 +1,1 @@
-2c4067c Update commit.sh
-9b2177c [ci skip] 1.0.15
-0a57db0 Update commit.sh
-517e705 [ci skip]
-7732463 Update commit.sh
-1e7c272 [ci skip] 1.0.15
-3509004 Update tournament_list_item.xml
-707d65a Merge pull request #48 from kaloglu/feature/tournament_list
-3ac8188 Add List view
-0954a91 Show tournament list
-3c22980 [ci skip] Categorize layouts
-28c333f change travis yml
+308bdb6 Update kotlin version
