@@ -2,6 +2,7 @@ package com.kaloglu.duels.presentation.interfaces.base.mvp
 
 import android.view.View
 import com.kaloglu.duels.domain.model.base.BaseModel
+import com.kaloglu.duels.utils.extensions.hideKeyboard
 
 interface FormContract {
     interface FormView : MvpView {
@@ -30,6 +31,7 @@ interface FormContract {
         fun setSubmitButtonEnabledIfPossible() = setSubmitButtonEnabled(getSubmitButton())
 
         fun submitForm() {
+            getSubmitButton().hideKeyboard()
             if (canSubmitForm() && isFormValid()) onSubmitForm()
         }
 
