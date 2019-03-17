@@ -5,9 +5,9 @@ import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.kaloglu.duels.R
 import com.kaloglu.duels.adapter.tournament.TournamentListAdapter
-import com.kaloglu.duels.data.model.Tournament
 import com.kaloglu.duels.mobileui.base.mvp.BaseMvpFragment
 import com.kaloglu.duels.mobileui.interfaces.UIStateManager.UIStateType
+import com.kaloglu.duels.presentation.interfaces.tournament.Model
 import com.kaloglu.duels.presentation.interfaces.tournament.TournamentContract
 import com.kaloglu.duels.utils.extensions.setItemClickListener
 import com.kaloglu.duels.utils.extensions.setViewClickListener
@@ -39,13 +39,13 @@ class TournamentListFragment
 
     override fun onEmpty() = presenter.getUIState(UIStateType.EMPTY)
 
-    override fun onSuccess(data: List<Tournament>) {
+    override fun onSuccess(data: List<Model>) {
         presenter.getUIState(UIStateType.CONTENT)
 
         adapter.items = data
     }
 
-    override fun onError(errorMessage: String?, data: List<Tournament>?) =
+    override fun onError(errorMessage: String?, data: List<Model>?) =
             presenter.getUIState(UIStateType.ERROR)
 
 
@@ -58,9 +58,9 @@ class TournamentListFragment
                 .setViewClickListener(::onClickView)
     }
 
-    override fun onClickItem(item: Tournament) = openTournament(item)
+    override fun onClickItem(model: Model) = presenter.openDetail(model)
 
-    override fun onClickView(item: Tournament, view: View) {
+    override fun onClickView(model: Model, view: View) {
 //        BottomSheetDialog(view.context).run {
 //            setContentView(
 //                    layoutInflater.inflate(R.layout.tournament_bottom_sheet_dialog, null)
@@ -68,15 +68,13 @@ class TournamentListFragment
 //            show()
 //        }
 
-        presenter.removeTournament(item)
+        presenter.remove(model)
     }
 
     override fun onPresenterAttached() {
         super.onPresenterAttached()
-        presenter.observeTournamentList()
+        presenter.observe()
     }
-
-    private fun openTournament(model: Tournament) = presenter.openTournament(model)
 
     companion object {
         fun newInstance() = TournamentListFragment()

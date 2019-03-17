@@ -1,10 +1,12 @@
 package com.kaloglu.duels.presentation.interfaces.tournament
 
-import com.kaloglu.duels.data.model.Tournament
+import com.kaloglu.duels.domain.model.Tournament
 import com.kaloglu.duels.mobileui.interfaces.UIStateManager
 import com.kaloglu.duels.presentation.interfaces.base.mvp.FormContract
 import com.kaloglu.duels.presentation.interfaces.base.mvp.MvpPresenter
 import com.kaloglu.duels.presentation.interfaces.base.mvp.ResponseLiveListView
+
+typealias Model = Tournament
 
 interface TournamentContract {
 
@@ -12,20 +14,21 @@ interface TournamentContract {
         fun getName(): String
     }
 
-    interface Presenter : FormContract.FormPresenter<Tournament, View> {
+    interface Presenter : FormContract.FormPresenter<Model, View> {
         //no need on Submit action
         override fun onSubmitForm() = Unit
 
     }
 
-    interface ListView : ResponseLiveListView<Tournament>, UIStateManager.UIStatesView {
-        fun onClickView(item: Tournament, view: android.view.View)
-        fun onClickItem(item: Tournament)
+    interface ListView : ResponseLiveListView<Model>, UIStateManager.UIStatesView {
+        fun onClickView(model: Model, view: android.view.View)
+        fun onClickItem(model: Model)
     }
 
     interface ListPresenter : MvpPresenter<ListView>, UIStateManager.UIStatesPresenter {
-        fun observeTournamentList()
-        fun openTournament(model: Tournament)
-        fun removeTournament(item: Tournament)
+        fun observe()
+        fun openDetail(model: Model)
+        fun remove(model: Model)
     }
+
 }

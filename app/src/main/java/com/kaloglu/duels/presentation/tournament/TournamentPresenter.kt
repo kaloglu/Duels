@@ -1,10 +1,10 @@
 package com.kaloglu.duels.presentation.tournament
 
 import com.kaloglu.duels.R
-import com.kaloglu.duels.data.model.Tournament
 import com.kaloglu.duels.data.repository.tournament.TournamentRepository
 import com.kaloglu.duels.presentation.base.BasePresenter
 import com.kaloglu.duels.presentation.base.GenericDependencies
+import com.kaloglu.duels.presentation.interfaces.tournament.Model
 import com.kaloglu.duels.presentation.interfaces.tournament.TournamentContract
 import javax.inject.Inject
 
@@ -21,8 +21,8 @@ class TournamentPresenter @Inject constructor(
     }
 
     override fun onSubmitForm() {
-        val tournament = Tournament(getView().getName())
-        repository.addTournament(tournament).addOnCompleteListener {
+        val model = Model(getView().getName())
+        repository.add(model).addOnCompleteListener {
             when {
                 it.isSuccessful -> {
                     getView().showSnackbar(R.string.tournament_form_success_message)
