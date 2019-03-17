@@ -8,7 +8,7 @@ import com.kaloglu.duels.presentation.interfaces.base.mvp.ResponseLiveListView
 
 interface TournamentContract {
 
-    interface View : FormContract.FormView<Tournament> {
+    interface View : FormContract.FormView {
         fun getName(): String
     }
 
