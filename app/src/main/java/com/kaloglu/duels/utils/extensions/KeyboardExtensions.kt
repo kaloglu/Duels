@@ -6,7 +6,6 @@ import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.TextView
 import androidx.annotation.IntegerRes
 
 /**
@@ -50,16 +49,8 @@ fun Context.isKeyboardShown(): Boolean {
     return this.getInputMethodManager().isAcceptingText
 }
 
-/**
- * Return a system-level [InputMethodManager] service
- * for accessing input methods.
- *
- * @param this@getInputMethodManager the context in which system services are obtained from.
- * @return An [InputMethodManager]
- */
-private fun Context.getInputMethodManager(): InputMethodManager {
-    return getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-}
+private fun Context.getInputMethodManager() =
+        getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
 
 /**
@@ -69,13 +60,10 @@ private fun Context.getInputMethodManager(): InputMethodManager {
 fun EditText.onActionResInSoftKeyboard(@IntegerRes actionResId: Int, onOkInSoftKeyboard: (View) -> Boolean) =
         onActionInSoftKeyboard(resources.getInteger(actionResId), onOkInSoftKeyboard)
 
-fun EditText.onActionInSoftKeyboard(action: Int, onOkInSoftKeyboard: (View) -> Boolean) {
-    setOnEditorActionListener(
-            TextView.OnEditorActionListener { view, actionId, _ ->
-                return@OnEditorActionListener when (actionId) {
-                    action -> onOkInSoftKeyboard(view)
-                    else -> false
-                }
+fun EditText.onActionInSoftKeyboard(action: Int, onOkInSoftKeyboard: (View) -> Boolean) =
+        setOnEditorActionListener { view, actionId, _ ->
+            when (actionId) {
+                action -> onOkInSoftKeyboard(view)
+                else -> false
             }
-    )
-}
+        }

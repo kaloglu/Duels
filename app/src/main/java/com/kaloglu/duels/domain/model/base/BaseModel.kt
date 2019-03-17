@@ -14,4 +14,8 @@ import java.io.Serializable
 abstract class BaseModel @JvmOverloads constructor(
         @Exclude var id: String = String.empty,
         open var name: String = String.empty
-):Serializable
+) : Serializable {
+    companion object {
+        const val serialVersionUID = 1L
+    }
+}

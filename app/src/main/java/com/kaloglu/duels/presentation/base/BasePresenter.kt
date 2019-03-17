@@ -9,12 +9,15 @@ import com.kaloglu.duels.presentation.interfaces.base.mvp.MvpView
 import com.kaloglu.duels.utils.extensions.checkInjection
 import java.lang.ref.WeakReference
 
+/**
+ * Base implementation for presenter
+ * */
 abstract class BasePresenter<V : MvpView> : MvpPresenter<V> {
 
     override val genericDependencies: GenericDependencies? = null
         get() = GenericDependencies::class.java.checkInjection(field)
 
-    open var uiStateManager: UIStateManager? = null
+    override lateinit var uiStateManager: UIStateManager
 
     private var viewRef: WeakReference<V>? = null
 
@@ -22,8 +25,8 @@ abstract class BasePresenter<V : MvpView> : MvpPresenter<V> {
     @Suppress("UNCHECKED_CAST")
     override fun attachView(view: MvpView) {
         viewRef = WeakReference(view as V)
-        if (view is UIStateManager.UIStatesView) {
-            uiStateManager?.initStates(view)
+        when (view) {
+            is UIStateManager.UIStatesView -> uiStateManager.initStates(view)
         }
     }
 
@@ -42,7 +45,7 @@ abstract class BasePresenter<V : MvpView> : MvpPresenter<V> {
     }
 
     override fun getView() = when {
-        isViewAttached() -> viewRef!!.get()!!
+        isViewAttached() -> viewRef?.get()!!
         else -> throw IllegalArgumentException()
     }
 
@@ -52,8 +55,7 @@ abstract class BasePresenter<V : MvpView> : MvpPresenter<V> {
 
     override fun signOut(): OnCompleteListener<Void> =
             OnCompleteListener {
-                genericDependencies!!
-                        .activityNavigator
+                activityNavigator
                         .toSplashScreen()
                         .finishThis()
                         .navigate()

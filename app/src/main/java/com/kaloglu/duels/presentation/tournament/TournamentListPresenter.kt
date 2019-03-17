@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 class TournamentListPresenter @Inject constructor(
         private val repository: TournamentRepository,
-        override var uiStateManager: UIStateManager?,
+        override var uiStateManager: UIStateManager,
         override val genericDependencies: GenericDependencies
 ) : BasePresenter<TournamentContract.ListView>(), TournamentContract.ListPresenter {
     private lateinit var isSignedIn: LiveData<Boolean>
@@ -23,15 +23,6 @@ class TournamentListPresenter @Inject constructor(
     override fun getNextActivity() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-
-    override fun signOut(): OnCompleteListener<Void> =
-            OnCompleteListener {
-                activityNavigator
-                        .toSplashScreen()
-                        .finishThis()
-                        .navigate()
-            }
-
 
     override fun observe() {
         getView().onLoading()
@@ -46,12 +37,11 @@ class TournamentListPresenter @Inject constructor(
     }
 
     override fun getUIState(state: UIStateManager.UIStateType) {
-        uiStateManager?.getState(state)
+        uiStateManager.getState(state)
     }
 
     override fun openDetail(model: Model) {
-        genericDependencies
-                .fragmentNavigator
+        fragmentNavigator
                 .showFragment(TournamentFragment.newInstance(model))
     }
 
