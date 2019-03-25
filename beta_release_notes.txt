@@ -1,8 +1,5 @@
-2ed784e Merge pull request #51 from kaloglu/develop
-204e592 Solve codacy issues
-f397a58 Merge pull request #50 from kaloglu/feature/tournament_fragment
-0b27181 Add submit action as named as 'create' on keyboard
-6564492 Merge pull request #49 from kaloglu/refactor/structure
-0842454 [ci skip] Add repository domain and implement base repository
-d40d0e2 Removal Unnecessary classes
-c34b0b3 Refactor packages and structure elements
+28f839d Merge pull request #52 from kaloglu/develop
+ad67554 Merge branch 'beta/1.0.19' into develop
+f77f8ff Migrate AppCompat
+a507edb Move classes to kotlin package
+d78b3e3 Merge branch 'master' into develop
