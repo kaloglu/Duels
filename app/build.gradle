@@ -73,6 +73,7 @@ android {
     sourceSets {
         main {
             res.srcDirs = getSourceDirectories('main')
+            java.srcDirs += 'src/main/kotlin'
         }
 
     }

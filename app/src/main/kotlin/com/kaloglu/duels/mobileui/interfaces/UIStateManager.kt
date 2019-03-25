@@ -1,6 +1,6 @@
 package com.kaloglu.duels.mobileui.interfaces
 
-import android.app.Activity
+import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import androidx.annotation.UiThread
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -9,7 +9,7 @@ import com.kaloglu.duels.injection.scopes.PerFragment
 import javax.inject.Inject
 
 @PerFragment
-class UIStateManager @Inject constructor(val context: Activity) {
+class UIStateManager @Inject constructor(val context: AppCompatActivity) {
 
     private lateinit var statesView: UIStatesView
 

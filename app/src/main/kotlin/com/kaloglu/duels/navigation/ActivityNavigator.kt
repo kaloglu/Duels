@@ -1,6 +1,6 @@
 package com.kaloglu.duels.navigation
 
-import android.app.Activity
+import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
 import android.net.Uri
 import com.firebase.ui.auth.AuthUI
@@ -12,7 +12,7 @@ import java.util.*
 import javax.inject.Inject
 
 @PerActivity
-class ActivityNavigator @Inject constructor(val activity: Activity) {
+class ActivityNavigator @Inject constructor(val activity: AppCompatActivity) {
 
     fun finishCurrentActivity() =
             NavigationCreator(activity).finishThis()

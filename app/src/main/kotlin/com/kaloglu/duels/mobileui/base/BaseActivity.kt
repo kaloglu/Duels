@@ -2,7 +2,6 @@ package com.kaloglu.duels.mobileui.base
 
 import android.os.Bundle
 import androidx.annotation.UiThread
-import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerAppCompatActivity
 

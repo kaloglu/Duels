@@ -1,6 +1,6 @@
 package com.kaloglu.duels.mobileui.splash
 
-import android.app.Activity
+import androidx.appcompat.app.AppCompatActivity
 import android.content.Context
 import android.content.Intent
 import com.firebase.ui.auth.IdpResponse
@@ -30,7 +30,7 @@ class SplashActivity : BaseMvpActivity<SplashContract.Presenter>(), SplashContra
         val response = IdpResponse.fromResultIntent(data)
 
         return when {
-            resultCode == Activity.RESULT_OK -> presenter.checkAuth()
+            resultCode == AppCompatActivity.RESULT_OK -> presenter.checkAuth()
             response == null -> showSnackbar(R.string.sign_in_cancelled)
             response.error != null -> presenter.showError(response.error!!)
             else -> Unit

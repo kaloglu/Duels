@@ -6,10 +6,9 @@ buildscript {
     addRepos(repositories)
 
     dependencies {
-        classpath gradlePlugins.android
-        classpath gradlePlugins.kotlin
-        classpath gradlePlugins.google
-        classpath gradlePlugins.fabric
+        gradlePlugins.each { plugin ->
+            classpath plugin
+        }
     }
 
 }
