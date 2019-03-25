@@ -29,11 +29,12 @@ def versions = [
         gradlePlugin        : '3.2.1',
         multidex            : '2.0.0',
         kotlin              : '1.3.21',
+        ktxVersion          : '1.0.0',
         supportLibrary      : '1.0.0',
         supportLibraryRC01  : '1.0.0-rc01',
         constraintLayout    : '1.1.2',
-        room                : '2.0.0',
-        lifecycle           : '2.0.0',
+        room                : '2.0.0-rc01',
+        lifecycle           : '2.0.0-rc01',
         dagger              : '2.16',
         javaxInject         : '1',
         timber              : '4.5.1',
@@ -41,26 +42,20 @@ def versions = [
         firebaseUI          : '4.2.1',
         fireStore           : '17.1.5',
         ahBottomNavigation  : '2.3.3',
-        fabricGradle        : '1.26.1',
-        fabric              : '2.9.9'
-]
-
-def pluginLibs = [
-        //Google Services Gradle Plugin
-        google : "com.google.gms:google-services:$versions.googleServicesPlugin",
-        // Android Gradle Plugin
-        android: "com.android.tools.build:gradle:$versions.gradlePlugin",
-        // Kotlin Gradle Plugin
-        kotlin : "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin",
-        //Fabric Plugin
-        fabric : "io.fabric.tools:gradle:$versions.fabricGradle"
+        fabricGradle        : '1.27.0',
+        fabric              : '2.9.9',
+        jetifier            : '1.0.0-beta04',
 ]
 
 ext.gradlePlugins = [
-        android: pluginLibs.android,
-        kotlin : pluginLibs.kotlin,
-        google : pluginLibs.google,
-        fabric : pluginLibs.fabric
+        //Google Services Gradle Plugin
+        "com.google.gms:google-services:$versions.googleServicesPlugin",
+        // Android Gradle Plugin
+        "com.android.tools.build:gradle:$versions.gradlePlugin",
+        // Kotlin Gradle Plugin
+        "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin",
+        //Fabric Plugin
+        "io.fabric.tools:gradle:$versions.fabricGradle"
 ]
 
 def libraries = [
@@ -78,7 +73,9 @@ def libraries = [
         supportV4          : "androidx.legacy:legacy-support-v4:$versions.supportLibrary",
         viewPager          : "androidx.viewpager:viewpager:$versions.supportLibrary",
 
-        supportDesign      : "com.google.android.material:material:$versions.supportLibraryRC01",
+        androidKtx         : "androidx.core:core-ktx:$versions.ktxVersion",
+        fragmentKtx        : "androidx.core:core-ktx:$versions.ktxVersion",
+        supportDesign      : "com.google.android.material:material:$versions.supportLibrary",
 
         constraintLayout   : "androidx.constraintlayout:constraintlayout:$versions.constraintLayout",
 
@@ -115,8 +112,11 @@ def libraries = [
         ahBottomNavigation : "com.aurelhubert:ahbottomnavigation:$versions.ahBottomNavigation",
 
         //Fabric
-        fabric             : "com.crashlytics.sdk.android:crashlytics:${versions.fabric}@aar"
+        fabric             : "com.crashlytics.sdk.android:crashlytics:${versions.fabric}@aar",
 
+        //jetifier
+        jetifierKapt       : "com.android.tools.build.jetifier:jetifier-core:${versions.jetifier}",
+        jetifierProcessor  : "com.android.tools.build.jetifier:jetifier-core:${versions.jetifier}"
 ]
 ext.appDependencies = [
         addDependency('implementation', libraries.multidex),
@@ -135,12 +135,14 @@ ext.appDependencies = [
         addDependency('implementation', libraries.roomRuntime),
         addDependency('kapt', libraries.roomCompiler),
 
+        addDependency('implementation', libraries.androidKtx),
+        addDependency('implementation', libraries.fragmentKtx),
         addDependency('implementation', libraries.lifecycleRuntime),
         addDependency('implementation', libraries.lifeCycleExtensions),
         addDependency('kapt', libraries.lifeCycleCompiler),
 
-        addDependency('implementation', libraries.dagger),
-        addDependency('implementation', libraries.daggerAndroid),
+        addDependency('api', libraries.dagger),
+        addDependency('api', libraries.daggerAndroid),
         addDependency('implementation', libraries.daggerSupport),
         addDependency('kapt', libraries.daggerCompiler),
         addDependency('kapt', libraries.daggerProcessor),
@@ -153,6 +155,9 @@ ext.appDependencies = [
 
         addDependency('implementation', libraries.ahBottomNavigation),
         addDependency('implementation', libraries.fabric, { transitive = true }),
+
+        addDependency('kapt', libraries.jetifierKapt),
+        addDependency('annotationProcessor', libraries.jetifierProcessor),
 
         //TODO: kullanılmazsa silinecek
         addDependency('implementation', libraries.javaxInject),

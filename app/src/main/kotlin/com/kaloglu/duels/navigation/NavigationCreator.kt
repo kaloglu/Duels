@@ -1,10 +1,10 @@
 package com.kaloglu.duels.navigation
 
-import android.app.Activity
+import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
 import androidx.annotation.AnimRes
 
-class NavigationCreator internal constructor(private val activity: Activity) {
+class NavigationCreator internal constructor(private val activity: AppCompatActivity) {
 
     private var intent: Intent? = null
     private var animationPair: Pair<Int, Int>? = null
