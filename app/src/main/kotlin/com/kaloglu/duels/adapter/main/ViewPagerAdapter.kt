@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.kaloglu.duels.mobileui.base.BaseFragment
 import com.kaloglu.duels.mobileui.tournament.TournamentListFragment
+import com.kaloglu.duels.utils.extensions.putArgs
 import java.util.*
 import javax.inject.Inject
 
@@ -22,7 +23,7 @@ class ViewPagerAdapter @Inject constructor(fragmentManager: FragmentManager) : F
     init {
 
         fragments.clear()
-        fragments.add(TournamentListFragment.newInstance())
+        fragments.add(TournamentListFragment().putArgs())
     }
 
     override fun getItem(position: Int): BaseFragment {

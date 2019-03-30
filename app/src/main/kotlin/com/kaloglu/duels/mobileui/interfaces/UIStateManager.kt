@@ -1,7 +1,7 @@
 package com.kaloglu.duels.mobileui.interfaces
 
-import androidx.appcompat.app.AppCompatActivity
 import android.view.View
+
 import androidx.annotation.UiThread
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.transition.TransitionManager
@@ -9,16 +9,9 @@ import com.kaloglu.duels.injection.scopes.PerFragment
 import javax.inject.Inject
 
 @PerFragment
-class UIStateManager @Inject constructor(val context: AppCompatActivity) {
+class UIStateManager @Inject constructor() {
 
     private lateinit var statesView: UIStatesView
-
-    enum class UIStateType {
-        LOADING,
-        EMPTY,
-        CONTENT,
-        ERROR
-    }
 
     interface UIStatesView {
 
@@ -61,12 +54,6 @@ class UIStateManager @Inject constructor(val context: AppCompatActivity) {
 
     companion object {
         private var currentState: UIStateType = UIStateType.LOADING
-
-        @JvmStatic
-        fun setCurrentState(state: UIStateType) {
-            currentState = state
-        }
     }
 
 }
-

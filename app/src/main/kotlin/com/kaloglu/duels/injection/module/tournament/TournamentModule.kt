@@ -3,10 +3,10 @@ package com.kaloglu.duels.injection.module.tournament
 import com.kaloglu.duels.data.repository.tournament.TournamentRepository
 import com.kaloglu.duels.injection.scopes.PerFragment
 import com.kaloglu.duels.mobileui.base.BaseFragment
-import com.kaloglu.duels.mobileui.interfaces.UIStateManager
 import com.kaloglu.duels.mobileui.tournament.TournamentFragment
 import com.kaloglu.duels.mobileui.tournament.TournamentListFragment
 import com.kaloglu.duels.presentation.base.GenericDependencies
+import com.kaloglu.duels.presentation.base.GenericListDependencies
 import com.kaloglu.duels.presentation.interfaces.tournament.TournamentContract
 import com.kaloglu.duels.presentation.tournament.TournamentListPresenter
 import com.kaloglu.duels.presentation.tournament.TournamentPresenter
@@ -25,10 +25,9 @@ abstract class TournamentModule {
         @PerFragment
         fun listPresenter(
                 repository: TournamentRepository,
-                uiStateManager: UIStateManager,
-                genericDependencies: GenericDependencies
+                genericDependencies: GenericListDependencies
         ): TournamentContract.ListPresenter =
-                TournamentListPresenter(repository, uiStateManager, genericDependencies)
+                TournamentListPresenter(repository, genericDependencies)
 
         @JvmStatic
         @Provides

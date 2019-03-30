@@ -1,13 +1,14 @@
 package com.kaloglu.duels.navigation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
 import android.net.Uri
+import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
 import com.kaloglu.duels.BuildConfig
 import com.kaloglu.duels.injection.scopes.PerActivity
 import com.kaloglu.duels.mobileui.main.MainActivity
 import com.kaloglu.duels.mobileui.splash.SplashActivity
+import com.kaloglu.duels.utils.extensions.createIntent
 import java.util.*
 import javax.inject.Inject
 
@@ -19,9 +20,6 @@ class ActivityNavigator @Inject constructor(val activity: AppCompatActivity) {
 
     fun openExternalUrl(url: String) =
             NavigationCreator(activity).intent(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-
-    fun toMainActivity() =
-            NavigationCreator(activity).intent(MainActivity.newIntent(activity))
 
     fun toSignInActivity(requestCodeForSignIn: Int): NavigationCreator {
 
@@ -42,7 +40,12 @@ class ActivityNavigator @Inject constructor(val activity: AppCompatActivity) {
                 .forResult(requestCodeForSignIn)
     }
 
-    fun toSplashScreen() =
-            NavigationCreator(activity).intent(SplashActivity.newIntent(activity))
+    @JvmOverloads
+    fun toMainActivity(extraBuilder: (Intent.() -> Unit) = {}) =
+            NavigationCreator(activity).intent(activity.createIntent<MainActivity>(extraBuilder))
+
+    @JvmOverloads
+    fun toSplashScreen(extraBuilder: (Intent.() -> Unit) = {}) =
+            NavigationCreator(activity).intent(activity.createIntent<SplashActivity>(extraBuilder))
 
 }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.CallSuper
 import dagger.android.support.DaggerFragment
 
 abstract class BaseFragment : DaggerFragment() {
@@ -41,6 +42,7 @@ abstract class BaseFragment : DaggerFragment() {
      *
      * @param rootView The fragment's root view
      */
+    @CallSuper
     protected open fun initUserInterface(rootView: View) = Unit
 
     /**

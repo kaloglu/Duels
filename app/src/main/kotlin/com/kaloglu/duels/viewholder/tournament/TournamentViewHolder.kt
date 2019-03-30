@@ -9,7 +9,7 @@ class TournamentViewHolder(itemView: View) : BaseViewHolder<Model>(itemView) {
     override fun bindItem(item: Model) {
         itemView.apply {
             tournamentName.text = item.name
-            tournamentMore.setOnClickListener { onViewClick.invoke(item, it) }
+            tournamentMoreButton.setOnClickListener { onViewClick.invoke(item, it) }
         }
     }
 
