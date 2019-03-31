@@ -1,5 +1,4 @@
-28f839d Merge pull request #52 from kaloglu/develop
-ad67554 Merge branch 'beta/1.0.19' into develop
-f77f8ff Migrate AppCompat
-a507edb Move classes to kotlin package
-d78b3e3 Merge branch 'master' into develop
+919b2e9 Merge pull request #54 from kaloglu/develop
+118ce4f Merge pull request #53 from kaloglu/feature/new_structure
+55f1c95 Add BottomSheet menu for adapter items
+08dfd7d Create new injection simplified
