@@ -1,16 +1,32 @@
 package com.kaloglu.duels.mobileui.base.mvp
 
 import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.CallSuper
-import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.kaloglu.duels.R
 import com.kaloglu.duels.domain.model.base.BaseModel
 import com.kaloglu.duels.mobileui.interfaces.UIStateType
+import com.kaloglu.duels.presentation.interfaces.base.bottomsheetmenu.BottomSheetMenu
+import com.kaloglu.duels.presentation.interfaces.base.bottomsheetmenu.BottomSheetMenuView
 import com.kaloglu.duels.presentation.interfaces.base.mvp.MvpListPresenter
 import com.kaloglu.duels.presentation.interfaces.base.mvp.MvpListView
-import com.kaloglu.duels.presentation.interfaces.tournament.Model
 
 abstract class BaseMvpListFragment<M : BaseModel, V : MvpListView<M>, P : MvpListPresenter<M, V>>
     : BaseMvpFragment<V, P>(), MvpListView<M> {
+
+    override var bottomSheetMenuView: BottomSheetMenuView<M> = object : BottomSheetMenu<M>() {
+        override fun onClickBottomMenuItem(
+                bottomSheetItem: M,
+                bottomMenuItemView: View
+        ) {
+            when (bottomMenuItemView.id) {
+                R.id.bottomSheetEdit -> presenter.openDetail(bottomSheetItem)
+                R.id.bottomSheetDelete -> presenter.remove(bottomSheetItem)
+                else -> TODO("should override onClickBottomMenuItem(bottomMenuItem: View)")
+            }
+
+        }
+    }
 
     override fun onLoading() = presenter.getUIState(UIStateType.LOADING)
 
@@ -23,24 +39,19 @@ abstract class BaseMvpListFragment<M : BaseModel, V : MvpListView<M>, P : MvpLis
     override fun onError(errorMessage: String?, data: List<M>?) =
             presenter.getUIState(UIStateType.ERROR)
 
-    @CallSuper
+    override fun initUserInterface(rootView: View) {
+        super.initUserInterface(rootView)
+        bottomSheetMenuView.init(rootView as ViewGroup)
+    }
+
     override fun onClickItem(model: M) = presenter.openDetail(model)
 
-    @CallSuper
     override fun onClickView(model: M, view: View) = Unit
-
-    override fun showBottomMenu(model: Model, bottomSheetLayout: Int) {
-        BottomSheetDialog(view!!.context).run {
-            setContentView(
-                    layoutInflater.inflate(bottomSheetLayout, null)
-            )
-            show()
-        }
-    }
 
     @CallSuper
     override fun onPresenterAttached() {
         super.onPresenterAttached()
         presenter.observe()
     }
+
 }

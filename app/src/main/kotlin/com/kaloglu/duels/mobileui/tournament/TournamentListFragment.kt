@@ -1,12 +1,13 @@
 package com.kaloglu.duels.mobileui.tournament
 
+import android.annotation.SuppressLint
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.kaloglu.duels.R
 import com.kaloglu.duels.adapter.tournament.TournamentListAdapter
+import com.kaloglu.duels.domain.model.Tournament
 import com.kaloglu.duels.mobileui.base.mvp.BaseMvpListFragment
 import com.kaloglu.duels.mobileui.interfaces.UIStateType
-import com.kaloglu.duels.presentation.interfaces.tournament.Model
 import com.kaloglu.duels.presentation.interfaces.tournament.TournamentContract
 import com.kaloglu.duels.utils.extensions.setItemClickListener
 import com.kaloglu.duels.utils.extensions.setViewClickListener
@@ -17,7 +18,7 @@ import kotlinx.android.synthetic.main.tournament_list_empty.*
 import kotlinx.android.synthetic.main.tournament_list_loading.*
 
 class TournamentListFragment
-    : BaseMvpListFragment<Model, TournamentContract.ListView, TournamentContract.ListPresenter>()
+    : BaseMvpListFragment<Tournament, TournamentContract.ListView, TournamentContract.ListPresenter>()
         , TournamentContract.ListView {
 
     private lateinit var adapter: TournamentListAdapter
@@ -44,15 +45,17 @@ class TournamentListFragment
                 .setViewClickListener(::onClickView)
     }
 
-    override fun onSuccess(data: List<Model>) {
+    override fun onSuccess(data: List<Tournament>) {
         super.onSuccess(data)
         adapter.items = data
     }
 
-    override fun onClickView(model: Model, view: View) {
-        super.onClickView(model, view)
+    @SuppressLint("InflateParams")
+    override fun onClickView(model: Tournament, view: View) {
         when (view.id) {
-            R.id.tournamentMoreButton -> showBottomMenu(model)
+            R.id.tournamentMoreButton -> {
+                bottomSheetMenuView.show(model)
+            }
         }
     }
 

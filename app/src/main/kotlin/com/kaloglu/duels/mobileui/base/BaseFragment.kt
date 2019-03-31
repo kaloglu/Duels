@@ -9,6 +9,8 @@ import dagger.android.support.DaggerFragment
 
 abstract class BaseFragment : DaggerFragment() {
 
+    internal lateinit var rootView: View
+
     /**
      * Get fragment's UI content layout resource id.
      *
@@ -32,7 +34,9 @@ abstract class BaseFragment : DaggerFragment() {
     open fun inflateView(inflater: LayoutInflater, container: ViewGroup?): View =
             inflater.inflate(resourceLayoutId, container, false)
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        rootView = view
         super.onViewCreated(view, savedInstanceState)
         initUserInterface(view)
     }
