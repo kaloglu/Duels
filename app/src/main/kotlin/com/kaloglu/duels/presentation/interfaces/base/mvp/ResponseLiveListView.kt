@@ -7,5 +7,4 @@ interface ResponseLiveListView<M : BaseModel> : MvpView {
     fun onSuccess(data: List<M>)
     fun onEmpty()
     fun onError(errorMessage: String?, data: List<M>?)
-
 }

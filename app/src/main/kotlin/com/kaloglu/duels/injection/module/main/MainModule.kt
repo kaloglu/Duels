@@ -25,8 +25,8 @@ abstract class MainModule {
         @JvmStatic
         @Provides
         @PerActivity
-        fun presenter(genericDependencies: GenericDependencies):
-                MainContract.Presenter = MainPresenter(genericDependencies)
+        fun presenter(genericDependencies: GenericDependencies): MainContract.Presenter =
+                MainPresenter(genericDependencies)
 
     }
 

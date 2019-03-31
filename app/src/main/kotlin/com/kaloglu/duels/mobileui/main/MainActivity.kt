@@ -1,7 +1,5 @@
 package com.kaloglu.duels.mobileui.main
 
-import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.os.Handler
 import android.view.animation.OvershootInterpolator
@@ -19,14 +17,12 @@ import com.kaloglu.duels.utils.extensions.withAnimation
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
-class MainActivity : BaseMvpActivity<MainContract.Presenter>(), MainContract.View {
+class MainActivity : BaseMvpActivity<MainContract.View, MainContract.Presenter>(), MainContract.View {
 
     @Inject
     lateinit var adapter: ViewPagerAdapter
 
     override val contentResourceId = R.layout.activity_main
-
-    override val baseFrameLayoutId = -1
 
     override val snackbarLayoutId = R.id.bottom_navigation
 
@@ -146,9 +142,4 @@ class MainActivity : BaseMvpActivity<MainContract.Presenter>(), MainContract.Vie
         }, 1000)
     }
 
-    companion object {
-
-        @JvmStatic
-        fun newIntent(context: Context): Intent = Intent(context, MainActivity::class.java)
-    }
 }

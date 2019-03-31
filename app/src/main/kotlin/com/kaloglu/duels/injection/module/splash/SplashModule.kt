@@ -1,6 +1,5 @@
 package com.kaloglu.duels.injection.module.splash
 
-import com.google.firebase.auth.FirebaseAuth
 import com.kaloglu.duels.injection.module.ActivityModule
 import com.kaloglu.duels.injection.scopes.PerActivity
 import com.kaloglu.duels.mobileui.base.BaseActivity
@@ -21,8 +20,8 @@ abstract class SplashModule {
         @JvmStatic
         @Provides
         @PerActivity
-        fun presenter(firebaseAuth: FirebaseAuth, genericDependencies: GenericDependencies):
-                SplashContract.Presenter = SplashPresenter(firebaseAuth, genericDependencies)
+        fun presenter(genericDependencies: GenericDependencies): SplashContract.Presenter =
+                SplashPresenter(genericDependencies)
 
     }
 

@@ -16,4 +16,6 @@
     <string name="tournament_form_name_hint">Tournament Name</string>
     <string name="tournament_form_submit_text">Create new tournament</string>
     <string name="tournament_form_success_message">İşlem Başarılı!</string>
+    <string name="tournament_bottom_menu_edit">Tournament Edit</string>
+    <string name="tournament_bottom_menu_delete">Tournament Delete</string>
 </resources>
