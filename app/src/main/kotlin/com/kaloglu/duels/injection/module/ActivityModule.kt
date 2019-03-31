@@ -10,6 +10,7 @@ import com.kaloglu.duels.injection.scopes.PerActivity
 import com.kaloglu.duels.injection.scopes.PerFragment
 import com.kaloglu.duels.mobileui.base.BaseActivity
 import com.kaloglu.duels.mobileui.base.BaseFragment
+import com.kaloglu.duels.navigation.ActivityNavigator
 import com.kaloglu.duels.navigation.FragmentNavigator
 import com.kaloglu.duels.presentation.interfaces.base.navigator.BaseFragmentNavigator
 import dagger.Binds
@@ -25,14 +26,20 @@ abstract class ActivityModule {
         @JvmStatic
         @Provides
         @PerActivity
+        fun fragmentManager(activity: AppCompatActivity): FragmentManager =
+                activity.supportFragmentManager
+
+        @JvmStatic
+        @Provides
+        @PerActivity
         fun fragmentNavigator(fragmentManager: FragmentManager): FragmentNavigator =
                 BaseFragmentNavigator(fragmentManager)
 
         @JvmStatic
         @Provides
         @PerActivity
-        fun fragmentManager(activity: AppCompatActivity): FragmentManager =
-                activity.supportFragmentManager
+        fun activityNavigator(activity: AppCompatActivity): ActivityNavigator =
+                ActivityNavigator(activity)
 
     }
 

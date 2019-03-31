@@ -1,45 +1,38 @@
 package com.kaloglu.duels.presentation.interfaces.base.mvp
 
 import androidx.annotation.UiThread
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
+import com.firebase.ui.auth.FirebaseUiException
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.FirebaseAuth
 import com.kaloglu.duels.mobileui.base.BaseFragment
-import com.kaloglu.duels.mobileui.interfaces.UIStateManager
+import com.kaloglu.duels.navigation.ActivityNavigator
+import com.kaloglu.duels.navigation.FragmentNavigator
 import com.kaloglu.duels.presentation.base.GenericDependencies
 
-interface MvpPresenter<out V : MvpView> : LifecycleObserver {
+interface MvpPresenter<V : MvpView> {
 
     val genericDependencies: GenericDependencies?
 
-    val activityNavigator
+    val firebaseAuth: FirebaseAuth
+        get() = genericDependencies!!.firebaseAuth
+
+    val activityNavigator: ActivityNavigator
         get() = genericDependencies!!.activityNavigator
 
-    val fragmentNavigator
+    val fragmentNavigator: FragmentNavigator
         get() = genericDependencies!!.fragmentNavigator
 
     val requestCodeForSignIn: Int
         get() = 9999
 
-    var uiStateManager: UIStateManager
+    @UiThread
+    fun checkAuth()
 
     @UiThread
-    fun attachView(view: MvpView)
-
-    @UiThread
-    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    fun attachLifecycle()
-
-    @UiThread
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun detachLifecycle()
+    fun attachView(view: V)
 
     @UiThread
     fun detachView()
-
-    @UiThread
-    fun getLifeCycle(): Lifecycle
 
     /**
      * Gets the attached view. You should to [isViewAttached] to avoid exceptions.
@@ -59,14 +52,18 @@ interface MvpPresenter<out V : MvpView> : LifecycleObserver {
     fun isViewAttached(): Boolean
 
     @UiThread
-    fun getSignInActivity()
-
-    @UiThread
-    fun getNextActivity()
-
-    @UiThread
     fun showFragment(fragment: BaseFragment?)
 
     @UiThread
     fun signOut(): OnCompleteListener<Void>
+
+    @UiThread
+    fun onLogin()
+
+    @UiThread
+    fun onLogout()
+
+    @UiThread
+    fun showFireBaseAuthError(firebaseUiException: FirebaseUiException)
+
 }

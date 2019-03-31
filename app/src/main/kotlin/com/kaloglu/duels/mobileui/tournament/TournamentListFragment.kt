@@ -1,13 +1,13 @@
 package com.kaloglu.duels.mobileui.tournament
 
+import android.annotation.SuppressLint
 import android.view.View
-import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.kaloglu.duels.R
 import com.kaloglu.duels.adapter.tournament.TournamentListAdapter
-import com.kaloglu.duels.mobileui.base.mvp.BaseMvpFragment
-import com.kaloglu.duels.mobileui.interfaces.UIStateManager.UIStateType
-import com.kaloglu.duels.presentation.interfaces.tournament.Model
+import com.kaloglu.duels.domain.model.Tournament
+import com.kaloglu.duels.mobileui.base.mvp.BaseMvpListFragment
+import com.kaloglu.duels.mobileui.interfaces.UIStateType
 import com.kaloglu.duels.presentation.interfaces.tournament.TournamentContract
 import com.kaloglu.duels.utils.extensions.setItemClickListener
 import com.kaloglu.duels.utils.extensions.setViewClickListener
@@ -18,7 +18,8 @@ import kotlinx.android.synthetic.main.tournament_list_empty.*
 import kotlinx.android.synthetic.main.tournament_list_loading.*
 
 class TournamentListFragment
-    : BaseMvpFragment<TournamentContract.ListPresenter>(), TournamentContract.ListView {
+    : BaseMvpListFragment<Tournament, TournamentContract.ListView, TournamentContract.ListPresenter>()
+        , TournamentContract.ListView {
 
     private lateinit var adapter: TournamentListAdapter
 
@@ -26,30 +27,16 @@ class TournamentListFragment
 
     override fun getSceneLayout(): ConstraintLayout? = tournamentListScene
 
-    override fun getContainer(uiStateType: UIStateType): LinearLayout? {
-        return when (uiStateType) {
-            UIStateType.LOADING -> loading
-            UIStateType.EMPTY -> empty
-            UIStateType.CONTENT -> content
-            UIStateType.ERROR -> null
-        }
+    override fun getContainer(uiStateType: UIStateType) = when (uiStateType) {
+        UIStateType.LOADING -> loading
+        UIStateType.EMPTY -> empty
+        UIStateType.CONTENT -> content
+        UIStateType.ERROR -> null
     }
-
-    override fun onLoading() = presenter.getUIState(UIStateType.LOADING)
-
-    override fun onEmpty() = presenter.getUIState(UIStateType.EMPTY)
-
-    override fun onSuccess(data: List<Model>) {
-        presenter.getUIState(UIStateType.CONTENT)
-
-        adapter.items = data
-    }
-
-    override fun onError(errorMessage: String?, data: List<Model>?) =
-            presenter.getUIState(UIStateType.ERROR)
-
 
     override fun initUserInterface(rootView: View) {
+        super.initUserInterface(rootView)
+
         adapter = recyclerViewTournamentList
                 .setup(TournamentListAdapter())
 
@@ -58,26 +45,18 @@ class TournamentListFragment
                 .setViewClickListener(::onClickView)
     }
 
-    override fun onClickItem(model: Model) = presenter.openDetail(model)
-
-    override fun onClickView(model: Model, view: View) {
-//        BottomSheetDialog(view.context).run {
-//            setContentView(
-//                    layoutInflater.inflate(R.layout.tournament_bottom_sheet_dialog, null)
-//            )
-//            show()
-//        }
-
-        presenter.remove(model)
+    override fun onSuccess(data: List<Tournament>) {
+        super.onSuccess(data)
+        adapter.items = data
     }
 
-    override fun onPresenterAttached() {
-        super.onPresenterAttached()
-        presenter.observe()
-    }
-
-    companion object {
-        fun newInstance() = TournamentListFragment()
+    @SuppressLint("InflateParams")
+    override fun onClickView(model: Tournament, view: View) {
+        when (view.id) {
+            R.id.tournamentMoreButton -> {
+                bottomSheetMenuView.show(model)
+            }
+        }
     }
 
 }

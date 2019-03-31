@@ -13,10 +13,8 @@ ext.getSourceDirectories = { String dimensionName ->
     def directories = new ArrayList<>()
 
     def res_path = "src/$dimensionName/res"
-    directories.add(res_path)
 
     def layout_path = "app/$res_path/layout"
-    directories.add(layout_path)
 
     layout_names.each { layout_name ->
         def layouts = new File("$layout_path/$layout_name")
@@ -26,6 +24,10 @@ ext.getSourceDirectories = { String dimensionName ->
             }
         }
     }
+
+    directories.add(layout_path)
+
+    directories.add(res_path)
 
     return directories
 }

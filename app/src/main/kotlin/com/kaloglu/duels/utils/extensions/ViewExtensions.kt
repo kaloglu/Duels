@@ -4,6 +4,8 @@ package com.kaloglu.duels.utils.extensions
 
 import android.animation.Animator
 import android.content.Context
+import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -11,10 +13,12 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.animation.Interpolator
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kaloglu.duels.domain.model.base.BaseModel
+import com.kaloglu.duels.mobileui.base.BaseFragment
 import com.kaloglu.duels.utils.adapter.BaseRecyclerAdapter
 
 /**
@@ -99,3 +103,11 @@ fun <A : BaseRecyclerAdapter<M, *>, M : BaseModel>
 fun Context.toast(message: String, length: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(this, message, length).show()
 }
+
+inline fun <reified F : BaseFragment> F.putArgs(argsBuilder: Bundle.() -> Unit = {}) = apply {
+    arguments = Bundle().apply(argsBuilder)
+}
+
+@JvmOverloads
+inline fun <reified A : AppCompatActivity> Context.createIntent(extraBuilder: (Intent.() -> Unit) = {}) =
+        Intent(this, A::class.java).apply(extraBuilder)

@@ -1,34 +1,20 @@
 package com.kaloglu.duels.presentation.interfaces.tournament
 
 import com.kaloglu.duels.domain.model.Tournament
-import com.kaloglu.duels.mobileui.interfaces.UIStateManager
 import com.kaloglu.duels.presentation.interfaces.base.mvp.FormContract
-import com.kaloglu.duels.presentation.interfaces.base.mvp.MvpPresenter
-import com.kaloglu.duels.presentation.interfaces.base.mvp.ResponseLiveListView
-
-typealias Model = Tournament
+import com.kaloglu.duels.presentation.interfaces.base.mvp.MvpListPresenter
+import com.kaloglu.duels.presentation.interfaces.base.mvp.MvpListView
 
 interface TournamentContract {
 
     interface View : FormContract.FormView {
-        fun getName(): String
+        fun getTournamentName(): String
     }
 
-    interface Presenter : FormContract.FormPresenter<Model, View> {
-        //no need on Submit action
-        override fun onSubmitForm() = Unit
+    interface Presenter : FormContract.FormPresenter<Tournament, View>
 
-    }
+    interface ListView : MvpListView<Tournament>
 
-    interface ListView : ResponseLiveListView<Model>, UIStateManager.UIStatesView {
-        fun onClickView(model: Model, view: android.view.View)
-        fun onClickItem(model: Model)
-    }
-
-    interface ListPresenter : MvpPresenter<ListView>, UIStateManager.UIStatesPresenter {
-        fun observe()
-        fun openDetail(model: Model)
-        fun remove(model: Model)
-    }
+    interface ListPresenter : MvpListPresenter<Tournament, ListView>
 
 }
