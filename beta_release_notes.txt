@@ -1,4 +1,2 @@
-919b2e9 Merge pull request #54 from kaloglu/develop
-118ce4f Merge pull request #53 from kaloglu/feature/new_structure
-55f1c95 Add BottomSheet menu for adapter items
-08dfd7d Create new injection simplified
+0008c2d Merge pull request #57 from kaloglu/develop
+2f1d0c8 new design for detail
