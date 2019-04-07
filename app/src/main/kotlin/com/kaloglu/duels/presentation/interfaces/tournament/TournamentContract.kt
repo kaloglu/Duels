@@ -15,6 +15,8 @@ interface TournamentContract {
 
     interface ListView : MvpListView<Tournament>
 
-    interface ListPresenter : MvpListPresenter<Tournament, ListView>
+    interface ListPresenter : MvpListPresenter<Tournament, ListView> {
+        fun createTournament()
+    }
 
 }
