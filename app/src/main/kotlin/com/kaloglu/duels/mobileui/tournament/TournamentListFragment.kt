@@ -43,6 +43,10 @@ class TournamentListFragment
         adapter
                 .setItemClickListener(::onClickItem)
                 .setViewClickListener(::onClickView)
+
+        fab.setOnClickListener {
+            presenter.createTournament()
+        }
     }
 
     override fun onSuccess(data: List<Tournament>) {

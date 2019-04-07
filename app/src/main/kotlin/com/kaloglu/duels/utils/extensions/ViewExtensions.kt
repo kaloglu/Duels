@@ -13,8 +13,11 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.animation.Interpolator
 import android.widget.Toast
+import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kaloglu.duels.domain.model.base.BaseModel
@@ -80,11 +83,19 @@ fun ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false): View {
 @JvmOverloads
 fun <A : BaseRecyclerAdapter<*, *>> RecyclerView.setup(
         adapter: A,
-        layoutManager: RecyclerView.LayoutManager? = null
+        layoutManager: RecyclerView.LayoutManager? = null,
+        @DrawableRes seperatorDrawable: Int? = null
 ): A {
     this.layoutManager = layoutManager ?: LinearLayoutManager(context)
     this.adapter = adapter
-
+    seperatorDrawable?.let {
+        addItemDecoration(
+                DividerItemDecoration(context, DividerItemDecoration.VERTICAL).apply {
+                    setDrawable(ContextCompat.getDrawable(context!!, it)!!)
+                }
+        )
+    }
+    setHasFixedSize(true)
     return adapter
 }
 
